@@ -1,7 +1,10 @@
 package com.migc.qatar2022.data.local.entity
 
+import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.migc.qatar2022.common.Constants.STANDINGS_TABLE
 
+@Entity(tableName = STANDINGS_TABLE)
 data class StandingsEntity(
     @PrimaryKey
     val countryId: String,
@@ -13,5 +16,6 @@ data class StandingsEntity(
     val loses: Int = 0,
     val goalsInFavor: Int = 0,
     val goalsAgainst: Int = 0,
-    val points: Int = 0
+    val points: Int = 0,
+    val maxStage: Int = 1
 )
