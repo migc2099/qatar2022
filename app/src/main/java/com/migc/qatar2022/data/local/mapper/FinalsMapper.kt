@@ -16,3 +16,17 @@ fun FinalsEntity.toKnockOutMatch(): KnockOutMatch {
         winnerTeam = winnerTeam!!
     )
 }
+
+fun KnockOutMatch.toFinalsEntity(): FinalsEntity {
+    return FinalsEntity(
+        roundKey = roundKey,
+        firstTeamId = firstTeam,
+        secondTeamId = secondTeam,
+        firstTeamScore = firstTeamScore,
+        secondTeamScore = secondTeamScore,
+        firstTeamPKScore = firstTeamPKScore,
+        secondTeamPKScore = secondTeamPKScore,
+        loserTeam = loserTeam,
+        winnerTeam = winnerTeam
+    )
+}
