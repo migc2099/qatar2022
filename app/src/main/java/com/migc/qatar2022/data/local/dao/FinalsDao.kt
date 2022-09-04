@@ -7,9 +7,9 @@ import com.migc.qatar2022.data.local.entity.FinalsEntity
 interface FinalsDao {
 
     @Update
-    suspend fun resetAllFinals(finalsEntity: FinalsEntity)
+    suspend fun resetAllFinals(finals: List<FinalsEntity>)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun updateFinals(vararg finalsEntities: FinalsEntity)
+    suspend fun updateFinals(finals: List<FinalsEntity>)
 
 }
