@@ -1,6 +1,6 @@
 package com.migc.qatar2022.domain.model
 
-data class CountryStats(
+data class TeamStats(
     val countryId: String,
     val groupKey: String,
     val groupPosition: Int = 1,

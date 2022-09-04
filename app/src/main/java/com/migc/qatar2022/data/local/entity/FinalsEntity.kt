@@ -6,8 +6,7 @@ import com.migc.qatar2022.common.Constants.FINALS_TABLE
 
 @Entity(tableName = FINALS_TABLE)
 data class FinalsEntity(
-    @PrimaryKey
-    val roundKey: Int,
+    @PrimaryKey val roundKey: Int,
     val firstTeamId: String? = null,
     val secondTeamId: String? = null,
     val firstTeamScore: Int = 0,

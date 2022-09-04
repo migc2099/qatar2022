@@ -15,8 +15,8 @@ import com.migc.qatar2022.data.local.entity.StandingsEntity
 )
 abstract class QatarDatabase : RoomDatabase() {
 
-    abstract fun standingsDao(): StandingsDao
-    abstract fun finalsDao(): FinalsDao
-    abstract fun countryDao(): CountryDao
+    abstract val standingsDao: StandingsDao
+    abstract val finalsDao: FinalsDao
+    abstract val countryDao: CountryDao
 
 }
