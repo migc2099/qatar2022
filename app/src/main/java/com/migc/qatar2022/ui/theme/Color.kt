@@ -3,7 +3,7 @@ package com.migc.qatar2022.ui.theme
 import androidx.compose.ui.graphics.Color
 
 val mainColor = Color(0xFF8F1838)
-val backgroundColor = Color(0xFFE6E6DA)
+val mainBackgroundColor = Color(0xFFE6E6DA)
 val groupA = Color(0xFF3E1460)
 val groupB = Color(0xFF82BDB2)
 val groupC = Color(0xFFC63553)
