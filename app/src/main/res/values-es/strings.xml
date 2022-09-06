@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">Qatar 2022</string>
     <string name="soccer_logo">Pelota</string>
+    <string name="days_text">Días</string>
+    <string name="hours_text">Horas</string>
+    <string name="minutes_text">Mins</string>
+    <string name="seconds_text">Segs</string>
+    <string name="world_cup_starts_text">La Copa Mundial Empieza en</string>
 </resources>

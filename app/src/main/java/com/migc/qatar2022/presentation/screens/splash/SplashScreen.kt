@@ -15,6 +15,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import com.migc.qatar2022.R
+import com.migc.qatar2022.navigation.Screen
 import com.migc.qatar2022.ui.theme.mainColor
 
 @Composable
@@ -32,6 +33,7 @@ fun SplashScreen(
             )
         )
         navController.popBackStack()
+        navController.navigate(Screen.Home.route)
     }
 
     Splash(degrees = degrees.value)
