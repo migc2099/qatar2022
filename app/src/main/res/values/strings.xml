@@ -6,4 +6,5 @@
     <string name="minutes_text">Mins</string>
     <string name="seconds_text">Secs</string>
     <string name="world_cup_starts_text">World Cup Starts in</string>
+    <string name="team_flag">Flag</string>
 </resources>
