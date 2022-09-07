@@ -1,15 +1,20 @@
 package com.migc.qatar2022.di
 
 import com.migc.qatar2022.data.QatarDatabase
+import com.migc.qatar2022.data.remote.FixtureApi
 import com.migc.qatar2022.data.repository.FinalsRepositoryImpl
+import com.migc.qatar2022.data.repository.FixtureRepositoryImpl
 import com.migc.qatar2022.data.repository.StandingsRepositoryImpl
 import com.migc.qatar2022.domain.repository.FinalsRepository
+import com.migc.qatar2022.domain.repository.FixtureRepository
 import com.migc.qatar2022.domain.repository.StandingsRepository
 import com.migc.qatar2022.domain.use_case.FinalsUseCases
+import com.migc.qatar2022.domain.use_case.GroupDetailsUseCases
 import com.migc.qatar2022.domain.use_case.StandingsUseCases
 import com.migc.qatar2022.domain.use_case.finals.EnterKnockOutResultUseCase
 import com.migc.qatar2022.domain.use_case.finals.GetMatchByRoundUseCase
 import com.migc.qatar2022.domain.use_case.finals.SetupFinalsUseCase
+import com.migc.qatar2022.domain.use_case.group_details.GetMatchesByGroupUseCase
 import com.migc.qatar2022.domain.use_case.standings.GetTeamByGroupPositionUseCase
 import com.migc.qatar2022.domain.use_case.standings.GetTeamsByGroupUseCase
 import com.migc.qatar2022.domain.use_case.standings.SetupStandingsUseCase
@@ -54,6 +59,20 @@ object RepositoriesModule {
             enterKnockOutResultUseCase = EnterKnockOutResultUseCase(repository),
             getMatchByRoundUseCase = GetMatchByRoundUseCase(repository),
             setupFinalsUseCase = SetupFinalsUseCase(repository)
+        )
+    }
+
+    @Provides
+    @Singleton
+    fun provideFixtureRepository(api: FixtureApi): FixtureRepository {
+        return FixtureRepositoryImpl(fixtureApi = api)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGroupDetailsUseCases(repository: FixtureRepository): GroupDetailsUseCases {
+        return GroupDetailsUseCases(
+            getMatchesByGroupUseCase = GetMatchesByGroupUseCase(repository)
         )
     }
 
