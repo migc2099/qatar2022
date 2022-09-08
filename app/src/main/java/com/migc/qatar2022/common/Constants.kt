@@ -8,6 +8,7 @@ object Constants {
     const val STANDINGS_TABLE = "standings_table"
     const val FINALS_TABLE = "finals_table"
     const val COUNTRIES_TABLE = "countries_table"
+    const val FIXTURE_TABLE = "fixture_table"
 
     const val WORLD_CUP_START_DATE_MILLIS = 1668988800000
 

@@ -15,29 +15,32 @@ class GetMatchesByGroupUseCase(
     private val fixtureRepository: FixtureRepository
 ) {
 
-    operator fun invoke(group: String): Flow<Resource<List<Fixture>>> = flow {
-        try {
-            emit(Resource.Loading())
-            val fixtureDto = fixtureRepository.getMatchesByGroup(group = group)
-            val fixtureResult = fixtureDto
-                .filter {
-                    it.RoundNumber < 4
-                }
-                .filter {
-                    Log.d("filter", "${it.Group.lowercase()} == ${group.lowercase()}" )
-                    it.Group.lowercase(Locale.getDefault()) == group.lowercase()
-                }
-            Log.d("invoke", "outside of operators")
-            val values = fixtureResult.map {
-                Log.d("map", it.toString())
-                it.toFixture()
-            }
-            emit(Resource.Success(data = values))
-        } catch (e: HttpException) {
-            emit(Resource.Error(e.localizedMessage ?: "An unexpected error occurred"))
-        } catch (e: IOException) {
-            emit(Resource.Error("Couldn't reach server. Check internet connection"))
-        }
-    }
+//    operator fun invoke(group: String): Flow<Resource<List<Fixture>>> = flow {
+//        try {
+//            emit(Resource.Loading())
+//            val fixtureDto = fixtureRepository.getMatchesByGroup(group = group)
+//            val fixtureResult = fixtureDto
+//                .filter {
+//                    it.RoundNumber < 4
+//                }
+//                .filter {
+//                    Log.d("filter", "${it.Group.lowercase()} == ${group.lowercase()}" )
+//                    it.Group.lowercase(Locale.getDefault()) == group.lowercase()
+//                }
+//                .sortedBy {
+//                    it.MatchNumber
+//                }
+//            Log.d("invoke", "outside of operators")
+//            val values = fixtureResult.map {
+//                Log.d("map", it.toString())
+//                it.toFixture()
+//            }
+//            emit(Resource.Success(data = values))
+//        } catch (e: HttpException) {
+//            emit(Resource.Error(e.localizedMessage ?: "An unexpected error occurred"))
+//        } catch (e: IOException) {
+//            emit(Resource.Error("Couldn't reach server. Check internet connection"))
+//        }
+//    }
 
 }
