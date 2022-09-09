@@ -2,6 +2,7 @@ package com.migc.qatar2022.common
 
 object Constants {
 
+    const val PREFERENCES_NAME = "qatar_preferences"
     const val FIXTURE_BASE_URL = "https://fixturedownload.com/"
 
     const val QATAR_DATABASE = "qatar_database"

@@ -10,7 +10,7 @@ import com.migc.qatar2022.data.local.entity.FixtureEntity
 interface FixtureDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertFixture(finals: List<FixtureEntity>)
+    suspend fun insertFixture(finals: List<FixtureEntity>) : List<Long>
 
     @Query("SELECT * FROM fixture_table WHERE groupKey=:group")
     suspend fun getGroupMatches(group: String): List<FixtureEntity>
