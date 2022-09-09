@@ -1,6 +1,7 @@
 package com.migc.qatar2022.presentation.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -21,9 +22,19 @@ import com.migc.qatar2022.domain.model.Team
 import com.migc.qatar2022.ui.theme.*
 
 @Composable
-fun GroupCard(modifier: Modifier, size: Dp, group: String, teams: List<Team>) {
+fun GroupCard(
+    modifier: Modifier,
+    size: Dp,
+    group: String,
+    teams: List<Team>,
+    onClick: (String) -> Unit
+) {
     Card(
-        modifier = modifier.size(size),
+        modifier = modifier
+            .size(size)
+            .clickable {
+                onClick(group)
+            },
         shape = GroupCardShape(),
         backgroundColor = mainColor
     ) {
@@ -92,6 +103,7 @@ fun GroupCardPreview() {
             Team("ECU", "Ecuador", R.drawable.flag_ecuador),
             Team("SEN", "Senegal", R.drawable.flag_senegal),
             Team("NET", "Netherlands", R.drawable.flag_netherlands)
-        )
+        ),
+        onClick = {}
     )
 }
