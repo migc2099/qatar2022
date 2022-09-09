@@ -7,7 +7,9 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.preferencesDataStore
+import com.migc.qatar2022.common.Constants.PREFERENCES_GROUPS_FIXTURE_KEY
 import com.migc.qatar2022.common.Constants.PREFERENCES_NAME
+import com.migc.qatar2022.common.Constants.PREFERENCES_STANDINGS_KEY
 import com.migc.qatar2022.domain.repository.DataStoreOpsRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -23,16 +25,17 @@ class DataStoreOpsRepositoryImpl(context: Context) : DataStoreOpsRepository {
     val dataStore = context.dataStore
 
     private object PreferencesKey {
-        val onFirstTimeAppOpenedKey = booleanPreferencesKey(name = PREFERENCES_NAME)
+        val onFixtureSetupCompletedKey = booleanPreferencesKey(name = PREFERENCES_GROUPS_FIXTURE_KEY)
+        val onStandingsSetupCompletedKey = booleanPreferencesKey(name = PREFERENCES_STANDINGS_KEY)
     }
 
-    override suspend fun saveOnFirstTimeAppOpened(completed: Boolean) {
+    override suspend fun saveOnFixtureSetupCompleted(completed: Boolean) {
         dataStore.edit { preferences ->
-            preferences[PreferencesKey.onFirstTimeAppOpenedKey] = completed
+            preferences[PreferencesKey.onFixtureSetupCompletedKey] = completed
         }
     }
 
-    override fun readOnFirstTimeAppOpened(): Flow<Boolean> {
+    override fun readOnFixtureSetupCompleted(): Flow<Boolean> {
         return dataStore.data
             .catch { exception ->
                 if (exception is IOException) {
@@ -42,8 +45,29 @@ class DataStoreOpsRepositoryImpl(context: Context) : DataStoreOpsRepository {
                 }
             }
             .map { preferences ->
-                val onFirstTimeAppOpened = preferences[PreferencesKey.onFirstTimeAppOpenedKey] ?: false
+                val onFirstTimeAppOpened = preferences[PreferencesKey.onFixtureSetupCompletedKey] ?: false
                 onFirstTimeAppOpened
+            }
+    }
+
+    override suspend fun saveOnStandingsSetupCompleted(completed: Boolean) {
+        dataStore.edit { preferences ->
+            preferences[PreferencesKey.onStandingsSetupCompletedKey] = completed
+        }
+    }
+
+    override fun readOnStandingsSetupCompleted(): Flow<Boolean> {
+        return dataStore.data
+            .catch { exception ->
+                if (exception is IOException) {
+                    emit(emptyPreferences())
+                } else {
+                    throw exception
+                }
+            }
+            .map { preferences ->
+                val onStandingsSetupCompleted = preferences[PreferencesKey.onStandingsSetupCompletedKey] ?: false
+                onStandingsSetupCompleted
             }
     }
 

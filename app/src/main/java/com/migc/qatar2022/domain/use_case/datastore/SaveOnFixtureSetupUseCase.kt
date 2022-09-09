@@ -6,6 +6,6 @@ class SaveOnFixtureSetupUseCase(
     private val dataStoreOperations: DataStoreOpsRepository
 ) {
     suspend operator fun invoke(completed: Boolean) {
-        dataStoreOperations.saveOnFirstTimeAppOpened(completed)
+        dataStoreOperations.saveOnFixtureSetupCompleted(completed)
     }
 }

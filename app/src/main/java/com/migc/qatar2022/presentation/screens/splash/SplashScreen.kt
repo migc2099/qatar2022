@@ -27,6 +27,7 @@ fun SplashScreen(
     splashViewModel: SplashViewModel = hiltViewModel()
 ) {
     val onFixtureSetupCompleted by splashViewModel.onFixtureSetupCompleted.collectAsState()
+    val onStandingsSetupCompleted by splashViewModel.onStandingsSetupCompleted.collectAsState()
     val degrees = remember { Animatable(0f) }
 
     LaunchedEffect(key1 = true) {
@@ -40,6 +41,10 @@ fun SplashScreen(
         Log.d("SplashScreen", "onFixtureSetupCompleted=$onFixtureSetupCompleted")
         if (!onFixtureSetupCompleted) {
             splashViewModel.setDatabaseFixture()
+        }
+        Log.d("SplashScreen", "onStandingsSetupCompleted=$onStandingsSetupCompleted")
+        if (!onStandingsSetupCompleted){
+            splashViewModel.setDatabaseStandings()
         }
         delay(200)
         navController.popBackStack()

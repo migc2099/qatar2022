@@ -14,7 +14,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
-import kotlin.math.log
 
 @HiltViewModel
 class SplashViewModel @Inject constructor(
@@ -24,11 +23,15 @@ class SplashViewModel @Inject constructor(
 
     private val _onFixtureSetupCompleted = MutableStateFlow(false)
     val onFixtureSetupCompleted: StateFlow<Boolean> = _onFixtureSetupCompleted
+    private val _onStandingsSetupCompleted = MutableStateFlow(false)
+    val onStandingsSetupCompleted = _onStandingsSetupCompleted
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
             _onFixtureSetupCompleted.value =
                 dataStoreUseCases.readOnFixtureSetupUseCase().stateIn(viewModelScope).value
+            _onStandingsSetupCompleted.value =
+                dataStoreUseCases.readOnStandingsSetupUseCase().stateIn(viewModelScope).value
         }
     }
 
@@ -44,7 +47,19 @@ class SplashViewModel @Inject constructor(
                 Log.e("SplashViewModel", "setDatabaseFixture() didn't insert rows")
             }
         }
+    }
 
+    @OptIn(DelicateCoroutinesApi::class)
+    fun setDatabaseStandings() {
+        GlobalScope.launch(Dispatchers.IO) {
+            val insertResult = databaseSetupUseCases.setStandingsUseCase()
+            if (insertResult) {
+                Log.d("SplashViewModel", "setDatabaseStandings() rows inserted successfully")
+                dataStoreUseCases.saveOnStandingsSetupUseCase(completed = true)
+            } else {
+                Log.e("SplashViewModel", "setDatabaseStandings() didn't insert rows")
+            }
+        }
     }
 
 }

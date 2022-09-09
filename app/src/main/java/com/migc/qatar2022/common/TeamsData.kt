@@ -3,6 +3,7 @@ package com.migc.qatar2022.common
 import android.util.Log
 import com.migc.qatar2022.R
 import com.migc.qatar2022.data.local.entity.FixtureEntity
+import com.migc.qatar2022.data.local.entity.StandingsEntity
 import com.migc.qatar2022.domain.model.Group
 import com.migc.qatar2022.domain.model.Team
 
@@ -115,6 +116,41 @@ object TeamsData {
         FixtureEntity(46, 3, "H", 0, "Education City Stadium", "KOR", "POR"),
         FixtureEntity(47, 3, "G", 0, "Stadium 974", "SER", "SWI"),
         FixtureEntity(48, 3, "G", 0, "Lusail Stadium", "CAM", "BRA"),
+    )
+
+    val standings = listOf(
+        StandingsEntity("QAT", "A"),
+        StandingsEntity("ECU", "A"),
+        StandingsEntity("SEN", "A"),
+        StandingsEntity("NET", "A"),
+        StandingsEntity("ENG", "B"),
+        StandingsEntity("IRA", "B"),
+        StandingsEntity("USA", "B"),
+        StandingsEntity("WAL", "B"),
+        StandingsEntity("ARG", "C"),
+        StandingsEntity("SAU", "C"),
+        StandingsEntity("MEX", "C"),
+        StandingsEntity("POL", "C"),
+        StandingsEntity("FRA", "D"),
+        StandingsEntity("DEN", "D"),
+        StandingsEntity("TUN", "D"),
+        StandingsEntity("AUS", "D"),
+        StandingsEntity("SPA", "E"),
+        StandingsEntity("GER", "E"),
+        StandingsEntity("JAP", "E"),
+        StandingsEntity("COS", "E"),
+        StandingsEntity("BEL", "F"),
+        StandingsEntity("CAN", "F"),
+        StandingsEntity("MOR", "F"),
+        StandingsEntity("CRO", "F"),
+        StandingsEntity("BRA", "G"),
+        StandingsEntity("SER", "G"),
+        StandingsEntity("SWI", "G"),
+        StandingsEntity("CAM", "G"),
+        StandingsEntity("POR", "F"),
+        StandingsEntity("GHA", "F"),
+        StandingsEntity("URU", "F"),
+        StandingsEntity("KOR", "F")
     )
 
     fun getTeamsByGroup(groupId: String): List<Team> {

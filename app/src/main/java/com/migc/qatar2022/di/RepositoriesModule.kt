@@ -6,12 +6,16 @@ import com.migc.qatar2022.data.repository.*
 import com.migc.qatar2022.domain.repository.*
 import com.migc.qatar2022.domain.use_case.*
 import com.migc.qatar2022.domain.use_case.database_setup.SetGroupsFixtureUseCase
+import com.migc.qatar2022.domain.use_case.database_setup.SetStandingsUseCase
 import com.migc.qatar2022.domain.use_case.datastore.ReadOnFixtureSetupUseCase
+import com.migc.qatar2022.domain.use_case.datastore.ReadOnStandingsSetupUseCase
 import com.migc.qatar2022.domain.use_case.datastore.SaveOnFixtureSetupUseCase
+import com.migc.qatar2022.domain.use_case.datastore.SaveOnStandingsSetupUseCase
 import com.migc.qatar2022.domain.use_case.finals.EnterKnockOutResultUseCase
 import com.migc.qatar2022.domain.use_case.finals.GetMatchByRoundUseCase
 import com.migc.qatar2022.domain.use_case.finals.SetupFinalsUseCase
 import com.migc.qatar2022.domain.use_case.group_details.GetFixtureByGroupUseCase
+import com.migc.qatar2022.domain.use_case.group_details.UpdateFixtureUseCase
 import com.migc.qatar2022.domain.use_case.standings.GetTeamByGroupPositionUseCase
 import com.migc.qatar2022.domain.use_case.standings.GetTeamsByGroupUseCase
 import com.migc.qatar2022.domain.use_case.standings.SetupStandingsUseCase
@@ -71,13 +75,14 @@ object RepositoriesModule {
     fun provideGroupDetailsUseCases(repository: FixtureRepository): GroupDetailsUseCases {
         return GroupDetailsUseCases(
 //            getMatchesByGroupUseCase = GetMatchesByGroupUseCase(repository),
-            getFixtureByGroupUseCase = GetFixtureByGroupUseCase(repository)
+            getFixtureByGroupUseCase = GetFixtureByGroupUseCase(repository),
+            updateFixtureUseCase = UpdateFixtureUseCase(repository)
         )
     }
 
     @Provides
     @Singleton
-    fun provideDatabaseSetupRepository(database: QatarDatabase):DatabaseSetupRepository{
+    fun provideDatabaseSetupRepository(database: QatarDatabase): DatabaseSetupRepository {
         return DatabaseSetupRepositoryImpl(qatarDatabase = database)
     }
 
@@ -85,14 +90,16 @@ object RepositoriesModule {
     @Singleton
     fun provideDatabaseSetupUseCases(repository: DatabaseSetupRepository): DatabaseSetupUseCases {
         return DatabaseSetupUseCases(
-            setGroupsFixtureUseCase = SetGroupsFixtureUseCase(repository)
+            setGroupsFixtureUseCase = SetGroupsFixtureUseCase(repository),
+            setStandingsUseCase = SetStandingsUseCase(repository)
         )
     }
 
     @Provides
     @Singleton
     fun provideDataStoreOpsRepository(
-        @ApplicationContext context: Context):DataStoreOpsRepository{
+        @ApplicationContext context: Context
+    ): DataStoreOpsRepository {
         return DataStoreOpsRepositoryImpl(
             context = context
         )
@@ -100,10 +107,12 @@ object RepositoriesModule {
 
     @Provides
     @Singleton
-    fun provideDataStoreUseCases(repository: DataStoreOpsRepository):DataStoreUseCases{
+    fun provideDataStoreUseCases(repository: DataStoreOpsRepository): DataStoreUseCases {
         return DataStoreUseCases(
             saveOnFixtureSetupUseCase = SaveOnFixtureSetupUseCase(repository),
-            readOnFixtureSetupUseCase = ReadOnFixtureSetupUseCase(repository)
+            readOnFixtureSetupUseCase = ReadOnFixtureSetupUseCase(repository),
+            saveOnStandingsSetupUseCase = SaveOnStandingsSetupUseCase(repository),
+            readOnStandingsSetupUseCase = ReadOnStandingsSetupUseCase(repository)
         )
     }
 

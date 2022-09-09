@@ -7,7 +7,7 @@ import com.migc.qatar2022.data.local.entity.StandingsEntity
 interface StandingsDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insertStandings(standings: List<StandingsEntity>)
+    suspend fun insertStandings(standings: List<StandingsEntity>): List<Long>
 
     @Update
     fun updateStandings(standings: List<StandingsEntity>)
