@@ -1,5 +1,6 @@
 package com.migc.qatar2022.presentation.screens.splash
 
+import android.util.Log
 import androidx.compose.animation.core.Animatable
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
@@ -13,15 +14,19 @@ import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.migc.qatar2022.R
 import com.migc.qatar2022.navigation.Screen
 import com.migc.qatar2022.ui.theme.mainColor
+import kotlinx.coroutines.delay
 
 @Composable
 fun SplashScreen(
     navController: NavController,
+    splashViewModel: SplashViewModel = hiltViewModel()
 ) {
+    val onFixtureSetupCompleted by splashViewModel.onFixtureSetupCompleted.collectAsState()
     val degrees = remember { Animatable(0f) }
 
     LaunchedEffect(key1 = true) {
@@ -32,6 +37,11 @@ fun SplashScreen(
                 delayMillis = 200
             )
         )
+        Log.d("SplashScreen", "onFixtureSetupCompleted=$onFixtureSetupCompleted")
+        if (!onFixtureSetupCompleted) {
+            splashViewModel.setDatabaseFixture()
+        }
+        delay(200)
         navController.popBackStack()
         navController.navigate(Screen.Home.route)
     }
