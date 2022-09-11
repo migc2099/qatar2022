@@ -8,12 +8,12 @@ fun FixtureEntity.toFixture(): Fixture {
         matchNumber = matchNumber,
         roundNumber = roundNumber,
         group = groupKey,
-        date = date.toString(),
+        date = date,
         location = location,
         homeTeam = homeTeam,
         awayTeam = awayTeam,
-        homeTeamScore = 0,
-        awayTeamScore = 0
+        homeTeamScore = homeTeamScore,
+        awayTeamScore = awayTeamScore
     )
 }
 
@@ -22,11 +22,11 @@ fun Fixture.toFixtureEntity(): FixtureEntity {
         matchNumber = matchNumber,
         roundNumber = roundNumber,
         groupKey = group,
-        date = date.toInt(),
+        date =  date,
         location = location,
         homeTeam = homeTeam,
         awayTeam = awayTeam,
-        homeTeamScore = 0,
-        awayTeamScore = 0
+        homeTeamScore = homeTeamScore,
+        awayTeamScore = awayTeamScore
     )
 }

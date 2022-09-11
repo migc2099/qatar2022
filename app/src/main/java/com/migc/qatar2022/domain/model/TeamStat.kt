@@ -3,12 +3,12 @@ package com.migc.qatar2022.domain.model
 data class TeamStat(
     val teamId: String,
     val groupKey: String,
-    val groupPosition: Int = 1,
-    val gamesPlayed: Int = 0,
-    val wins: Int = 0,
-    val draws: Int = 0,
-    val loses: Int = 0,
-    val goalsInFavor: Int = 0,
-    val goalsAgainst: Int = 0,
-    val points: Int = 0
+    var groupPosition: Int = 1,
+    var gamesPlayed: Int = 0,
+    var wins: Int = 0,
+    var draws: Int = 0,
+    var loses: Int = 0,
+    var goalsInFavor: Int = 0,
+    var goalsAgainst: Int = 0,
+    var points: Int = 0
 )

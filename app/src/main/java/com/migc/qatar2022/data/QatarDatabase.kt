@@ -2,14 +2,8 @@ package com.migc.qatar2022.data
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.migc.qatar2022.data.local.dao.CountryDao
-import com.migc.qatar2022.data.local.dao.FinalsDao
-import com.migc.qatar2022.data.local.dao.FixtureDao
-import com.migc.qatar2022.data.local.dao.StandingsDao
-import com.migc.qatar2022.data.local.entity.CountryEntity
-import com.migc.qatar2022.data.local.entity.FinalsEntity
-import com.migc.qatar2022.data.local.entity.FixtureEntity
-import com.migc.qatar2022.data.local.entity.StandingsEntity
+import com.migc.qatar2022.data.local.dao.*
+import com.migc.qatar2022.data.local.entity.*
 
 @Database(
     entities = [

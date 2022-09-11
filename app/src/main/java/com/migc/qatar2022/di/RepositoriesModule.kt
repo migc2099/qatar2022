@@ -14,6 +14,7 @@ import com.migc.qatar2022.domain.use_case.datastore.SaveOnStandingsSetupUseCase
 import com.migc.qatar2022.domain.use_case.finals.EnterKnockOutResultUseCase
 import com.migc.qatar2022.domain.use_case.finals.GetMatchByRoundUseCase
 import com.migc.qatar2022.domain.use_case.finals.SetupFinalsUseCase
+import com.migc.qatar2022.domain.use_case.group_details.CalculatePointsUseCase
 import com.migc.qatar2022.domain.use_case.group_details.GetFixtureByGroupUseCase
 import com.migc.qatar2022.domain.use_case.group_details.UpdateFixtureUseCase
 import com.migc.qatar2022.domain.use_case.standings.GetTeamByGroupPositionUseCase
@@ -72,11 +73,15 @@ object RepositoriesModule {
 
     @Provides
     @Singleton
-    fun provideGroupDetailsUseCases(repository: FixtureRepository): GroupDetailsUseCases {
+    fun provideGroupDetailsUseCases(
+        fixtureRepository: FixtureRepository,
+        standingsRepository: StandingsRepository
+    ): GroupDetailsUseCases {
         return GroupDetailsUseCases(
 //            getMatchesByGroupUseCase = GetMatchesByGroupUseCase(repository),
-            getFixtureByGroupUseCase = GetFixtureByGroupUseCase(repository),
-            updateFixtureUseCase = UpdateFixtureUseCase(repository)
+            getFixtureByGroupUseCase = GetFixtureByGroupUseCase(fixtureRepository),
+            updateFixtureUseCase = UpdateFixtureUseCase(fixtureRepository),
+            calculatePointsUseCase = CalculatePointsUseCase(fixtureRepository, standingsRepository)
         )
     }
 

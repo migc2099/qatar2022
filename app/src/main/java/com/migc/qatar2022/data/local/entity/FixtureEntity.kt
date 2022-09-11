@@ -10,10 +10,10 @@ data class FixtureEntity(
     val matchNumber: Int,
     val roundNumber: Int,
     val groupKey: String,
-    val date: Int,
+    val date: Long,
     val location: String,
     val homeTeam: String,
     val awayTeam: String,
-    val homeTeamScore: Int = 0,
-    val awayTeamScore: Int = 0
+    val homeTeamScore: Int? = null,
+    val awayTeamScore: Int? = null
 )
