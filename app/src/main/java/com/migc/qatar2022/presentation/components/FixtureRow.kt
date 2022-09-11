@@ -1,40 +1,46 @@
 package com.migc.qatar2022.presentation.components
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.migc.qatar2022.R
-import com.migc.qatar2022.domain.model.Team
+import com.migc.qatar2022.common.TeamsData
+import com.migc.qatar2022.domain.model.Fixture
 import com.migc.qatar2022.ui.theme.*
 
 @Composable
 fun FixtureRow(
-    homeTeam: Team,
-    awayTeam: Team,
-    homeTeamScore: (Int) -> Unit,
-    awayTeamScore: (Int) -> Unit
+    fixture: Fixture,
+    homeTeamScoreValue: String,
+    awayTeamScoreValue: String,
+    homeTeamScore: (String) -> Unit,
+    awayTeamScore: (String) -> Unit
 ) {
     val leftText = remember {
-        mutableStateOf(TextFieldValue(""))
+        mutableStateOf(TextFieldValue(homeTeamScoreValue))
     }
     val rightText = remember {
-        mutableStateOf(TextFieldValue(""))
+        mutableStateOf(TextFieldValue(awayTeamScoreValue))
     }
+    Log.d("FixtureRow", "${fixture.homeTeam} ${fixture.homeTeamScore}vs${fixture.awayTeamScore} ${fixture.awayTeam}")
+    val homeTeamFlag = TeamsData.flagsMap[fixture.homeTeam] ?: R.drawable.ic_launcher_foreground
+    val awayTeamFlag = TeamsData.flagsMap[fixture.awayTeam] ?: R.drawable.ic_launcher_foreground
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -45,13 +51,13 @@ fun FixtureRow(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Image(
-            painter = painterResource(id = homeTeam.flagUri),
-            contentDescription = "home team flag",
+            painter = painterResource(id = homeTeamFlag),
+            contentDescription = stringResource(R.string.home_team_flag),
             modifier = Modifier.size(FLAG_ROW_IMAGE_SIZE)
         )
         Spacer(modifier = Modifier.width(SMALL_HORIZONTAL_PADDING))
         Text(
-            text = homeTeam.teamId,
+            text = fixture.homeTeam,
             color = Color.Black,
             fontSize = Typography.subtitle1.fontSize
         )
@@ -60,6 +66,11 @@ fun FixtureRow(
             value = leftText.value,
             onValueChange = {
                 leftText.value = it
+                if (it.text.isNotEmpty()) {
+                    homeTeamScore(it.text)
+                } else {
+                    homeTeamScore("")
+                }
             },
             modifier = Modifier
                 .width(50.dp),
@@ -83,6 +94,11 @@ fun FixtureRow(
             value = rightText.value,
             onValueChange = {
                 rightText.value = it
+                if (it.text.isNotEmpty()) {
+                    awayTeamScore(it.text)
+                } else {
+                    awayTeamScore("")
+                }
             },
             modifier = Modifier
                 .width(50.dp),
@@ -96,14 +112,14 @@ fun FixtureRow(
         )
         Spacer(modifier = Modifier.width(EXTRA_SMALL_HORIZONTAL_PADDING))
         Text(
-            text = awayTeam.teamId,
+            text = fixture.awayTeam,
             color = Color.Black,
             fontSize = Typography.subtitle1.fontSize
         )
         Spacer(modifier = Modifier.width(SMALL_HORIZONTAL_PADDING))
         Image(
-            painter = painterResource(id = awayTeam.flagUri),
-            contentDescription = "home team flag",
+            painter = painterResource(id = awayTeamFlag),
+            contentDescription = stringResource(R.string.away_team_flag),
             modifier = Modifier.size(FLAG_ROW_IMAGE_SIZE)
         )
     }
@@ -113,8 +129,9 @@ fun FixtureRow(
 @Preview
 fun FixtureRowPreview() {
     FixtureRow(
-        homeTeam = Team("QAT", "Qatar", R.drawable.flag_qatar),
-        awayTeam = Team("ECU", "Ecuador", R.drawable.flag_ecuador),
+        fixture = Fixture(1, 1, "A", 0, "My Stadium", "QAT", "ECU"),
+        homeTeamScoreValue = "1",
+        awayTeamScoreValue = "0",
         homeTeamScore = {},
         awayTeamScore = {}
     )

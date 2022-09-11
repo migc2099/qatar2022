@@ -9,7 +9,9 @@ import com.migc.qatar2022.common.Constants.PARAM_GROUP_ID
 import com.migc.qatar2022.domain.model.Fixture
 import com.migc.qatar2022.domain.use_case.GroupDetailsUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -24,6 +26,7 @@ class GroupDetailsViewModel @Inject constructor(
     private val _selectedGroup: MutableStateFlow<List<Fixture>> = MutableStateFlow(emptyList())
     val selectedGroup: StateFlow<List<Fixture>> = _selectedGroup
 
+    lateinit var editableFixture: MutableList<Fixture>
     val currentGroup = mutableStateOf("")
 
     init {
@@ -37,6 +40,7 @@ class GroupDetailsViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             Log.d("getFixture", "groupId: ${groupId.last()}")
             _selectedGroup.value = useCases.getFixtureByGroupUseCase(group = groupId.last().toString())
+            editableFixture = _selectedGroup.value.toMutableList()
         }
 
 //        useCases.getMatchesByGroupUseCase(groupId).onEach { result ->
@@ -57,6 +61,33 @@ class GroupDetailsViewModel @Inject constructor(
 //                }
 //            }
 //        }.launchIn(viewModelScope)
+    }
+
+    fun updateHomeTeamScore(matchNumber: Int, score: Int) {
+        editableFixture
+            .filter {
+                it.matchNumber == matchNumber
+            }.map {
+                it.homeTeamScore = score
+            }
+    }
+
+    fun updateAwayTeamScore(matchNumber: Int, score: Int) {
+        editableFixture
+            .filter {
+                it.matchNumber == matchNumber
+            }.map {
+                it.awayTeamScore = score
+            }
+    }
+
+    @OptIn(DelicateCoroutinesApi::class)
+    fun onSaveButtonClicked(group: String) {
+        Log.d("GroupDetailsViewModel","onSaveButtonClicked" )
+        GlobalScope.launch(Dispatchers.IO) {
+            Log.d("GroupDetailsViewModel","currentGroup: ${currentGroup.value.last()}" )
+            useCases.calculatePointsUseCase(editableFixture, group.last().toString())
+        }
     }
 
 }

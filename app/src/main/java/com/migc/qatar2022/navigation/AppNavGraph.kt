@@ -5,7 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.migc.qatar2022.common.Constants.PARAM_GROUP_ID
-import com.migc.qatar2022.presentation.screens.group_details.GroupDetails
+import com.migc.qatar2022.presentation.screens.group_details.GroupDetailsScreen
 import com.migc.qatar2022.presentation.screens.home.HomeScreen
 import com.migc.qatar2022.presentation.screens.splash.SplashScreen
 
@@ -22,7 +22,7 @@ fun AppNavGraph(navHostController: NavHostController) {
             HomeScreen(navHostController = navHostController)
         }
         composable(route = Screen.GroupDetails.route + "/{$PARAM_GROUP_ID}"){
-            GroupDetails(navHostController = navHostController)
+            GroupDetailsScreen(navHostController = navHostController)
         }
     }
 }

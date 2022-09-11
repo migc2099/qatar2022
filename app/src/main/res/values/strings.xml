@@ -7,4 +7,7 @@
     <string name="seconds_text">Secs</string>
     <string name="world_cup_starts_text">World Cup Starts in</string>
     <string name="team_flag">Flag</string>
+    <string name="home_team_flag">Home Team Flag</string>
+    <string name="away_team_flag">Away Team Flag</string>
+    <string name="save_changes_text">Save changes</string>
 </resources>
