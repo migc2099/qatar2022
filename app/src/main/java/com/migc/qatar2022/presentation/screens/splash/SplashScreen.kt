@@ -28,6 +28,8 @@ fun SplashScreen(
 ) {
     val onFixtureSetupCompleted by splashViewModel.onFixtureSetupCompleted.collectAsState()
     val onStandingsSetupCompleted by splashViewModel.onStandingsSetupCompleted.collectAsState()
+    val onGroupsSetupCompleted by splashViewModel.onGroupsSetupCompleted.collectAsState()
+    val onTeamsSetupCompleted by splashViewModel.onTeamsSetCompleted.collectAsState()
     val degrees = remember { Animatable(0f) }
 
     LaunchedEffect(key1 = true) {
@@ -43,8 +45,16 @@ fun SplashScreen(
             splashViewModel.setDatabaseFixture()
         }
         Log.d("SplashScreen", "onStandingsSetupCompleted=$onStandingsSetupCompleted")
-        if (!onStandingsSetupCompleted){
+        if (!onStandingsSetupCompleted) {
             splashViewModel.setDatabaseStandings()
+        }
+        Log.d("SplashScreen", "onGroupsSetupCompleted=$onGroupsSetupCompleted")
+        if (!onGroupsSetupCompleted) {
+            splashViewModel.setDatabaseGroups()
+        }
+        Log.d("SplashScreen", "onTeamsSetupCompleted=$onTeamsSetupCompleted")
+        if (!onTeamsSetupCompleted) {
+            splashViewModel.setDatabaseTeams()
         }
         delay(200)
         navController.popBackStack()

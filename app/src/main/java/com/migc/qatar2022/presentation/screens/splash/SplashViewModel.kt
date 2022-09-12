@@ -25,6 +25,10 @@ class SplashViewModel @Inject constructor(
     val onFixtureSetupCompleted: StateFlow<Boolean> = _onFixtureSetupCompleted
     private val _onStandingsSetupCompleted = MutableStateFlow(false)
     val onStandingsSetupCompleted = _onStandingsSetupCompleted
+    private val _onGroupsSetupCompleted = MutableStateFlow(false)
+    val onGroupsSetupCompleted = _onGroupsSetupCompleted
+    private val _onTeamsSetupCompleted = MutableStateFlow(false)
+    val onTeamsSetCompleted = _onTeamsSetupCompleted
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
@@ -32,6 +36,11 @@ class SplashViewModel @Inject constructor(
                 dataStoreUseCases.readOnFixtureSetupUseCase().stateIn(viewModelScope).value
             _onStandingsSetupCompleted.value =
                 dataStoreUseCases.readOnStandingsSetupUseCase().stateIn(viewModelScope).value
+            _onGroupsSetupCompleted.value =
+                dataStoreUseCases.readOnGroupsSetupUseCase().stateIn(viewModelScope).value
+            _onTeamsSetupCompleted.value =
+                dataStoreUseCases.readOnTeamsSetupUseCase().stateIn(viewModelScope).value
+
         }
     }
 
@@ -58,6 +67,32 @@ class SplashViewModel @Inject constructor(
                 dataStoreUseCases.saveOnStandingsSetupUseCase(completed = true)
             } else {
                 Log.e("SplashViewModel", "setDatabaseStandings() didn't insert rows")
+            }
+        }
+    }
+
+    @OptIn(DelicateCoroutinesApi::class)
+    fun setDatabaseGroups(){
+        GlobalScope.launch(Dispatchers.IO){
+            val insertResult = databaseSetupUseCases.setGroupsUseCase()
+            if (insertResult) {
+                Log.d("SplashViewModel", "setDatabaseGroups() rows inserted successfully")
+                dataStoreUseCases.saveOnGroupsSetupUseCase(completed = true)
+            } else {
+                Log.e("SplashViewModel", "setDatabaseGroups() didn't insert rows")
+            }
+        }
+    }
+
+    @OptIn(DelicateCoroutinesApi::class)
+    fun setDatabaseTeams() {
+        GlobalScope.launch(Dispatchers.IO) {
+            val insertResult = databaseSetupUseCases.setTeamsUseCase()
+            if (insertResult) {
+                Log.d("SplashViewModel", "setDatabaseTeams() rows inserted successfully")
+                dataStoreUseCases.saveOnTeamsSetupUseCase(completed = true)
+            } else {
+                Log.e("SplashViewModel", "setDatabaseTeams() didn't insert rows")
             }
         }
     }
