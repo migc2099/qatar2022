@@ -40,7 +40,9 @@ object RepositoriesModule {
         return StandingsUseCases(
             setupStandingsUseCase = SetupStandingsUseCase(repository),
             getTeamsByGroupUseCase = GetTeamsByGroupUseCase(repository),
-            getTeamByGroupPositionUseCase = GetTeamByGroupPositionUseCase(repository)
+            getTeamByGroupPositionUseCase = GetTeamByGroupPositionUseCase(repository),
+            updateStandingsUseCase = UpdateStandingsUseCase(repository),
+            getTeamsStatsPerGroupUseCase = GetTeamsStatsPerGroupUseCase(repository)
         )
     }
 
