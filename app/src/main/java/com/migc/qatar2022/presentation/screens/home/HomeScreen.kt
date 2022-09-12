@@ -1,13 +1,15 @@
 package com.migc.qatar2022.presentation.screens.home
 
+import android.util.Log
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
@@ -29,6 +31,15 @@ fun HomeScreen(
 ) {
     val screenWidth = LocalConfiguration.current.screenWidthDp
 
+    val listState = rememberLazyListState()
+    val teamStatsMap = homeViewModel.statsPerGroup.value
+
+    LaunchedEffect(key1 = true) {
+        Log.d("HomeScreen", "LaunchEffect")
+        homeViewModel.onEvent(HomeUiEvent.OnStart)
+        listState.scrollToItem(homeViewModel.listPosition, homeViewModel.listOffSet)
+    }
+
     Surface(modifier = Modifier.fillMaxSize()) {
         Box(
             modifier = Modifier
@@ -47,22 +58,30 @@ fun HomeScreen(
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(GROUP_LAZY_ROW_HEIGHT),
+                        state = listState
                     ) {
-                        homeViewModel.groups.forEach {
+                        teamStatsMap.forEach { (group, teamStats) ->
+                            Log.d("HomeScreen", "GROUP $group")
+                            Log.d("HomeScreen", "TEAMSTATS $teamStats")
                             item {
                                 Row(modifier = Modifier.padding(horizontal = MEDIUM_PADDING)) {
                                     GroupCard(
                                         modifier = Modifier,
                                         size = (screenWidth * 0.8f).dp,
-                                        group = it.name,
-                                        teams = it.teams
-                                    ){
+                                        group = group,
+                                        teamsStats = teamStats
+                                    ) {
+                                        homeViewModel.onEvent(
+                                            HomeUiEvent.OnNavigateToGroupDetails(
+                                                listIndex = listState.firstVisibleItemIndex,
+                                                scrollOffSet = listState.firstVisibleItemScrollOffset
+                                            )
+                                        )
                                         navHostController.navigate(Screen.GroupDetails.route + "/$it")
                                     }
                                 }
                             }
                         }
-
                     }
                 }
                 item {

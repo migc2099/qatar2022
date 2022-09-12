@@ -38,29 +38,10 @@ class GroupDetailsViewModel @Inject constructor(
 
     private fun getFixture(groupId: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            Log.d("getFixture", "groupId: ${groupId.last()}")
-            _selectedGroup.value = useCases.getFixtureByGroupUseCase(group = groupId.last().toString())
+            Log.d("getFixture", "groupId: $groupId")
+            _selectedGroup.value = useCases.getFixtureByGroupUseCase(group = groupId)
             editableFixture = _selectedGroup.value.toMutableList()
         }
-
-//        useCases.getMatchesByGroupUseCase(groupId).onEach { result ->
-//            when (result) {
-//                is Resource.Success -> {
-//                    Log.d("GroupDetailsViewModel", "${result.data}")
-//                    result.data.let {
-//                        _state.value = GroupDetailsState(fixture = it!!)
-//                    }
-//                }
-//                is Resource.Error -> {
-//                    _state.value = GroupDetailsState(error = result.message ?: "An unexpected error occurred")
-//                    Log.e("GroupDetailsViewModel", result.message.toString())
-//                }
-//                is Resource.Loading -> {
-//                    Log.d("GroupDetailsViewModel", "Loading")
-//                    _state.value = GroupDetailsState(isLoading = true)
-//                }
-//            }
-//        }.launchIn(viewModelScope)
     }
 
     fun updateHomeTeamScore(matchNumber: Int, score: Int) {

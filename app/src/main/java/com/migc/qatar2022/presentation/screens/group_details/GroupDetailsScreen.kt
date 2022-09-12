@@ -66,7 +66,7 @@ fun FixtureDetails(
     ) {
         Text(
             modifier = Modifier.fillMaxWidth(),
-            text = viewModel.currentGroup.value,
+            text = "Group ${viewModel.currentGroup.value}",
             textAlign = TextAlign.Center,
             fontSize = Typography.h4.fontSize
         )
