@@ -8,8 +8,10 @@ import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.preferencesDataStore
 import com.migc.qatar2022.common.Constants.PREFERENCES_GROUPS_FIXTURE_KEY
+import com.migc.qatar2022.common.Constants.PREFERENCES_GROUPS_KEY
 import com.migc.qatar2022.common.Constants.PREFERENCES_NAME
 import com.migc.qatar2022.common.Constants.PREFERENCES_STANDINGS_KEY
+import com.migc.qatar2022.common.Constants.PREFERENCES_TEAMS_KEY
 import com.migc.qatar2022.domain.repository.DataStoreOpsRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -22,11 +24,13 @@ val Context.dataStore: DataStore<Preferences> by preferencesDataStore(
 
 class DataStoreOpsRepositoryImpl(context: Context) : DataStoreOpsRepository {
 
-    val dataStore = context.dataStore
+    private val dataStore = context.dataStore
 
     private object PreferencesKey {
         val onFixtureSetupCompletedKey = booleanPreferencesKey(name = PREFERENCES_GROUPS_FIXTURE_KEY)
         val onStandingsSetupCompletedKey = booleanPreferencesKey(name = PREFERENCES_STANDINGS_KEY)
+        val onGroupsSetupCompletedKey = booleanPreferencesKey(name = PREFERENCES_GROUPS_KEY)
+        val onTeamsSetupCompletedKey = booleanPreferencesKey(name = PREFERENCES_TEAMS_KEY)
     }
 
     override suspend fun saveOnFixtureSetupCompleted(completed: Boolean) {
@@ -68,6 +72,48 @@ class DataStoreOpsRepositoryImpl(context: Context) : DataStoreOpsRepository {
             .map { preferences ->
                 val onStandingsSetupCompleted = preferences[PreferencesKey.onStandingsSetupCompletedKey] ?: false
                 onStandingsSetupCompleted
+            }
+    }
+
+    override suspend fun saveOnGroupsSetupCompleted(completed: Boolean) {
+        dataStore.edit { preferences ->
+            preferences[PreferencesKey.onGroupsSetupCompletedKey] = completed
+        }
+    }
+
+    override fun readOnGroupsSetupCompleted(): Flow<Boolean> {
+        return dataStore.data
+            .catch { exception ->
+                if (exception is IOException) {
+                    emit(emptyPreferences())
+                } else {
+                    throw exception
+                }
+            }
+            .map { preferences ->
+                val onGroupSetupCompleted = preferences[PreferencesKey.onGroupsSetupCompletedKey] ?: false
+                onGroupSetupCompleted
+            }
+    }
+
+    override suspend fun saveOnTeamsSetupCompleted(completed: Boolean) {
+        dataStore.edit { preferences ->
+            preferences[PreferencesKey.onTeamsSetupCompletedKey] = completed
+        }
+    }
+
+    override fun readOnTeamsSetupCompleted(): Flow<Boolean> {
+        return dataStore.data
+            .catch { exception ->
+                if (exception is IOException) {
+                    emit(emptyPreferences())
+                } else {
+                    throw exception
+                }
+            }
+            .map { preferences ->
+                val onTeamsSetupCompleted = preferences[PreferencesKey.onTeamsSetupCompletedKey] ?: false
+                onTeamsSetupCompleted
             }
     }
 

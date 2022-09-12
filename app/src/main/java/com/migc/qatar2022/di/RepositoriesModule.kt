@@ -6,21 +6,17 @@ import com.migc.qatar2022.data.repository.*
 import com.migc.qatar2022.domain.repository.*
 import com.migc.qatar2022.domain.use_case.*
 import com.migc.qatar2022.domain.use_case.database_setup.SetGroupsFixtureUseCase
+import com.migc.qatar2022.domain.use_case.database_setup.SetGroupsUseCase
 import com.migc.qatar2022.domain.use_case.database_setup.SetStandingsUseCase
-import com.migc.qatar2022.domain.use_case.datastore.ReadOnFixtureSetupUseCase
-import com.migc.qatar2022.domain.use_case.datastore.ReadOnStandingsSetupUseCase
-import com.migc.qatar2022.domain.use_case.datastore.SaveOnFixtureSetupUseCase
-import com.migc.qatar2022.domain.use_case.datastore.SaveOnStandingsSetupUseCase
+import com.migc.qatar2022.domain.use_case.database_setup.SetTeamsUseCase
+import com.migc.qatar2022.domain.use_case.datastore.*
 import com.migc.qatar2022.domain.use_case.finals.EnterKnockOutResultUseCase
 import com.migc.qatar2022.domain.use_case.finals.GetMatchByRoundUseCase
 import com.migc.qatar2022.domain.use_case.finals.SetupFinalsUseCase
 import com.migc.qatar2022.domain.use_case.group_details.CalculatePointsUseCase
 import com.migc.qatar2022.domain.use_case.group_details.GetFixtureByGroupUseCase
 import com.migc.qatar2022.domain.use_case.group_details.UpdateFixtureUseCase
-import com.migc.qatar2022.domain.use_case.standings.GetTeamByGroupPositionUseCase
-import com.migc.qatar2022.domain.use_case.standings.GetTeamsByGroupUseCase
-import com.migc.qatar2022.domain.use_case.standings.SetupStandingsUseCase
-import com.migc.qatar2022.domain.use_case.standings.UpdateStandingsUseCase
+import com.migc.qatar2022.domain.use_case.standings.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -44,8 +40,7 @@ object RepositoriesModule {
         return StandingsUseCases(
             setupStandingsUseCase = SetupStandingsUseCase(repository),
             getTeamsByGroupUseCase = GetTeamsByGroupUseCase(repository),
-            getTeamByGroupPositionUseCase = GetTeamByGroupPositionUseCase(repository),
-            updateStandingsUseCase = UpdateStandingsUseCase(repository)
+            getTeamByGroupPositionUseCase = GetTeamByGroupPositionUseCase(repository)
         )
     }
 
@@ -96,7 +91,9 @@ object RepositoriesModule {
     fun provideDatabaseSetupUseCases(repository: DatabaseSetupRepository): DatabaseSetupUseCases {
         return DatabaseSetupUseCases(
             setGroupsFixtureUseCase = SetGroupsFixtureUseCase(repository),
-            setStandingsUseCase = SetStandingsUseCase(repository)
+            setStandingsUseCase = SetStandingsUseCase(repository),
+            setGroupsUseCase = SetGroupsUseCase(repository),
+            setTeamsUseCase = SetTeamsUseCase(repository)
         )
     }
 
@@ -117,7 +114,11 @@ object RepositoriesModule {
             saveOnFixtureSetupUseCase = SaveOnFixtureSetupUseCase(repository),
             readOnFixtureSetupUseCase = ReadOnFixtureSetupUseCase(repository),
             saveOnStandingsSetupUseCase = SaveOnStandingsSetupUseCase(repository),
-            readOnStandingsSetupUseCase = ReadOnStandingsSetupUseCase(repository)
+            readOnStandingsSetupUseCase = ReadOnStandingsSetupUseCase(repository),
+            saveOnGroupsSetupUseCase = SaveOnGroupsSetupUseCase(repository),
+            readOnGroupsSetupUseCase = ReadOnGroupsSetupUseCase(repository),
+            saveOnTeamsSetupUseCase = SaveOnTeamsSetupUseCase(repository),
+            readOnTeamsSetupUseCase = ReadOnTeamsSetupUseCase(repository)
         )
     }
 

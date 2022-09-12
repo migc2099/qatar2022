@@ -3,70 +3,72 @@ package com.migc.qatar2022.common
 import android.util.Log
 import com.migc.qatar2022.R
 import com.migc.qatar2022.data.local.entity.FixtureEntity
+import com.migc.qatar2022.data.local.entity.GroupEntity
 import com.migc.qatar2022.data.local.entity.StandingsEntity
+import com.migc.qatar2022.data.local.entity.TeamEntity
 import com.migc.qatar2022.domain.model.Group
 import com.migc.qatar2022.domain.model.Team
 
 object TeamsData {
 
-    val listA = listOf(
-        Team("QAT", "Qatar", R.drawable.flag_qatar),
-        Team("ECU", "Ecuador", R.drawable.flag_ecuador),
-        Team("SEN", "Senegal", R.drawable.flag_senegal),
-        Team("NET", "Netherlands", R.drawable.flag_netherlands)
-    )
-    val listB = listOf(
-        Team("ENG", "England", R.drawable.flag_england),
-        Team("IRA", "Iran", R.drawable.flag_iran),
-        Team("USA", "USA", R.drawable.flag_usa),
-        Team("WAL", "Wales", R.drawable.flag_wales)
-    )
-    val listC = listOf(
-        Team("ARG", "Argentina", R.drawable.flag_argentina),
-        Team("SAU", "Saudi Arabia", R.drawable.flag_saudi),
-        Team("MEX", "Mexico", R.drawable.flag_mexico),
-        Team("POL", "Poland", R.drawable.flag_poland)
-    )
-    val listD = listOf(
-        Team("FRA", "France", R.drawable.flag_france),
-        Team("DEN", "Denmark", R.drawable.flag_denmark),
-        Team("TUN", "Tunisia", R.drawable.flag_tunisia),
-        Team("AUS", "Australia", R.drawable.flag_australia)
-    )
-    val listE = listOf(
-        Team("SPA", "Spain", R.drawable.flag_spain),
-        Team("GER", "Germany", R.drawable.flag_germany),
-        Team("JAP", "Japan", R.drawable.flag_japan),
-        Team("COS", "Costa Rica", R.drawable.flag_costa_rica)
-    )
-    val listF = listOf(
-        Team("BEL", "Belgium", R.drawable.flag_belgium),
-        Team("CAN", "Canada", R.drawable.flag_canada),
-        Team("MOR", "Morocco", R.drawable.flag_morocco),
-        Team("CRO", "Croatia", R.drawable.flag_croatia)
-    )
-    val listG = listOf(
-        Team("BRA", "Brazil", R.drawable.flag_brazil),
-        Team("SER", "Serbia", R.drawable.flag_serbia),
-        Team("SWI", "Switzerland", R.drawable.flag_switzerland),
-        Team("CAM", "Cameroon", R.drawable.flag_cameroon)
-    )
-    val listH = listOf(
-        Team("POR", "Portugal", R.drawable.flag_portugal),
-        Team("GHA", "Ghana", R.drawable.flag_ghana),
-        Team("URU", "Uruguay", R.drawable.flag_uruguay),
-        Team("KOR", "Korea Republic", R.drawable.flag_south_korea)
-    )
-    val allGroups = listOf(
-        Group("Group A", listA),
-        Group("Group B", listB),
-        Group("Group C", listC),
-        Group("Group D", listD),
-        Group("Group E", listE),
-        Group("Group F", listF),
-        Group("Group G", listG),
-        Group("Group H", listH),
-    )
+//    val listA = listOf(
+//        Team("QAT", "Qatar", R.drawable.flag_qatar),
+//        Team("ECU", "Ecuador", R.drawable.flag_ecuador),
+//        Team("SEN", "Senegal", R.drawable.flag_senegal),
+//        Team("NET", "Netherlands", R.drawable.flag_netherlands)
+//    )
+//    val listB = listOf(
+//        Team("ENG", "England", R.drawable.flag_england),
+//        Team("IRA", "Iran", R.drawable.flag_iran),
+//        Team("USA", "USA", R.drawable.flag_usa),
+//        Team("WAL", "Wales", R.drawable.flag_wales)
+//    )
+//    val listC = listOf(
+//        Team("ARG", "Argentina", R.drawable.flag_argentina),
+//        Team("SAU", "Saudi Arabia", R.drawable.flag_saudi),
+//        Team("MEX", "Mexico", R.drawable.flag_mexico),
+//        Team("POL", "Poland", R.drawable.flag_poland)
+//    )
+//    val listD = listOf(
+//        Team("FRA", "France", R.drawable.flag_france),
+//        Team("DEN", "Denmark", R.drawable.flag_denmark),
+//        Team("TUN", "Tunisia", R.drawable.flag_tunisia),
+//        Team("AUS", "Australia", R.drawable.flag_australia)
+//    )
+//    val listE = listOf(
+//        Team("SPA", "Spain", R.drawable.flag_spain),
+//        Team("GER", "Germany", R.drawable.flag_germany),
+//        Team("JAP", "Japan", R.drawable.flag_japan),
+//        Team("COS", "Costa Rica", R.drawable.flag_costa_rica)
+//    )
+//    val listF = listOf(
+//        Team("BEL", "Belgium", R.drawable.flag_belgium),
+//        Team("CAN", "Canada", R.drawable.flag_canada),
+//        Team("MOR", "Morocco", R.drawable.flag_morocco),
+//        Team("CRO", "Croatia", R.drawable.flag_croatia)
+//    )
+//    val listG = listOf(
+//        Team("BRA", "Brazil", R.drawable.flag_brazil),
+//        Team("SER", "Serbia", R.drawable.flag_serbia),
+//        Team("SWI", "Switzerland", R.drawable.flag_switzerland),
+//        Team("CAM", "Cameroon", R.drawable.flag_cameroon)
+//    )
+//    val listH = listOf(
+//        Team("POR", "Portugal", R.drawable.flag_portugal),
+//        Team("GHA", "Ghana", R.drawable.flag_ghana),
+//        Team("URU", "Uruguay", R.drawable.flag_uruguay),
+//        Team("KOR", "Korea Republic", R.drawable.flag_south_korea)
+//    )
+//    val allGroups = listOf(
+//        Group("Group A", listA),
+//        Group("Group B", listB),
+//        Group("Group C", listC),
+//        Group("Group D", listD),
+//        Group("Group E", listE),
+//        Group("Group F", listF),
+//        Group("Group G", listG),
+//        Group("Group H", listH),
+//    )
     val flagsMap: Map<String, Int> = mapOf(
         "QAT" to R.drawable.flag_qatar,
         "ECU" to R.drawable.flag_ecuador,
@@ -100,6 +102,17 @@ object TeamsData {
         "GHA" to R.drawable.flag_ghana,
         "URU" to R.drawable.flag_uruguay,
         "KOR" to R.drawable.flag_south_korea
+    )
+
+    val groups = listOf(
+        GroupEntity("A", "Group A"),
+        GroupEntity("B", "Group B"),
+        GroupEntity("C", "Group C"),
+        GroupEntity("D", "Group D"),
+        GroupEntity("E", "Group E"),
+        GroupEntity("F", "Group F"),
+        GroupEntity("G", "Group G"),
+        GroupEntity("H", "Group H")
     )
 
     val groupsFixture = listOf(
@@ -188,31 +201,66 @@ object TeamsData {
         StandingsEntity("KOR", "H")
     )
 
-    fun getTeamsByGroup(groupId: String): List<Team> {
-        return when (groupId.lowercase()) {
-            "A", "a" -> listA
-            "B", "b" -> listB
-            "C", "c" -> listC
-            "D", "d" -> listD
-            "E", "e" -> listE
-            "F", "f" -> listF
-            "G", "g" -> listG
-            "H", "h" -> listH
-            else -> emptyList()
-        }
-    }
+    val teams = listOf(
+        TeamEntity("QAT", "Qatar", "A", R.drawable.flag_qatar),
+        TeamEntity("ECU", "Ecuador", "A", R.drawable.flag_ecuador),
+        TeamEntity("SEN", "Senegal", "A", R.drawable.flag_senegal),
+        TeamEntity("NET", "Netherlands", "A", R.drawable.flag_netherlands),
+        TeamEntity("ENG", "England", "B", R.drawable.flag_england),
+        TeamEntity("IRA", "Iran", "B", R.drawable.flag_iran),
+        TeamEntity("USA", "USA", "B", R.drawable.flag_usa),
+        TeamEntity("WAL", "Wales", "B", R.drawable.flag_wales),
+        TeamEntity("ARG", "Argentina", "C", R.drawable.flag_argentina),
+        TeamEntity("SAU", "Saudi Arabia", "C", R.drawable.flag_saudi),
+        TeamEntity("MEX", "Mexico", "C", R.drawable.flag_mexico),
+        TeamEntity("POL", "Poland", "C", R.drawable.flag_poland),
+        TeamEntity("FRA", "France", "D", R.drawable.flag_france),
+        TeamEntity("DEN", "Denmark", "D", R.drawable.flag_denmark),
+        TeamEntity("TUN", "Tunisia", "D", R.drawable.flag_tunisia),
+        TeamEntity("AUS", "Australia", "D", R.drawable.flag_australia),
+        TeamEntity("SPA", "Spain", "E", R.drawable.flag_spain),
+        TeamEntity("GER", "Germany", "E", R.drawable.flag_germany),
+        TeamEntity("JAP", "Japan", "E", R.drawable.flag_japan),
+        TeamEntity("COS", "Costa Rica", "E", R.drawable.flag_costa_rica),
+        TeamEntity("BEL", "Belgium", "F", R.drawable.flag_belgium),
+        TeamEntity("CAN", "Canada", "F", R.drawable.flag_canada),
+        TeamEntity("MOR", "Morocco", "F", R.drawable.flag_morocco),
+        TeamEntity("CRO", "Croatia", "F", R.drawable.flag_croatia),
+        TeamEntity("BRA", "Brazil", "G", R.drawable.flag_brazil),
+        TeamEntity("SER", "Serbia", "G", R.drawable.flag_serbia),
+        TeamEntity("SWI", "Switzerland", "G", R.drawable.flag_switzerland),
+        TeamEntity("CAM", "Cameroon", "G", R.drawable.flag_cameroon),
+        TeamEntity("POR", "Portugal", "H", R.drawable.flag_portugal),
+        TeamEntity("GHA", "Ghana", "H", R.drawable.flag_ghana),
+        TeamEntity("URU", "Uruguay", "H", R.drawable.flag_uruguay),
+        TeamEntity("KOR", "Korea Republic", "H", R.drawable.flag_south_korea)
+    )
 
-    fun getTeamInGroup(teamId: String, groupId: String): Team {
-        var team: Team
-        Log.d("TeamsData.getTeamInGroup", "teamId: $teamId groupId: $groupId")
-        val teams = getTeamsByGroup(groupId)
-        Log.d("TeamsData", teams.toString())
-        teams.let { existingList ->
-            team = existingList.first {
-                Log.d("log", it.toString())
-                it.teamId.lowercase() == teamId.substring(0..2).lowercase()
-            }
-        }
-        return team
-    }
+//    fun getTeamsByGroup(groupId: String): List<Team> {
+//        return when (groupId.lowercase()) {
+//            "A", "a" -> listA
+//            "B", "b" -> listB
+//            "C", "c" -> listC
+//            "D", "d" -> listD
+//            "E", "e" -> listE
+//            "F", "f" -> listF
+//            "G", "g" -> listG
+//            "H", "h" -> listH
+//            else -> emptyList()
+//        }
+//    }
+//
+//    fun getTeamInGroup(teamId: String, groupId: String): Team {
+//        var team: Team
+//        Log.d("TeamsData.getTeamInGroup", "teamId: $teamId groupId: $groupId")
+//        val teams = getTeamsByGroup(groupId)
+//        Log.d("TeamsData", teams.toString())
+//        teams.let { existingList ->
+//            team = existingList.first {
+//                Log.d("log", it.toString())
+//                it.teamId.lowercase() == teamId.substring(0..2).lowercase()
+//            }
+//        }
+//        return team
+//    }
 }

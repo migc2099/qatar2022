@@ -7,18 +7,20 @@ import com.migc.qatar2022.data.local.entity.*
 
 @Database(
     entities = [
+        GroupEntity::class,
         StandingsEntity::class,
         FinalsEntity::class,
-        CountryEntity::class,
+        TeamEntity::class,
         FixtureEntity::class
     ],
     version = 1
 )
 abstract class QatarDatabase : RoomDatabase() {
 
+    abstract val groupDao: GroupDao
     abstract val standingsDao: StandingsDao
     abstract val finalsDao: FinalsDao
-    abstract val countryDao: CountryDao
+    abstract val teamDao: TeamDao
     abstract val fixtureDao: FixtureDao
 
 }

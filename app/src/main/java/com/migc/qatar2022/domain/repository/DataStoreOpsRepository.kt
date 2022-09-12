@@ -7,4 +7,8 @@ interface DataStoreOpsRepository {
     fun readOnFixtureSetupCompleted(): Flow<Boolean>
     suspend fun saveOnStandingsSetupCompleted(completed: Boolean)
     fun readOnStandingsSetupCompleted(): Flow<Boolean>
+    suspend fun saveOnGroupsSetupCompleted(completed: Boolean)
+    fun readOnGroupsSetupCompleted(): Flow<Boolean>
+    suspend fun saveOnTeamsSetupCompleted(completed: Boolean)
+    fun readOnTeamsSetupCompleted(): Flow<Boolean>
 }
