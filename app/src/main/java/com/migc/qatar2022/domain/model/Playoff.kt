@@ -1,6 +1,6 @@
 package com.migc.qatar2022.domain.model
 
-data class KnockOutMatch(
+data class Playoff(
     val roundKey: Int,
     val firstTeam: String = "",
     val secondTeam: String = "",

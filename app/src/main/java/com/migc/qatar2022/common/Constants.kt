@@ -12,7 +12,7 @@ object Constants {
 
     const val QATAR_DATABASE = "qatar_database"
     const val STANDINGS_TABLE = "standings_table"
-    const val FINALS_TABLE = "finals_table"
+    const val PLAYOFFS_TABLE = "playoffs_table"
     const val GROUPS_TABLE = "groups_table"
     const val TEAMS_TABLE = "teams_table"
     const val FIXTURE_TABLE = "fixture_table"

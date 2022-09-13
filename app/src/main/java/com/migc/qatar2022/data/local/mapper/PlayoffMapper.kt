@@ -1,10 +1,10 @@
 package com.migc.qatar2022.data.local.mapper
 
-import com.migc.qatar2022.data.local.entity.FinalsEntity
-import com.migc.qatar2022.domain.model.KnockOutMatch
+import com.migc.qatar2022.data.local.entity.PlayoffEntity
+import com.migc.qatar2022.domain.model.Playoff
 
-fun FinalsEntity.toKnockOutMatch(): KnockOutMatch {
-    return KnockOutMatch(
+fun PlayoffEntity.toPlayoff(): Playoff {
+    return Playoff(
         roundKey = roundKey,
         firstTeam = firstTeamId!!,
         secondTeam = secondTeamId!!,
@@ -17,8 +17,8 @@ fun FinalsEntity.toKnockOutMatch(): KnockOutMatch {
     )
 }
 
-fun KnockOutMatch.toFinalsEntity(): FinalsEntity {
-    return FinalsEntity(
+fun Playoff.toPlayoffEntity(): PlayoffEntity {
+    return PlayoffEntity(
         roundKey = roundKey,
         firstTeamId = firstTeam,
         secondTeamId = secondTeam,
