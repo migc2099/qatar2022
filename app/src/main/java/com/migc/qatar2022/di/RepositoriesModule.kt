@@ -10,12 +10,13 @@ import com.migc.qatar2022.domain.use_case.database_setup.SetGroupsUseCase
 import com.migc.qatar2022.domain.use_case.database_setup.SetStandingsUseCase
 import com.migc.qatar2022.domain.use_case.database_setup.SetTeamsUseCase
 import com.migc.qatar2022.domain.use_case.datastore.*
-import com.migc.qatar2022.domain.use_case.finals.EnterKnockOutResultUseCase
-import com.migc.qatar2022.domain.use_case.finals.GetMatchByRoundUseCase
-import com.migc.qatar2022.domain.use_case.finals.SetupFinalsUseCase
+import com.migc.qatar2022.domain.use_case.playoffs.EnterKnockOutResultUseCase
+import com.migc.qatar2022.domain.use_case.playoffs.GetPlayoffByRoundUseCase
+import com.migc.qatar2022.domain.use_case.playoffs.SetupPlayoffsUseCase
 import com.migc.qatar2022.domain.use_case.group_details.CalculatePointsUseCase
 import com.migc.qatar2022.domain.use_case.group_details.GetFixtureByGroupUseCase
 import com.migc.qatar2022.domain.use_case.group_details.UpdateFixtureUseCase
+import com.migc.qatar2022.domain.use_case.playoffs.UpdatePlayoffUseCase
 import com.migc.qatar2022.domain.use_case.standings.*
 import dagger.Module
 import dagger.Provides
@@ -42,23 +43,25 @@ object RepositoriesModule {
             getTeamsByGroupUseCase = GetTeamsByGroupUseCase(repository),
             getTeamByGroupPositionUseCase = GetTeamByGroupPositionUseCase(repository),
             updateStandingsUseCase = UpdateStandingsUseCase(repository),
-            getTeamsStatsPerGroupUseCase = GetTeamsStatsPerGroupUseCase(repository)
+            getTeamsStatsPerGroupUseCase = GetTeamsStatsPerGroupUseCase(repository),
+            checkIfGroupGamesCompletedUseCase = CheckIfGroupGamesCompletedUseCase(repository)
         )
     }
 
     @Provides
     @Singleton
-    fun provideFinalsRepository(database: QatarDatabase): FinalsRepository {
-        return FinalsRepositoryImpl(qatarDatabase = database)
+    fun provideFinalsRepository(database: QatarDatabase): PlayoffsRepository {
+        return PlayoffsRepositoryImpl(qatarDatabase = database)
     }
 
     @Provides
     @Singleton
-    fun provideFinalsUseCases(repository: FinalsRepository): FinalsUseCases {
-        return FinalsUseCases(
+    fun providePlayoffUseCases(repository: PlayoffsRepository): PlayoffsUseCases {
+        return PlayoffsUseCases(
             enterKnockOutResultUseCase = EnterKnockOutResultUseCase(repository),
-            getMatchByRoundUseCase = GetMatchByRoundUseCase(repository),
-            setupFinalsUseCase = SetupFinalsUseCase(repository)
+            getPlayoffByRoundUseCase = GetPlayoffByRoundUseCase(repository),
+            setupPlayoffsUseCase = SetupPlayoffsUseCase(repository),
+            updatePlayoffUseCase = UpdatePlayoffUseCase(repository)
         )
     }
 

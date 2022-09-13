@@ -7,5 +7,6 @@ data class StandingsUseCases(
     val getTeamsByGroupUseCase: GetTeamsByGroupUseCase,
     val getTeamByGroupPositionUseCase: GetTeamByGroupPositionUseCase,
     val updateStandingsUseCase: UpdateStandingsUseCase,
-    val getTeamsStatsPerGroupUseCase: GetTeamsStatsPerGroupUseCase
+    val getTeamsStatsPerGroupUseCase: GetTeamsStatsPerGroupUseCase,
+    val checkIfGroupGamesCompletedUseCase: CheckIfGroupGamesCompletedUseCase
 )

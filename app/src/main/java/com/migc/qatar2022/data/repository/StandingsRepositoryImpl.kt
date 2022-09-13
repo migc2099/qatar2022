@@ -2,11 +2,9 @@ package com.migc.qatar2022.data.repository
 
 import android.util.Log
 import com.migc.qatar2022.data.QatarDatabase
-import com.migc.qatar2022.data.local.mapper.toGroup
-import com.migc.qatar2022.data.local.mapper.toStandingsEntity
-import com.migc.qatar2022.data.local.mapper.toTeam
-import com.migc.qatar2022.data.local.mapper.toTeamsStat
+import com.migc.qatar2022.data.local.mapper.*
 import com.migc.qatar2022.domain.model.Group
+import com.migc.qatar2022.domain.model.PlayOffTeam
 import com.migc.qatar2022.domain.model.Team
 import com.migc.qatar2022.domain.model.TeamStat
 import com.migc.qatar2022.domain.repository.StandingsRepository
@@ -98,5 +96,24 @@ class StandingsRepositoryImpl @Inject constructor(
         Log.d("StandingsRepositoryImpl", "statsMap $statsMap")
         return statsMap
     }
+
+    override fun checkIfGroupGamesCompleted(groupKey: String): Boolean {
+        var completed = true
+        val results = qatarDatabase.standingsDao.areGroupGamesCompleted(groupKey)
+        for (result in results) {
+            if (result.result == 0) {
+                completed = false
+                break
+            }
+        }
+        return completed
+    }
+
+//    override fun getQualifiedTeamsByGroup(groupKey: String): List<PlayOffTeam> {
+//        return qatarDatabase.standingsDao.getQualifiedTeams(groupKey = groupKey)
+//            .map {
+//                it.toPlayOffTeam()
+//            }
+//    }
 
 }

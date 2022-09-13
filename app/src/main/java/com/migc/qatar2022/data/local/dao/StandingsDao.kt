@@ -48,5 +48,38 @@ interface StandingsDao {
         var points: Int
     )
 
+    @Query("SELECT teamId, gamesPlayed, " +
+            "CASE " +
+            "WHEN gamesPlayed = 3 THEN 1 ELSE 0 " +
+            "END AS result " +
+            "FROM standings_table WHERE groupKey=:groupKey"
+    )
+    fun areGroupGamesCompleted(groupKey: String): List<TeamGroupGamesPlayed>
+
+    data class TeamGroupGamesPlayed(
+        var teamId: String,
+        var gamesPlayed: Int,
+        var result: Int
+    )
+
+//    @Query("SELECT " +
+//            "standings_table.teamId AS teamId, " +
+//            "teams_table.teamId AS teamName, " +
+//            "teams_table.flagLocation AS flagLocation, " +
+//            "standings_table.groupKey AS groupKey, " +
+//            "standings_table.groupPosition AS position " +
+//            "FROM standings_table " +
+//            "LEFT JOIN teams_table ON standings_table.teamId = teams_table.teamId " +
+//            "WHERE standings_table.groupKey=:groupKey")
+//    fun getQualifiedTeams(groupKey: String): List<QualifiedTeam>
+//
+//    data class QualifiedTeam(
+//        var teamId: String,
+//        var teamName: String,
+//        var flagLocation: Int,
+//        var groupKey: String,
+//        var position: Int
+//    )
+
 }
 
