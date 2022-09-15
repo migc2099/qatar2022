@@ -20,6 +20,10 @@ object Constants {
     const val TOTAL_GROUP_MATCHES = 48
     const val TOTAL_GROUPS = 8
     const val TOTAL_TEAMS = 32
+    const val ROUND_OF_16_STAGE_NUMBER = 4
+    const val ROUND_OF_8_STAGE_NUMBER = 5
+    const val SEMIFINALS_STAGE_NUMBER = 6
+    const val FINALS_STAGE_NUMBER = 7
 
     const val WORLD_CUP_START_DATE_MILLIS = 1668988800000
 

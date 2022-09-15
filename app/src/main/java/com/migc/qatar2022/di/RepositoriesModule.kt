@@ -11,7 +11,7 @@ import com.migc.qatar2022.domain.use_case.database_setup.SetStandingsUseCase
 import com.migc.qatar2022.domain.use_case.database_setup.SetTeamsUseCase
 import com.migc.qatar2022.domain.use_case.datastore.*
 import com.migc.qatar2022.domain.use_case.playoffs.EnterKnockOutResultUseCase
-import com.migc.qatar2022.domain.use_case.playoffs.GetPlayoffByRoundUseCase
+import com.migc.qatar2022.domain.use_case.playoffs.GetPlayoffsByRoundUseCase
 import com.migc.qatar2022.domain.use_case.playoffs.SetupPlayoffsUseCase
 import com.migc.qatar2022.domain.use_case.group_details.CalculatePointsUseCase
 import com.migc.qatar2022.domain.use_case.group_details.GetFixtureByGroupUseCase
@@ -59,7 +59,7 @@ object RepositoriesModule {
     fun providePlayoffUseCases(repository: PlayoffsRepository): PlayoffsUseCases {
         return PlayoffsUseCases(
             enterKnockOutResultUseCase = EnterKnockOutResultUseCase(repository),
-            getPlayoffByRoundUseCase = GetPlayoffByRoundUseCase(repository),
+            getPlayoffsByRoundUseCase = GetPlayoffsByRoundUseCase(repository),
             setupPlayoffsUseCase = SetupPlayoffsUseCase(repository),
             updatePlayoffUseCase = UpdatePlayoffUseCase(repository)
         )
