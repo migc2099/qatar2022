@@ -10,4 +10,7 @@
     <string name="home_team_flag">Bandero Equipo Local</string>
     <string name="away_team_flag">Bandera Equipo Visitante</string>
     <string name="save_changes_text">Guardar Cambios</string>
+    <string name="enter_match_result_text">Ingrese resultados del partido</string>
+    <string name="cancel_text">Cancelar</string>
+    <string name="okay_text">Aceptar</string>
 </resources>

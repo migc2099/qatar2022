@@ -10,4 +10,7 @@
     <string name="home_team_flag">Home Team Flag</string>
     <string name="away_team_flag">Away Team Flag</string>
     <string name="save_changes_text">Save changes</string>
+    <string name="enter_match_result_text">Enter Match Result</string>
+    <string name="cancel_text">Cancel</string>
+    <string name="okay_text">Accept</string>
 </resources>
