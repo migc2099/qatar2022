@@ -35,8 +35,8 @@ class PlayoffsRepositoryImpl constructor(
         return qatarDatabase.playoffDao.getPlayoffByRoundKey(roundKey).toPlayoff()
     }
 
-    override suspend fun getPlayoffsByRound(startRound: Int, endRound: Int): List<Playoff> {
-        val playoffEntities = qatarDatabase.playoffDao.getPlayoffsByRound(startRound,endRound)
+    override suspend fun getAllPlayoffs(): List<Playoff> {
+        val playoffEntities = qatarDatabase.playoffDao.getAllPlayoffs()
         return playoffEntities.map {
             it.toPlayoff()
         }

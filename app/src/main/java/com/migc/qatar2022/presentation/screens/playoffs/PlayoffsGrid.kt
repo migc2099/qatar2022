@@ -127,13 +127,31 @@ fun PlayoffsGrid(
         item {
             Column(modifier = Modifier.fillMaxWidth()) {
                 Spacer(modifier = Modifier.height(FLAG_ROW_IMAGE_SIZE + 2.dp + (MEDIUM_VERTICAL_GAP / 2)))
-                TeamPlaceholder(text = "C7")
-//                Spacer(modifier = Modifier.height(MEDIUM_VERTICAL_GAP))
-                TeamPlaceholder(text = "C8")
+                matches[57].let { playoff ->
+                    if (playoff!!.firstTeam.isNotEmpty()) {
+                        TeamFlag(teamId = playoff.firstTeam, onClick = { onPlayoffClick(playoff.roundKey) })
+                    } else {
+                        TeamPlaceholder(text = "49")
+                    }
+                    if (playoff.secondTeam.isNotEmpty()) {
+                        TeamFlag(teamId = playoff.secondTeam, onClick = { onPlayoffClick(playoff.roundKey) })
+                    } else {
+                        TeamPlaceholder(text = "50")
+                    }
+                }
                 Spacer(modifier = Modifier.height(MEDIUM_VERTICAL_GAP * 2 + 6.dp + (FLAG_ROW_IMAGE_SIZE * 2)))
-                TeamPlaceholder(text = "C9")
-//                Spacer(modifier = Modifier.height(MEDIUM_VERTICAL_GAP))
-                TeamPlaceholder(text = "10")
+                matches[58].let { playoff ->
+                    if (playoff!!.firstTeam.isNotEmpty()) {
+                        TeamFlag(teamId = playoff.firstTeam, onClick = { onPlayoffClick(playoff.roundKey) })
+                    } else {
+                        TeamPlaceholder(text = "53")
+                    }
+                    if (playoff.secondTeam.isNotEmpty()) {
+                        TeamFlag(teamId = playoff.secondTeam, onClick = { onPlayoffClick(playoff.roundKey) })
+                    } else {
+                        TeamPlaceholder(text = "54")
+                    }
+                }
             }
         }
         item {
@@ -143,9 +161,18 @@ fun PlayoffsGrid(
         item {
             Column(modifier = Modifier.fillMaxWidth()) {
                 Spacer(modifier = Modifier.height((FLAG_ROW_IMAGE_SIZE * 3) + (MEDIUM_VERTICAL_GAP * 1.5f) + 4.dp))
-                TeamPlaceholder(text = "11")
-//                Spacer(modifier = Modifier.height(MEDIUM_VERTICAL_GAP))
-                TeamPlaceholder(text = "12")
+                matches[61].let { playoff ->
+                    if (playoff!!.firstTeam.isNotEmpty()) {
+                        TeamFlag(teamId = playoff.firstTeam, onClick = { onPlayoffClick(playoff.roundKey) })
+                    } else {
+                        TeamPlaceholder(text = "57")
+                    }
+                    if (playoff.secondTeam.isNotEmpty()) {
+                        TeamFlag(teamId = playoff.secondTeam, onClick = { onPlayoffClick(playoff.roundKey) })
+                    } else {
+                        TeamPlaceholder(text = "58")
+                    }
+                }
             }
         }
         item {
@@ -171,9 +198,18 @@ fun PlayoffsGrid(
         item {
             Column(modifier = Modifier.fillMaxWidth()) {
                 Spacer(modifier = Modifier.height((FLAG_ROW_IMAGE_SIZE * 3) + MEDIUM_VERTICAL_GAP + 4.dp))
-                TeamPlaceholder(text = "11")
-                Spacer(modifier = Modifier.height(MEDIUM_VERTICAL_GAP))
-                TeamPlaceholder(text = "12")
+                matches[62].let { playoff ->
+                    if (playoff!!.firstTeam.isNotEmpty()) {
+                        TeamFlag(teamId = playoff.firstTeam, onClick = { onPlayoffClick(playoff.roundKey) })
+                    } else {
+                        TeamPlaceholder(text = "59")
+                    }
+                    if (playoff.secondTeam.isNotEmpty()) {
+                        TeamFlag(teamId = playoff.secondTeam, onClick = { onPlayoffClick(playoff.roundKey) })
+                    } else {
+                        TeamPlaceholder(text = "60")
+                    }
+                }
             }
         }
         item {
@@ -182,14 +218,32 @@ fun PlayoffsGrid(
         //***************************** Round of 8 *****************************
         item {
             Column(modifier = Modifier.fillMaxWidth()) {
-                Spacer(modifier = Modifier.height(FLAG_ROW_IMAGE_SIZE + 2.dp))
-                TeamPlaceholder(text = "C7")
-                Spacer(modifier = Modifier.height(MEDIUM_VERTICAL_GAP))
-                TeamPlaceholder(text = "C8")
-                Spacer(modifier = Modifier.height(MEDIUM_VERTICAL_GAP + 6.dp + (FLAG_ROW_IMAGE_SIZE * 2)))
-                TeamPlaceholder(text = "C9")
-                Spacer(modifier = Modifier.height(MEDIUM_VERTICAL_GAP))
-                TeamPlaceholder(text = "10")
+                Spacer(modifier = Modifier.height(FLAG_ROW_IMAGE_SIZE + 2.dp + (MEDIUM_VERTICAL_GAP / 2)))
+                matches[59].let { playoff ->
+                    if (playoff!!.firstTeam.isNotEmpty()) {
+                        TeamFlag(teamId = playoff.firstTeam, onClick = { onPlayoffClick(playoff.roundKey) })
+                    } else {
+                        TeamPlaceholder(text = "51")
+                    }
+                    if (playoff.secondTeam.isNotEmpty()) {
+                        TeamFlag(teamId = playoff.secondTeam, onClick = { onPlayoffClick(playoff.roundKey) })
+                    } else {
+                        TeamPlaceholder(text = "52")
+                    }
+                }
+                Spacer(modifier = Modifier.height(MEDIUM_VERTICAL_GAP * 2 + 6.dp + (FLAG_ROW_IMAGE_SIZE * 2)))
+                matches[60].let { playoff ->
+                    if (playoff!!.firstTeam.isNotEmpty()) {
+                        TeamFlag(teamId = playoff.firstTeam, onClick = { onPlayoffClick(playoff.roundKey) })
+                    } else {
+                        TeamPlaceholder(text = "55")
+                    }
+                    if (playoff.secondTeam.isNotEmpty()) {
+                        TeamFlag(teamId = playoff.secondTeam, onClick = { onPlayoffClick(playoff.roundKey) })
+                    } else {
+                        TeamPlaceholder(text = "56")
+                    }
+                }
             }
         }
         item {

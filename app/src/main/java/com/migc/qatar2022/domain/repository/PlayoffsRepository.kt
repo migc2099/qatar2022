@@ -6,7 +6,7 @@ interface PlayoffsRepository {
 
     fun setPlayoffs(): List<Playoff>
     suspend fun getPlayoffByRoundKey(roundKey: Int): Playoff
-    suspend fun getPlayoffsByRound(startRound: Int, endRound: Int): List<Playoff>
+    suspend fun getAllPlayoffs(): List<Playoff>
     suspend fun resetPlayoffs()
     suspend fun updatePlayoffResults(playoff: Playoff): Int
     suspend fun updateFirstTeam(roundKey: Int, teamId: String): Int

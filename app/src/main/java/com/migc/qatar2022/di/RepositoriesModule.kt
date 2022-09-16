@@ -58,7 +58,7 @@ object RepositoriesModule {
         return PlayoffsUseCases(
             enterKnockOutResultUseCase = EnterKnockOutResultUseCase(repository),
             getPlayoffByRoundKeyUseCase = GetPlayoffByRoundKeyUseCase(repository),
-            getPlayoffsByRoundUseCase = GetPlayoffsByRoundUseCase(repository),
+            getAllPlayoffsUseCase = GetAllPlayoffsUseCase(repository),
             setupPlayoffsUseCase = SetupPlayoffsUseCase(repository),
             updatePlayoffTeamUseCase = UpdatePlayoffTeamUseCase(repository),
             updatePlayoffResultsUseCase = UpdatePlayoffResultsUseCase(repository)

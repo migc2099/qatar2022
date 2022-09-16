@@ -12,7 +12,6 @@ import com.migc.qatar2022.common.Constants.GROUP_E_KEY
 import com.migc.qatar2022.common.Constants.GROUP_F_KEY
 import com.migc.qatar2022.common.Constants.GROUP_G_KEY
 import com.migc.qatar2022.common.Constants.GROUP_H_KEY
-import com.migc.qatar2022.common.Constants.ROUND_OF_16_STAGE_NUMBER
 import com.migc.qatar2022.domain.model.Group
 import com.migc.qatar2022.domain.model.Playoff
 import com.migc.qatar2022.domain.model.Team
@@ -93,7 +92,7 @@ class HomeViewModel @Inject constructor(
                     if (groupsCompleted == 0) {
                         resetPlayoffs()
                     } else {
-                        getRoundOf16()
+                        refreshPlayoffsGrid()
                     }
 
                 }
@@ -109,8 +108,9 @@ class HomeViewModel @Inject constructor(
             }
             is HomeUiEvent.OnPlayoffDialogCompleted -> {
                 viewModelScope.launch(Dispatchers.IO) {
-                    Log.d("LOG","updatePlayoffResultsUseCase: ${event.playoff}")
+                    Log.d("LOG", "updatePlayoffResultsUseCase: ${event.playoff}")
                     playoffsUseCases.updatePlayoffResultsUseCase(event.playoff)
+                    refreshPlayoffsGrid()
                 }
             }
         }
@@ -122,9 +122,10 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private fun getRoundOf16() {
+    private fun refreshPlayoffsGrid() {
         viewModelScope.launch(Dispatchers.IO) {
-            _roundOf16Playoffs.value = playoffsUseCases.getPlayoffsByRoundUseCase(ROUND_OF_16_STAGE_NUMBER)
+            _selectedPlayoff.value = Playoff(0)
+            _roundOf16Playoffs.value = playoffsUseCases.getAllPlayoffsUseCase()
         }
     }
 

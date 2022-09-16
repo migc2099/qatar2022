@@ -73,6 +73,25 @@ class UpdatePlayoffResultsUseCase(
         Log.d("UpdatePlayoffResultsUseCase", "after winner $winnerTeam")
         Log.d("UpdatePlayoffResultsUseCase", "after loser $loserTeam")
         repository.updatePlayoffResults(playoff = completedPlayoff)
+        saveNextRound(roundKey, winnerTeam)
+    }
+
+    private suspend fun saveNextRound(currentRound: Int, teamId: String) {
+        var nextRoundKey = 0
+        when (currentRound) {
+            49, 50 -> nextRoundKey = 57
+            51, 52 -> nextRoundKey = 59
+            53, 54 -> nextRoundKey = 58
+            55, 56 -> nextRoundKey = 60
+            57, 58 -> nextRoundKey = 61
+            59, 60 -> nextRoundKey = 62
+        }
+
+        if (currentRound.mod(2) != 0) {
+            repository.updateFirstTeam(roundKey = nextRoundKey, teamId = teamId)
+        } else {
+            repository.updateSecondTeam(roundKey = nextRoundKey, teamId = teamId)
+        }
     }
 
 }
