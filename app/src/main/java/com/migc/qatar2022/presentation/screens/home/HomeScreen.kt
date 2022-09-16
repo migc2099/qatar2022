@@ -15,9 +15,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.migc.qatar2022.navigation.Screen
 import com.migc.qatar2022.presentation.components.CountDownDisplay
+import com.migc.qatar2022.presentation.components.DisplayWinnersButton
 import com.migc.qatar2022.presentation.components.GroupCard
 import com.migc.qatar2022.presentation.screens.playoffs.PlayoffDialog
 import com.migc.qatar2022.presentation.screens.playoffs.PlayoffsGrid
+import com.migc.qatar2022.presentation.screens.playoffs.PodiumDialog
 import com.migc.qatar2022.ui.theme.*
 
 @Composable
@@ -29,6 +31,7 @@ fun HomeScreen(
 
     val teamStatsMap = homeViewModel.statsPerGroup.value
     val playoffs = homeViewModel.playoffs.collectAsState()
+    val playoffCompletedState = homeViewModel.playoffCompletedState.collectAsState()
 
     val listState = rememberLazyListState()
     LaunchedEffect(key1 = true) {
@@ -38,6 +41,7 @@ fun HomeScreen(
     }
 
     val showPlayoffDialog = remember { mutableStateOf(false) }
+    val showPodiumDialog = remember { mutableStateOf(false) }
     val selectedPlayoff = homeViewModel.selectedPlayoff.collectAsState()
 
     LazyColumn(
@@ -115,9 +119,17 @@ fun HomeScreen(
         item {
             Spacer(modifier = Modifier.height(MEDIUM_VERTICAL_GAP))
         }
+        item {
+            DisplayWinnersButton(
+                enabled = playoffCompletedState.value,
+                onClick = {
+                    showPodiumDialog.value = true
+                }
+            )
+        }
     }
 
-    if ( showPlayoffDialog.value &&
+    if (showPlayoffDialog.value &&
         selectedPlayoff.value.firstTeam.isNotEmpty() && selectedPlayoff.value.secondTeam.isNotEmpty()
     ) {
         PlayoffDialog(
@@ -132,6 +144,14 @@ fun HomeScreen(
                 homeViewModel.onEvent(HomeUiEvent.OnPlayoffDialogCompleted(it))
                 showPlayoffDialog.value = false
             }
+        )
+    }
+
+    if (playoffCompletedState.value && showPodiumDialog.value) {
+        PodiumDialog(
+            onDismiss = { showPodiumDialog.value = false },
+            onReset = { /*TODO*/ },
+            onClose = { showPodiumDialog.value = false }
         )
     }
 

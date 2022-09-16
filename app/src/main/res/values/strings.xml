@@ -15,4 +15,5 @@
     <string name="okay_text">Accept</string>
     <string name="start_over_text">Start Over</string>
     <string name="close_text">Close</string>
+    <string name="show_winners_text">Show Winners</string>
 </resources>

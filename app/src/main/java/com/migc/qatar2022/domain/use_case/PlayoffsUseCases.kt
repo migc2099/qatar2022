@@ -9,5 +9,6 @@ data class PlayoffsUseCases(
     val setupPlayoffsUseCase: SetupPlayoffsUseCase,
     val updatePlayoffTeamUseCase: UpdatePlayoffTeamUseCase,
     val determinePlayoffWinnerUseCase: DeterminePlayoffWinnerUseCase,
-    val updatePlayoffResultsUseCase: UpdatePlayoffResultsUseCase
+    val updatePlayoffResultsUseCase: UpdatePlayoffResultsUseCase,
+    val checkIfPlayoffCompletedUseCase: CheckIfPlayoffCompletedUseCase
 )

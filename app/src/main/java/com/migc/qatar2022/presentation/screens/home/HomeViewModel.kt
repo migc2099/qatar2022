@@ -53,6 +53,9 @@ class HomeViewModel @Inject constructor(
     private var _selectedPlayoff: MutableStateFlow<Playoff> = MutableStateFlow(Playoff(0))
     val selectedPlayoff = _selectedPlayoff.asStateFlow()
 
+    private var _playoffCompletedState: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val playoffCompletedState = _playoffCompletedState.asStateFlow()
+
     fun onEvent(event: HomeUiEvent) {
         when (event) {
             is HomeUiEvent.OnStart -> {
@@ -104,6 +107,7 @@ class HomeViewModel @Inject constructor(
             is HomeUiEvent.OnPlayoffDialogClicked -> {
                 viewModelScope.launch(Dispatchers.IO) {
                     _selectedPlayoff.value = playoffsUseCases.getPlayoffByRoundKeyUseCase(event.roundKey)
+                    _playoffCompletedState.value = false
                 }
             }
             is HomeUiEvent.OnPlayoffDialogCompleted -> {
@@ -132,6 +136,13 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch(Dispatchers.IO) {
             _selectedPlayoff.value = Playoff(0)
             _playoffs.value = playoffsUseCases.getAllPlayoffsUseCase()
+            refreshPlayoffCompletionStatus()
+        }
+    }
+
+    private fun refreshPlayoffCompletionStatus() {
+        viewModelScope.launch(Dispatchers.IO) {
+            _playoffCompletedState.value = playoffsUseCases.checkIfPlayoffCompletedUseCase()
         }
     }
 
