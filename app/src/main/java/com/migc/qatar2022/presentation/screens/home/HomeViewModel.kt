@@ -47,8 +47,8 @@ class HomeViewModel @Inject constructor(
     private var _statsPerGroup: MutableStateFlow<Map<Group, List<Team>>> = MutableStateFlow(emptyMap())
     val statsPerGroup = _statsPerGroup.asStateFlow()
 
-    private var _roundOf16Playoffs: MutableStateFlow<List<Playoff>> = MutableStateFlow(emptyList())
-    val roundOf16Playoffs = _roundOf16Playoffs.asStateFlow()
+    private var _playoffs: MutableStateFlow<List<Playoff>> = MutableStateFlow(emptyList())
+    val playoffs = _playoffs.asStateFlow()
 
     private var _selectedPlayoff: MutableStateFlow<Playoff> = MutableStateFlow(Playoff(0))
     val selectedPlayoff = _selectedPlayoff.asStateFlow()
@@ -131,7 +131,7 @@ class HomeViewModel @Inject constructor(
     private fun refreshPlayoffsGrid() {
         viewModelScope.launch(Dispatchers.IO) {
             _selectedPlayoff.value = Playoff(0)
-            _roundOf16Playoffs.value = playoffsUseCases.getAllPlayoffsUseCase()
+            _playoffs.value = playoffsUseCases.getAllPlayoffsUseCase()
         }
     }
 

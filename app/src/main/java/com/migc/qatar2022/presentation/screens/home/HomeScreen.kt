@@ -28,7 +28,7 @@ fun HomeScreen(
     val screenWidth = LocalConfiguration.current.screenWidthDp
 
     val teamStatsMap = homeViewModel.statsPerGroup.value
-    val playoffs = homeViewModel.roundOf16Playoffs.collectAsState()
+    val playoffs = homeViewModel.playoffs.collectAsState()
 
     val listState = rememberLazyListState()
     LaunchedEffect(key1 = true) {
