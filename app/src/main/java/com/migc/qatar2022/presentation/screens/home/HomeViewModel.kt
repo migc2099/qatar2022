@@ -1,20 +1,46 @@
 package com.migc.qatar2022.presentation.screens.home
 
+import android.util.Log
+import androidx.compose.runtime.mutableStateMapOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.migc.qatar2022.common.Constants.GROUP_A_KEY
+import com.migc.qatar2022.common.Constants.GROUP_B_KEY
+import com.migc.qatar2022.common.Constants.GROUP_C_KEY
+import com.migc.qatar2022.common.Constants.GROUP_D_KEY
+import com.migc.qatar2022.common.Constants.GROUP_E_KEY
+import com.migc.qatar2022.common.Constants.GROUP_F_KEY
+import com.migc.qatar2022.common.Constants.GROUP_G_KEY
+import com.migc.qatar2022.common.Constants.GROUP_H_KEY
+import com.migc.qatar2022.common.Constants.ROUND_OF_16_STAGE_NUMBER
 import com.migc.qatar2022.domain.model.Group
+import com.migc.qatar2022.domain.model.Playoff
 import com.migc.qatar2022.domain.model.Team
+import com.migc.qatar2022.domain.use_case.PlayoffsUseCases
 import com.migc.qatar2022.domain.use_case.StandingsUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val usesCases: StandingsUseCases
+    private val standingsUsesCases: StandingsUseCases,
+    private val playoffsUseCases: PlayoffsUseCases
 ) : ViewModel() {
+
+    private val completedGroupsMap = mutableStateMapOf(
+        GROUP_A_KEY to false,
+        GROUP_B_KEY to false,
+        GROUP_C_KEY to false,
+        GROUP_D_KEY to false,
+        GROUP_E_KEY to false,
+        GROUP_F_KEY to false,
+        GROUP_G_KEY to false,
+        GROUP_H_KEY to false
+    )
 
     var listPosition = 0
     var listOffSet = 0
@@ -22,14 +48,53 @@ class HomeViewModel @Inject constructor(
     private var _statsPerGroup: MutableStateFlow<Map<Group, List<Team>>> = MutableStateFlow(emptyMap())
     val statsPerGroup = _statsPerGroup.asStateFlow()
 
+    private var _roundOf16Playoffs: MutableStateFlow<List<Playoff>> = MutableStateFlow(emptyList())
+    val roundOf16Playoffs = _roundOf16Playoffs.asStateFlow()
+
+    private var _selectedPlayoff: MutableStateFlow<Playoff> = MutableStateFlow(Playoff(0))
+    val selectedPlayoff = _selectedPlayoff.asStateFlow()
+
     fun onEvent(event: HomeUiEvent) {
         when (event) {
             is HomeUiEvent.OnStart -> {
                 viewModelScope.launch(Dispatchers.IO) {
-                    usesCases.getTeamsStatsPerGroupUseCase()
+                    standingsUsesCases.getTeamsStatsPerGroupUseCase()
                         .collect { statsMap ->
                             _statsPerGroup.value = statsMap
                         }
+                }
+                viewModelScope.launch(Dispatchers.IO) {
+                    var groupsCompleted = 0
+                    completedGroupsMap[GROUP_A_KEY] = standingsUsesCases.checkIfGroupGamesCompletedUseCase(GROUP_A_KEY)
+                    completedGroupsMap[GROUP_B_KEY] = standingsUsesCases.checkIfGroupGamesCompletedUseCase(GROUP_B_KEY)
+                    completedGroupsMap[GROUP_C_KEY] = standingsUsesCases.checkIfGroupGamesCompletedUseCase(GROUP_C_KEY)
+                    completedGroupsMap[GROUP_D_KEY] = standingsUsesCases.checkIfGroupGamesCompletedUseCase(GROUP_D_KEY)
+                    completedGroupsMap[GROUP_E_KEY] = standingsUsesCases.checkIfGroupGamesCompletedUseCase(GROUP_E_KEY)
+                    completedGroupsMap[GROUP_F_KEY] = standingsUsesCases.checkIfGroupGamesCompletedUseCase(GROUP_F_KEY)
+                    completedGroupsMap[GROUP_G_KEY] = standingsUsesCases.checkIfGroupGamesCompletedUseCase(GROUP_G_KEY)
+                    completedGroupsMap[GROUP_H_KEY] = standingsUsesCases.checkIfGroupGamesCompletedUseCase(GROUP_H_KEY)
+                    delay(200)
+                    completedGroupsMap.forEach { mapItem ->
+                        Log.d("completedGroupsMap.forEach", mapItem.value.toString())
+                        if (mapItem.value) {
+                            val group = _statsPerGroup.value[Group(mapItem.key, "Group ${mapItem.key}")]
+                            if (group != null) {
+                                val firstTeam = group[0]
+                                val secondTeam = group[1]
+                                Log.d("HomeViewModel", "firstTeam: $firstTeam")
+                                Log.d("HomeViewModel", "secondTeam: $secondTeam")
+                                playoffsUseCases.updatePlayoffTeamUseCase(firstTeam.teamId, mapItem.key, 1)
+                                playoffsUseCases.updatePlayoffTeamUseCase(secondTeam.teamId, mapItem.key, 2)
+                                groupsCompleted++
+                            }
+                        }
+                    }
+                    Log.d("onEvent", "before groupsCompleted == 0")
+                    if (groupsCompleted == 0) {
+                        resetPlayoffs()
+                    } else {
+                        getRoundOf16()
+                    }
 
                 }
             }
@@ -37,6 +102,30 @@ class HomeViewModel @Inject constructor(
                 listPosition = event.listIndex
                 listOffSet = event.scrollOffSet
             }
+            is HomeUiEvent.OnPlayoffDialogClicked -> {
+                viewModelScope.launch(Dispatchers.IO) {
+                    _selectedPlayoff.value = playoffsUseCases.getPlayoffByRoundKeyUseCase(event.roundKey)
+                }
+            }
+            is HomeUiEvent.OnPlayoffDialogCompleted -> {
+                viewModelScope.launch(Dispatchers.IO) {
+                    Log.d("LOG","updatePlayoffResultsUseCase: ${event.playoff}")
+                    playoffsUseCases.updatePlayoffResultsUseCase(event.playoff)
+                }
+            }
         }
     }
+
+    private fun resetPlayoffs() {
+        viewModelScope.launch(Dispatchers.IO) {
+            playoffsUseCases.setupPlayoffsUseCase()
+        }
+    }
+
+    private fun getRoundOf16() {
+        viewModelScope.launch(Dispatchers.IO) {
+            _roundOf16Playoffs.value = playoffsUseCases.getPlayoffsByRoundUseCase(ROUND_OF_16_STAGE_NUMBER)
+        }
+    }
+
 }
