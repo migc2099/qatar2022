@@ -1,13 +1,12 @@
 package com.migc.qatar2022.domain.use_case
 
-import com.migc.qatar2022.domain.use_case.playoffs.EnterKnockOutResultUseCase
-import com.migc.qatar2022.domain.use_case.playoffs.GetPlayoffsByRoundUseCase
-import com.migc.qatar2022.domain.use_case.playoffs.SetupPlayoffsUseCase
-import com.migc.qatar2022.domain.use_case.playoffs.UpdatePlayoffUseCase
+import com.migc.qatar2022.domain.use_case.playoffs.*
 
 data class PlayoffsUseCases(
     val enterKnockOutResultUseCase: EnterKnockOutResultUseCase,
+    val getPlayoffByRoundKeyUseCase: GetPlayoffByRoundKeyUseCase,
     val getPlayoffsByRoundUseCase: GetPlayoffsByRoundUseCase,
     val setupPlayoffsUseCase: SetupPlayoffsUseCase,
-    val updatePlayoffUseCase: UpdatePlayoffUseCase
+    val updatePlayoffTeamUseCase: UpdatePlayoffTeamUseCase,
+    val updatePlayoffResultsUseCase: UpdatePlayoffResultsUseCase
 )

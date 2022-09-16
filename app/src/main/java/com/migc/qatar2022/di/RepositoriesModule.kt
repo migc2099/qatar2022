@@ -10,14 +10,12 @@ import com.migc.qatar2022.domain.use_case.database_setup.SetGroupsUseCase
 import com.migc.qatar2022.domain.use_case.database_setup.SetStandingsUseCase
 import com.migc.qatar2022.domain.use_case.database_setup.SetTeamsUseCase
 import com.migc.qatar2022.domain.use_case.datastore.*
-import com.migc.qatar2022.domain.use_case.playoffs.EnterKnockOutResultUseCase
-import com.migc.qatar2022.domain.use_case.playoffs.GetPlayoffsByRoundUseCase
-import com.migc.qatar2022.domain.use_case.playoffs.SetupPlayoffsUseCase
 import com.migc.qatar2022.domain.use_case.group_details.CalculatePointsUseCase
 import com.migc.qatar2022.domain.use_case.group_details.GetFixtureByGroupUseCase
 import com.migc.qatar2022.domain.use_case.group_details.UpdateFixtureUseCase
-import com.migc.qatar2022.domain.use_case.playoffs.UpdatePlayoffUseCase
+import com.migc.qatar2022.domain.use_case.playoffs.*
 import com.migc.qatar2022.domain.use_case.standings.*
+import com.migc.qatar2022.domain.use_case.team.GetTeamByIdUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -59,9 +57,11 @@ object RepositoriesModule {
     fun providePlayoffUseCases(repository: PlayoffsRepository): PlayoffsUseCases {
         return PlayoffsUseCases(
             enterKnockOutResultUseCase = EnterKnockOutResultUseCase(repository),
+            getPlayoffByRoundKeyUseCase = GetPlayoffByRoundKeyUseCase(repository),
             getPlayoffsByRoundUseCase = GetPlayoffsByRoundUseCase(repository),
             setupPlayoffsUseCase = SetupPlayoffsUseCase(repository),
-            updatePlayoffUseCase = UpdatePlayoffUseCase(repository)
+            updatePlayoffTeamUseCase = UpdatePlayoffTeamUseCase(repository),
+            updatePlayoffResultsUseCase = UpdatePlayoffResultsUseCase(repository)
         )
     }
 
@@ -83,6 +83,20 @@ object RepositoriesModule {
             updateFixtureUseCase = UpdateFixtureUseCase(fixtureRepository),
             calculatePointsUseCase = CalculatePointsUseCase(fixtureRepository, standingsRepository)
         )
+    }
+
+    @Provides
+    @Singleton
+    fun provideTeamRepository(database: QatarDatabase): TeamRepository {
+        return TeamRepositoryImpl(qatarDatabase = database)
+    }
+
+    @Provides
+    @Singleton
+    fun provideTeamUseCase(
+        teamRepository: TeamRepository
+    ): GetTeamByIdUseCase {
+        return GetTeamByIdUseCase(teamRepository)
     }
 
     @Provides

@@ -31,6 +31,10 @@ class PlayoffsRepositoryImpl constructor(
         )
     }
 
+    override suspend fun getPlayoffByRoundKey(roundKey: Int): Playoff {
+        return qatarDatabase.playoffDao.getPlayoffByRoundKey(roundKey).toPlayoff()
+    }
+
     override suspend fun getPlayoffsByRound(startRound: Int, endRound: Int): List<Playoff> {
         val playoffEntities = qatarDatabase.playoffDao.getPlayoffsByRound(startRound,endRound)
         return playoffEntities.map {
@@ -39,14 +43,14 @@ class PlayoffsRepositoryImpl constructor(
     }
 
     override suspend fun resetPlayoffs() {
-        val playoffEntity = setPlayoffs().map {
+        val playoffEntities = setPlayoffs().map {
             it.toPlayoffEntity()
         }
-        qatarDatabase.playoffDao.resetAllPlayoffs(playoffEntity)
+        qatarDatabase.playoffDao.resetAllPlayoffs(playoffEntities)
     }
 
-    override suspend fun updatePlayoff(playoff: Playoff): Int {
-        return qatarDatabase.playoffDao.updatePlayoff(playoff.toPlayoffEntity())
+    override suspend fun updatePlayoffResults(playoff: Playoff): Int {
+        return qatarDatabase.playoffDao.updateGameResults(playoff.toPlayoffEntity())
     }
 
     override suspend fun updateFirstTeam(roundKey: Int, teamId: String): Int {

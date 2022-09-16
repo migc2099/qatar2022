@@ -9,6 +9,9 @@ interface PlayoffDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun resetAllPlayoffs(playoffs: List<PlayoffEntity>)
 
+    @Query("SELECT * FROM playoffs_table WHERE roundKey=:roundKey")
+    suspend fun getPlayoffByRoundKey(roundKey: Int): PlayoffEntity
+
     @Query("SELECT * FROM playoffs_table WHERE roundKey BETWEEN :startRound AND :endRound")
     suspend fun getPlayoffsByRound(startRound: Int, endRound: Int): List<PlayoffEntity>
 
@@ -19,7 +22,7 @@ interface PlayoffDao {
     suspend fun updateSecondTeam(roundKey: Int, teamId: String): Int
 
     @Update
-    suspend fun updatePlayoff(playoff: PlayoffEntity): Int
+    suspend fun updateGameResults(playoff: PlayoffEntity): Int
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun updatePlayoffs(playoffs: List<PlayoffEntity>)

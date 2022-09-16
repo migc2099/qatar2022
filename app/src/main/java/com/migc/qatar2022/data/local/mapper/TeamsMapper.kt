@@ -1,6 +1,7 @@
 package com.migc.qatar2022.data.local.mapper
 
 import com.migc.qatar2022.data.local.dao.StandingsDao
+import com.migc.qatar2022.data.local.entity.TeamEntity
 import com.migc.qatar2022.domain.model.Team
 
 fun StandingsDao.TeamStanding.toTeam(): Team {
@@ -12,6 +13,16 @@ fun StandingsDao.TeamStanding.toTeam(): Team {
         points = points
     )
 }
+
+fun TeamEntity.toTeam():Team{
+    return Team(
+        teamId = teamId,
+        teamName = name,
+        flagUri = flagLocation,
+        goalsDifference = 0
+    )
+}
+
 //
 //fun StandingsDao.QualifiedTeam.toPlayOffTeam(): PlayOffTeam {
 //    return PlayOffTeam(

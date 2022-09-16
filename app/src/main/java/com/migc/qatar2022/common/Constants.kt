@@ -16,6 +16,14 @@ object Constants {
     const val GROUPS_TABLE = "groups_table"
     const val TEAMS_TABLE = "teams_table"
     const val FIXTURE_TABLE = "fixture_table"
+    const val GROUP_A_KEY = "A"
+    const val GROUP_B_KEY = "B"
+    const val GROUP_C_KEY = "C"
+    const val GROUP_D_KEY = "D"
+    const val GROUP_E_KEY = "E"
+    const val GROUP_F_KEY = "F"
+    const val GROUP_G_KEY = "G"
+    const val GROUP_H_KEY = "H"
 
     const val TOTAL_GROUP_MATCHES = 48
     const val TOTAL_GROUPS = 8

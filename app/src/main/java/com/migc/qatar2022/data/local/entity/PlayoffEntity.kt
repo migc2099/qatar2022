@@ -9,10 +9,10 @@ data class PlayoffEntity(
     @PrimaryKey val roundKey: Int,
     var firstTeamId: String? = null,
     var secondTeamId: String? = null,
-    var firstTeamScore: Int = 0,
-    var secondTeamScore: Int = 0,
-    var firstTeamPKScore: Int = 0,
-    var secondTeamPKScore: Int = 0,
+    var firstTeamScore: Int? = null,
+    var secondTeamScore: Int? = null,
+    var firstTeamPKScore: Int?= null,
+    var secondTeamPKScore: Int?= null,
     var loserTeam: String? = null,
     var winnerTeam: String? = null
 )
