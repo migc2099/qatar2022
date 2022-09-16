@@ -182,13 +182,31 @@ fun PlayoffsGrid(
         item {
             Column(modifier = Modifier.fillMaxWidth()) {
                 Spacer(modifier = Modifier.height(FLAG_ROW_IMAGE_SIZE + 2.dp + (MEDIUM_VERTICAL_GAP / 2)))
-                TeamPlaceholder(text = "C7")
-//                Spacer(modifier = Modifier.height(MEDIUM_VERTICAL_GAP))
-                TeamPlaceholder(text = "C8")
+                matches[64].let { playoff ->
+                    if (playoff!!.firstTeam.isNotEmpty()) {
+                        TeamFlag(teamId = playoff.firstTeam, onClick = { onPlayoffClick(playoff.roundKey) })
+                    } else {
+                        TeamPlaceholder(text = "WC")
+                    }
+                    if (playoff.secondTeam.isNotEmpty()) {
+                        TeamFlag(teamId = playoff.secondTeam, onClick = { onPlayoffClick(playoff.roundKey) })
+                    } else {
+                        TeamPlaceholder(text = "WC")
+                    }
+                }
                 Spacer(modifier = Modifier.height(MEDIUM_VERTICAL_GAP * 2 + 6.dp + (FLAG_ROW_IMAGE_SIZE * 2)))
-                TeamPlaceholder(text = "C9")
-//                Spacer(modifier = Modifier.height(MEDIUM_VERTICAL_GAP))
-                TeamPlaceholder(text = "10")
+                matches[63].let { playoff ->
+                    if (playoff!!.firstTeam.isNotEmpty()) {
+                        TeamFlag(teamId = playoff.firstTeam, onClick = { onPlayoffClick(playoff.roundKey) })
+                    } else {
+                        TeamPlaceholder(text = "3rd")
+                    }
+                    if (playoff.secondTeam.isNotEmpty()) {
+                        TeamFlag(teamId = playoff.secondTeam, onClick = { onPlayoffClick(playoff.roundKey) })
+                    } else {
+                        TeamPlaceholder(text = "3rd")
+                    }
+                }
             }
         }
         item {

@@ -74,6 +74,7 @@ class UpdatePlayoffResultsUseCase(
         Log.d("UpdatePlayoffResultsUseCase", "after loser $loserTeam")
         repository.updatePlayoffResults(playoff = completedPlayoff)
         saveNextRound(roundKey, winnerTeam)
+        saveFinals(roundKey, winnerTeam, loserTeam)
     }
 
     private suspend fun saveNextRound(currentRound: Int, teamId: String) {
@@ -87,10 +88,25 @@ class UpdatePlayoffResultsUseCase(
             59, 60 -> nextRoundKey = 62
         }
 
-        if (currentRound.mod(2) != 0) {
-            repository.updateFirstTeam(roundKey = nextRoundKey, teamId = teamId)
-        } else {
-            repository.updateSecondTeam(roundKey = nextRoundKey, teamId = teamId)
+        if (nextRoundKey != 0) {
+            if (currentRound.mod(2) != 0) {
+                repository.updateFirstTeam(roundKey = nextRoundKey, teamId = teamId)
+            } else {
+                repository.updateSecondTeam(roundKey = nextRoundKey, teamId = teamId)
+            }
+        }
+    }
+
+    private suspend fun saveFinals(currentRound: Int, winnerTeamId: String, loserTeamId: String) {
+        when (currentRound) {
+            61 -> {
+                repository.updateFirstTeam(roundKey = 63, teamId = loserTeamId)
+                repository.updateFirstTeam(roundKey = 64, teamId = winnerTeamId)
+            }
+            62 -> {
+                repository.updateSecondTeam(roundKey = 63, teamId = loserTeamId)
+                repository.updateSecondTeam(roundKey = 64, teamId = winnerTeamId)
+            }
         }
     }
 
