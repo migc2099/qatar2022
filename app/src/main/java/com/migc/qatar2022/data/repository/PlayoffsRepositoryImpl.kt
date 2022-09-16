@@ -61,11 +61,26 @@ class PlayoffsRepositoryImpl constructor(
         return qatarDatabase.playoffDao.updateSecondTeam(roundKey, teamId)
     }
 
+    override suspend fun updateWinnerTeam(roundKey: Int, teamId: String) {
+        qatarDatabase.playoffDao.updateWinnerTeam(roundKey, teamId)
+    }
+
+    override suspend fun updateLoserTeam(roundKey: Int, teamId: String) {
+        qatarDatabase.playoffDao.updateLoserTeam(roundKey, teamId)
+    }
+
     override suspend fun updatePlayoffs(playoffs: List<Playoff>) {
         val finalsEntities = playoffs.map {
             it.toPlayoffEntity()
         }
         qatarDatabase.playoffDao.updatePlayoffs(finalsEntities)
+    }
+
+    override suspend fun getPlayoffsByTeamId(teamId: String): List<Playoff> {
+        return qatarDatabase.playoffDao.getFinishedPlayoffsByTeamId(teamId)
+            .map {
+                it.toPlayoff()
+            }
     }
 
 }

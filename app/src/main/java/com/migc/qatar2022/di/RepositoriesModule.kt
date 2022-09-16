@@ -61,6 +61,7 @@ object RepositoriesModule {
             getAllPlayoffsUseCase = GetAllPlayoffsUseCase(repository),
             setupPlayoffsUseCase = SetupPlayoffsUseCase(repository),
             updatePlayoffTeamUseCase = UpdatePlayoffTeamUseCase(repository),
+            determinePlayoffWinnerUseCase = DeterminePlayoffWinnerUseCase(),
             updatePlayoffResultsUseCase = UpdatePlayoffResultsUseCase(repository)
         )
     }

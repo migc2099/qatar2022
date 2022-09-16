@@ -11,6 +11,9 @@ interface PlayoffsRepository {
     suspend fun updatePlayoffResults(playoff: Playoff): Int
     suspend fun updateFirstTeam(roundKey: Int, teamId: String): Int
     suspend fun updateSecondTeam(roundKey: Int, teamId: String): Int
+    suspend fun updateWinnerTeam(roundKey: Int, teamId: String)
+    suspend fun updateLoserTeam(roundKey: Int, teamId: String)
     suspend fun updatePlayoffs(playoffs: List<Playoff>)
+    suspend fun getPlayoffsByTeamId(teamId: String): List<Playoff>
 
 }

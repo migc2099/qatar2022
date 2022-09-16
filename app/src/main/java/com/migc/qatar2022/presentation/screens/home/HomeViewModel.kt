@@ -109,7 +109,13 @@ class HomeViewModel @Inject constructor(
             is HomeUiEvent.OnPlayoffDialogCompleted -> {
                 viewModelScope.launch(Dispatchers.IO) {
                     Log.d("LOG", "updatePlayoffResultsUseCase: ${event.playoff}")
-                    playoffsUseCases.updatePlayoffResultsUseCase(event.playoff)
+                    val completedPlayoff = playoffsUseCases.determinePlayoffWinnerUseCase(event.playoff)
+                    playoffsUseCases.updatePlayoffResultsUseCase(completedPlayoff)
+                    playoffsUseCases.updatePlayoffResultsUseCase(
+                        formerWinnerTeam = completedPlayoff.loserTeam,
+                        newWinnerTeam = completedPlayoff.winnerTeam,
+                        currentRoundKey = completedPlayoff.roundKey
+                    )
                     refreshPlayoffsGrid()
                 }
             }
