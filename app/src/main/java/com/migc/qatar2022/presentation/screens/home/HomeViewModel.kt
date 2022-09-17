@@ -65,6 +65,12 @@ class HomeViewModel @Inject constructor(
             is HomeUiEvent.OnNavigateToGroupDetails -> {
                 listPosition = event.listIndex
                 listOffSet = event.scrollOffSet
+                if (_playoffs.value.isNotEmpty()){
+                    viewModelScope.launch(Dispatchers.IO) {
+                        resetPlayoffs()
+                        fillRoundOf16Games()
+                    }
+                }
             }
             is HomeUiEvent.OnPlayoffDialogClicked -> {
                 viewModelScope.launch(Dispatchers.IO) {
@@ -94,7 +100,7 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private suspend fun fillRoundOf16Games(){
+    private suspend fun fillRoundOf16Games() {
         val completedGroupsMap = mutableStateMapOf(
             GROUP_A_KEY to false,
             GROUP_B_KEY to false,
@@ -139,14 +145,14 @@ class HomeViewModel @Inject constructor(
     }
 
     private suspend fun resetPlayoffs() {
-            playoffsUseCases.setupPlayoffsUseCase()
+        playoffsUseCases.setupPlayoffsUseCase()
     }
 
     private suspend fun refreshPlayoffsGrid() {
-            _selectedPlayoff.value = Playoff(0)
-            _playoffs.value = playoffsUseCases.getAllPlayoffsUseCase()
-            refreshPlayoffCompletionStatus()
-            getBestTeams()
+        _selectedPlayoff.value = Playoff(0)
+        _playoffs.value = playoffsUseCases.getAllPlayoffsUseCase()
+        refreshPlayoffCompletionStatus()
+        getBestTeams()
     }
 
     private fun refreshPlayoffCompletionStatus() {
@@ -163,7 +169,6 @@ class HomeViewModel @Inject constructor(
 
     fun resetTournament() {
         _playoffs.value = emptyList()
-        _statsPerGroup.value = emptyMap()
         _playoffCompletedState.value = false
         viewModelScope.launch(Dispatchers.IO) {
             resetPlayoffs()
