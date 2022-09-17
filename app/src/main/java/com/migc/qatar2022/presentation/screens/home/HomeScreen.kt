@@ -1,6 +1,7 @@
 package com.migc.qatar2022.presentation.screens.home
 
 import android.util.Log
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -9,9 +10,11 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.migc.qatar2022.R
 import com.migc.qatar2022.navigation.Screen
 import com.migc.qatar2022.presentation.components.CountDownDisplay
 import com.migc.qatar2022.presentation.components.DisplayWinnersButton
@@ -130,6 +133,25 @@ fun HomeScreen(
                     showPodiumDialog.value = true
                 }
             )
+        }
+        item {
+            TextButton(
+                modifier = Modifier
+                    .padding(MEDIUM_PADDING)
+                    .height(LARGE_BUTTON_HEIGHT)
+                    .fillMaxSize(),
+                enabled = true,
+                onClick = {
+                    homeViewModel.onEvent(HomeUiEvent.OnResetPlayoffsClicked)
+                },
+                shape = RoundedCornerShape(MEDIUM_ROUND_CORNER),
+                border = BorderStroke(2.dp, mainColor)
+            ) {
+                Text(
+                    text = stringResource(R.string.reset_playoffs_text),
+                    color = mainColor
+                )
+            }
         }
     }
 

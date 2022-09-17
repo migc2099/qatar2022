@@ -16,4 +16,5 @@
     <string name="start_over_text">Start Over</string>
     <string name="close_text">Close</string>
     <string name="show_winners_text">Show Winners</string>
+    <string name="reset_playoffs_text">Reset Playoffs</string>
 </resources>

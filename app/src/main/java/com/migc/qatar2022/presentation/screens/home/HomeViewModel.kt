@@ -32,17 +32,6 @@ class HomeViewModel @Inject constructor(
     private val databaseSetupUseCases: DatabaseSetupUseCases
 ) : ViewModel() {
 
-    private val completedGroupsMap = mutableStateMapOf(
-        GROUP_A_KEY to false,
-        GROUP_B_KEY to false,
-        GROUP_C_KEY to false,
-        GROUP_D_KEY to false,
-        GROUP_E_KEY to false,
-        GROUP_F_KEY to false,
-        GROUP_G_KEY to false,
-        GROUP_H_KEY to false
-    )
-
     var listPosition = 0
     var listOffSet = 0
 
@@ -70,40 +59,7 @@ class HomeViewModel @Inject constructor(
                         .collect { statsMap ->
                             _statsPerGroup.value = statsMap
                         }
-                }
-                viewModelScope.launch(Dispatchers.IO) {
-                    var groupsCompleted = 0
-                    completedGroupsMap[GROUP_A_KEY] = standingsUsesCases.checkIfGroupGamesCompletedUseCase(GROUP_A_KEY)
-                    completedGroupsMap[GROUP_B_KEY] = standingsUsesCases.checkIfGroupGamesCompletedUseCase(GROUP_B_KEY)
-                    completedGroupsMap[GROUP_C_KEY] = standingsUsesCases.checkIfGroupGamesCompletedUseCase(GROUP_C_KEY)
-                    completedGroupsMap[GROUP_D_KEY] = standingsUsesCases.checkIfGroupGamesCompletedUseCase(GROUP_D_KEY)
-                    completedGroupsMap[GROUP_E_KEY] = standingsUsesCases.checkIfGroupGamesCompletedUseCase(GROUP_E_KEY)
-                    completedGroupsMap[GROUP_F_KEY] = standingsUsesCases.checkIfGroupGamesCompletedUseCase(GROUP_F_KEY)
-                    completedGroupsMap[GROUP_G_KEY] = standingsUsesCases.checkIfGroupGamesCompletedUseCase(GROUP_G_KEY)
-                    completedGroupsMap[GROUP_H_KEY] = standingsUsesCases.checkIfGroupGamesCompletedUseCase(GROUP_H_KEY)
-                    delay(200)
-                    completedGroupsMap.forEach { mapItem ->
-                        Log.d("completedGroupsMap.forEach", mapItem.value.toString())
-                        if (mapItem.value) {
-                            val group = _statsPerGroup.value[Group(mapItem.key, "Group ${mapItem.key}")]
-                            if (group != null) {
-                                val firstTeam = group[0]
-                                val secondTeam = group[1]
-                                Log.d("HomeViewModel", "firstTeam: $firstTeam")
-                                Log.d("HomeViewModel", "secondTeam: $secondTeam")
-                                playoffsUseCases.updatePlayoffTeamUseCase(firstTeam.teamId, mapItem.key, 1)
-                                playoffsUseCases.updatePlayoffTeamUseCase(secondTeam.teamId, mapItem.key, 2)
-                                groupsCompleted++
-                            }
-                        }
-                    }
-                    Log.d("onEvent", "before groupsCompleted == 0")
-                    if (groupsCompleted == 0) {
-                        resetPlayoffs()
-                    } else {
-                        refreshPlayoffsGrid()
-                    }
-
+                    fillRoundOf16Games()
                 }
             }
             is HomeUiEvent.OnNavigateToGroupDetails -> {
@@ -129,22 +85,68 @@ class HomeViewModel @Inject constructor(
                     refreshPlayoffsGrid()
                 }
             }
+            is HomeUiEvent.OnResetPlayoffsClicked -> {
+                viewModelScope.launch(Dispatchers.IO) {
+                    resetPlayoffs()
+                    fillRoundOf16Games()
+                }
+            }
         }
     }
 
-    private fun resetPlayoffs() {
-        viewModelScope.launch(Dispatchers.IO) {
+    private suspend fun fillRoundOf16Games(){
+        val completedGroupsMap = mutableStateMapOf(
+            GROUP_A_KEY to false,
+            GROUP_B_KEY to false,
+            GROUP_C_KEY to false,
+            GROUP_D_KEY to false,
+            GROUP_E_KEY to false,
+            GROUP_F_KEY to false,
+            GROUP_G_KEY to false,
+            GROUP_H_KEY to false
+        )
+        var groupsCompleted = 0
+        completedGroupsMap[GROUP_A_KEY] = standingsUsesCases.checkIfGroupGamesCompletedUseCase(GROUP_A_KEY)
+        completedGroupsMap[GROUP_B_KEY] = standingsUsesCases.checkIfGroupGamesCompletedUseCase(GROUP_B_KEY)
+        completedGroupsMap[GROUP_C_KEY] = standingsUsesCases.checkIfGroupGamesCompletedUseCase(GROUP_C_KEY)
+        completedGroupsMap[GROUP_D_KEY] = standingsUsesCases.checkIfGroupGamesCompletedUseCase(GROUP_D_KEY)
+        completedGroupsMap[GROUP_E_KEY] = standingsUsesCases.checkIfGroupGamesCompletedUseCase(GROUP_E_KEY)
+        completedGroupsMap[GROUP_F_KEY] = standingsUsesCases.checkIfGroupGamesCompletedUseCase(GROUP_F_KEY)
+        completedGroupsMap[GROUP_G_KEY] = standingsUsesCases.checkIfGroupGamesCompletedUseCase(GROUP_G_KEY)
+        completedGroupsMap[GROUP_H_KEY] = standingsUsesCases.checkIfGroupGamesCompletedUseCase(GROUP_H_KEY)
+        delay(200)
+        completedGroupsMap.forEach { mapItem ->
+            Log.d("completedGroupsMap.forEach", mapItem.value.toString())
+            if (mapItem.value) {
+                val group = _statsPerGroup.value[Group(mapItem.key, "Group ${mapItem.key}")]
+                if (group != null) {
+                    val firstTeam = group[0]
+                    val secondTeam = group[1]
+                    Log.d("HomeViewModel", "firstTeam: $firstTeam")
+                    Log.d("HomeViewModel", "secondTeam: $secondTeam")
+                    playoffsUseCases.updatePlayoffTeamUseCase(firstTeam.teamId, mapItem.key, 1)
+                    playoffsUseCases.updatePlayoffTeamUseCase(secondTeam.teamId, mapItem.key, 2)
+                    groupsCompleted++
+                }
+            }
+        }
+        Log.d("onEvent", "before groupsCompleted == 0")
+        if (groupsCompleted == 0) {
+            resetPlayoffs()
+        } else {
+            refreshPlayoffsGrid()
+        }
+    }
+
+    private suspend fun resetPlayoffs() {
             playoffsUseCases.setupPlayoffsUseCase()
-        }
     }
 
-    private fun refreshPlayoffsGrid() {
-        viewModelScope.launch(Dispatchers.IO) {
+    private suspend fun refreshPlayoffsGrid() {
             _selectedPlayoff.value = Playoff(0)
             _playoffs.value = playoffsUseCases.getAllPlayoffsUseCase()
             refreshPlayoffCompletionStatus()
             getBestTeams()
-        }
     }
 
     private fun refreshPlayoffCompletionStatus() {
@@ -163,16 +165,16 @@ class HomeViewModel @Inject constructor(
         _playoffs.value = emptyList()
         _statsPerGroup.value = emptyMap()
         _playoffCompletedState.value = false
-        resetPlayoffs()
         viewModelScope.launch(Dispatchers.IO) {
+            resetPlayoffs()
             databaseSetupUseCases.setStandingsUseCase()
             databaseSetupUseCases.setGroupsFixtureUseCase()
             standingsUsesCases.getTeamsStatsPerGroupUseCase()
                 .collect { statsMap ->
                     _statsPerGroup.value = statsMap
                 }
+            refreshPlayoffsGrid()
         }
-        refreshPlayoffsGrid()
     }
 
 }

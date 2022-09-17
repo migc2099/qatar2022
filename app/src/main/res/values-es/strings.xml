@@ -16,4 +16,5 @@
     <string name="start_over_text">Empezar de Nuevo</string>
     <string name="close_text">Cerrar</string>
     <string name="show_winners_text">Mostrar Ganadores</string>
+    <string name="reset_playoffs_text">Reiniciar Cuartos de Final</string>
 </resources>
