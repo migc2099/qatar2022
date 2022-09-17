@@ -15,6 +15,7 @@ import com.migc.qatar2022.common.Constants.GROUP_H_KEY
 import com.migc.qatar2022.domain.model.Group
 import com.migc.qatar2022.domain.model.Playoff
 import com.migc.qatar2022.domain.model.Team
+import com.migc.qatar2022.domain.use_case.DatabaseSetupUseCases
 import com.migc.qatar2022.domain.use_case.PlayoffsUseCases
 import com.migc.qatar2022.domain.use_case.StandingsUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -27,7 +28,8 @@ import javax.inject.Inject
 @HiltViewModel
 class HomeViewModel @Inject constructor(
     private val standingsUsesCases: StandingsUseCases,
-    private val playoffsUseCases: PlayoffsUseCases
+    private val playoffsUseCases: PlayoffsUseCases,
+    private val databaseSetupUseCases: DatabaseSetupUseCases
 ) : ViewModel() {
 
     private val completedGroupsMap = mutableStateMapOf(
@@ -56,7 +58,7 @@ class HomeViewModel @Inject constructor(
     private var _playoffCompletedState: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val playoffCompletedState = _playoffCompletedState.asStateFlow()
 
-    private var _bestTeams : MutableStateFlow<Array<Team>> = MutableStateFlow(emptyArray())
+    private var _bestTeams: MutableStateFlow<Array<Team>> = MutableStateFlow(emptyArray())
     val bestTeams = _bestTeams.asStateFlow()
 
 
@@ -151,10 +153,26 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private fun getBestTeams(){
+    private fun getBestTeams() {
         viewModelScope.launch(Dispatchers.IO) {
             _bestTeams.value = playoffsUseCases.getBestThreeTeamsUseCase()
         }
+    }
+
+    fun resetTournament() {
+        _playoffs.value = emptyList()
+        _statsPerGroup.value = emptyMap()
+        _playoffCompletedState.value = false
+        resetPlayoffs()
+        viewModelScope.launch(Dispatchers.IO) {
+            databaseSetupUseCases.setStandingsUseCase()
+            databaseSetupUseCases.setGroupsFixtureUseCase()
+            standingsUsesCases.getTeamsStatsPerGroupUseCase()
+                .collect { statsMap ->
+                    _statsPerGroup.value = statsMap
+                }
+        }
+        refreshPlayoffsGrid()
     }
 
 }

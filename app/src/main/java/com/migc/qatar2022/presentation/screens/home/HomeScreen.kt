@@ -152,7 +152,10 @@ fun HomeScreen(
         PodiumDialog(
             teams = bestTeams.value,
             onDismiss = { showPodiumDialog.value = false },
-            onReset = { /*TODO*/ },
+            onStartOver = {
+                showPodiumDialog.value = false
+                homeViewModel.resetTournament()
+            },
             onClose = { showPodiumDialog.value = false }
         )
     }

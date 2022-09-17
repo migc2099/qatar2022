@@ -29,7 +29,7 @@ import com.migc.qatar2022.ui.theme.*
 fun PodiumDialog(
     teams: Array<Team>,
     onDismiss: () -> Unit,
-    onReset: () -> Unit,
+    onStartOver: () -> Unit,
     onClose: () -> Unit
 ) {
     Log.d("PodiumDialog", teams.toString())
@@ -73,7 +73,7 @@ fun PodiumDialog(
                 ) {
                     TextButton(
                         onClick = {
-
+                            onStartOver()
                         }
                     ) {
                         Text(text = stringResource(R.string.start_over_text))
@@ -167,7 +167,7 @@ fun PodiumDialogPreview() {
     PodiumDialog(
         teams = emptyArray(),
         onDismiss = { },
-        onReset = { },
+        onStartOver = { },
         onClose = { }
     )
 }
