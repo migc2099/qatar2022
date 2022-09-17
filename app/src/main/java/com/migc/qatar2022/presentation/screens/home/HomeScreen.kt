@@ -9,7 +9,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
@@ -27,7 +26,6 @@ fun HomeScreen(
     navHostController: NavHostController,
     homeViewModel: HomeViewModel = hiltViewModel()
 ) {
-    val screenWidth = LocalConfiguration.current.screenWidthDp
 
     val teamStatsMap = homeViewModel.statsPerGroup.value
     val playoffs = homeViewModel.playoffs.collectAsState()
@@ -62,6 +60,9 @@ fun HomeScreen(
                     .height(GROUP_LAZY_ROW_HEIGHT),
                 state = listState
             ) {
+                item{
+                    Spacer(modifier = Modifier.width(LARGE_PADDING))
+                }
                 teamStatsMap.forEach { (group, teamStats) ->
                     Log.d("HomeScreen", "GROUP $group")
                     Log.d("HomeScreen", "TEAMSTATS $teamStats")
@@ -69,7 +70,6 @@ fun HomeScreen(
                         Row(modifier = Modifier.padding(horizontal = MEDIUM_PADDING)) {
                             GroupCard(
                                 modifier = Modifier,
-                                size = (screenWidth * 0.8f).dp,
                                 group = group,
                                 teamsStats = teamStats
                             ) {
@@ -83,6 +83,9 @@ fun HomeScreen(
                             }
                         }
                     }
+                }
+                item {
+                    Spacer(modifier = Modifier.width(LARGE_PADDING))
                 }
             }
         }

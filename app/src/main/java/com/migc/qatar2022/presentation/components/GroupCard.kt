@@ -27,15 +27,13 @@ import com.migc.qatar2022.ui.theme.*
 @Composable
 fun GroupCard(
     modifier: Modifier,
-    size: Dp,
     group: Group,
-//    teams: List<Team>,
     teamsStats: List<Team>,
     onClick: (String) -> Unit
 ) {
     Card(
         modifier = modifier
-            .size(size)
+            .size(GROUP_CARD_SIZE)
             .clickable {
                 onClick(group.groupId)
             },
@@ -128,7 +126,6 @@ fun GroupCard(
 fun GroupCardPreview() {
     GroupCard(
         modifier = Modifier,
-        size = 296.dp,
         group = Group("A", "Group A"),
         teamsStats = listOf(
             Team("QAT", "Qatar", R.drawable.flag_qatar, 0, 0),
