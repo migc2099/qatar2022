@@ -54,16 +54,20 @@ object RepositoriesModule {
 
     @Provides
     @Singleton
-    fun providePlayoffUseCases(repository: PlayoffsRepository): PlayoffsUseCases {
+    fun providePlayoffUseCases(
+        playoffRepository: PlayoffsRepository,
+        teamRepository: TeamRepository
+    ): PlayoffsUseCases {
         return PlayoffsUseCases(
-            enterKnockOutResultUseCase = EnterKnockOutResultUseCase(repository),
-            getPlayoffByRoundKeyUseCase = GetPlayoffByRoundKeyUseCase(repository),
-            getAllPlayoffsUseCase = GetAllPlayoffsUseCase(repository),
-            setupPlayoffsUseCase = SetupPlayoffsUseCase(repository),
-            updatePlayoffTeamUseCase = UpdatePlayoffTeamUseCase(repository),
+            enterKnockOutResultUseCase = EnterKnockOutResultUseCase(playoffRepository),
+            getPlayoffByRoundKeyUseCase = GetPlayoffByRoundKeyUseCase(playoffRepository),
+            getAllPlayoffsUseCase = GetAllPlayoffsUseCase(playoffRepository),
+            setupPlayoffsUseCase = SetupPlayoffsUseCase(playoffRepository),
+            updatePlayoffTeamUseCase = UpdatePlayoffTeamUseCase(playoffRepository),
             determinePlayoffWinnerUseCase = DeterminePlayoffWinnerUseCase(),
-            updatePlayoffResultsUseCase = UpdatePlayoffResultsUseCase(repository),
-            checkIfPlayoffCompletedUseCase = CheckIfPlayoffCompletedUseCase(repository)
+            updatePlayoffResultsUseCase = UpdatePlayoffResultsUseCase(playoffRepository),
+            checkIfPlayoffCompletedUseCase = CheckIfPlayoffCompletedUseCase(playoffRepository),
+            getBestThreeTeamsUseCase = GetBestThreeTeamsUseCase(playoffRepository, teamRepository)
         )
     }
 

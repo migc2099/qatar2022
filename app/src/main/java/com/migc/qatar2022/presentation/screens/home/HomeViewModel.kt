@@ -56,6 +56,10 @@ class HomeViewModel @Inject constructor(
     private var _playoffCompletedState: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val playoffCompletedState = _playoffCompletedState.asStateFlow()
 
+    private var _bestTeams : MutableStateFlow<Array<Team>> = MutableStateFlow(emptyArray())
+    val bestTeams = _bestTeams.asStateFlow()
+
+
     fun onEvent(event: HomeUiEvent) {
         when (event) {
             is HomeUiEvent.OnStart -> {
@@ -137,12 +141,19 @@ class HomeViewModel @Inject constructor(
             _selectedPlayoff.value = Playoff(0)
             _playoffs.value = playoffsUseCases.getAllPlayoffsUseCase()
             refreshPlayoffCompletionStatus()
+            getBestTeams()
         }
     }
 
     private fun refreshPlayoffCompletionStatus() {
         viewModelScope.launch(Dispatchers.IO) {
             _playoffCompletedState.value = playoffsUseCases.checkIfPlayoffCompletedUseCase()
+        }
+    }
+
+    private fun getBestTeams(){
+        viewModelScope.launch(Dispatchers.IO) {
+            _bestTeams.value = playoffsUseCases.getBestThreeTeamsUseCase()
         }
     }
 

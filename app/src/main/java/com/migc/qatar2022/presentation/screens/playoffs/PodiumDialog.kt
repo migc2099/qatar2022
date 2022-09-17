@@ -1,5 +1,6 @@
 package com.migc.qatar2022.presentation.screens.playoffs
 
+import android.util.Log
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -26,12 +27,16 @@ import com.migc.qatar2022.ui.theme.*
 
 @Composable
 fun PodiumDialog(
+    teams: Array<Team>,
     onDismiss: () -> Unit,
     onReset: () -> Unit,
     onClose: () -> Unit
 ) {
+    Log.d("PodiumDialog", teams.toString())
     Dialog(
-        onDismissRequest = { onDismiss() }
+        onDismissRequest = {
+            onDismiss()
+        }
     ) {
         Card(
             modifier = Modifier
@@ -51,11 +56,13 @@ fun PodiumDialog(
                     horizontalArrangement = Arrangement.Center,
                     verticalAlignment = Alignment.Bottom
                 ) {
-                    PlaceColumn(team = Team("POR", "Portugal", R.drawable.flag_portugal, 0, 0), place = 2)
-                    Spacer(modifier = Modifier.width(1.dp))
-                    PlaceColumn(team = Team("ARG", "Argentina", R.drawable.flag_argentina, 0, 0), place = 1)
-                    Spacer(modifier = Modifier.width(1.dp))
-                    PlaceColumn(team = Team("BRA", "Brazil", R.drawable.flag_brazil, 0, 0), place = 3)
+                    if (teams.size > 2) {
+                        PlaceColumn(team = teams[1], place = 2)
+                        Spacer(modifier = Modifier.width(1.dp))
+                        PlaceColumn(team = teams[0], place = 1)
+                        Spacer(modifier = Modifier.width(1.dp))
+                        PlaceColumn(team = teams[2], place = 3)
+                    }
                 }
                 Spacer(modifier = Modifier.height(EXTRA_LARGE_PADDING))
                 Row(
@@ -72,7 +79,11 @@ fun PodiumDialog(
                         Text(text = stringResource(R.string.start_over_text))
                     }
                     Spacer(modifier = Modifier.width(LARGE_PADDING))
-                    TextButton(onClick = onClose) {
+                    TextButton(
+                        onClick = {
+                            onClose()
+                        }
+                    ) {
                         Text(text = stringResource(R.string.close_text))
                     }
                 }
@@ -154,6 +165,7 @@ fun PlaceColumnPreview() {
 @Preview
 fun PodiumDialogPreview() {
     PodiumDialog(
+        teams = emptyArray(),
         onDismiss = { },
         onReset = { },
         onClose = { }

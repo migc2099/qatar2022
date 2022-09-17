@@ -43,6 +43,7 @@ fun HomeScreen(
     val showPlayoffDialog = remember { mutableStateOf(false) }
     val showPodiumDialog = remember { mutableStateOf(false) }
     val selectedPlayoff = homeViewModel.selectedPlayoff.collectAsState()
+    val bestTeams = homeViewModel.bestTeams.collectAsState()
 
     LazyColumn(
         modifier = Modifier
@@ -149,6 +150,7 @@ fun HomeScreen(
 
     if (playoffCompletedState.value && showPodiumDialog.value) {
         PodiumDialog(
+            teams = bestTeams.value,
             onDismiss = { showPodiumDialog.value = false },
             onReset = { /*TODO*/ },
             onClose = { showPodiumDialog.value = false }
