@@ -10,8 +10,7 @@ import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.rotate
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.migc.qatar2022.ui.theme.BRACKET_STROKE_WIDTH
-import com.migc.qatar2022.ui.theme.MEDIUM_PADDING
+import com.migc.qatar2022.ui.theme.SMALL_PADDING
 import com.migc.qatar2022.ui.theme.mainBackgroundColor
 
 @Composable
@@ -19,35 +18,35 @@ fun Bracket(modifier: Modifier, rotate: Boolean) {
     var degrees = 0f
     if (rotate) degrees = 180f
     Canvas(
-        modifier = modifier.padding(horizontal = MEDIUM_PADDING)
+        modifier = modifier.padding(horizontal = SMALL_PADDING)
     ) {
         rotate(degrees) {
             drawLine(
                 color = mainBackgroundColor,
                 start = Offset.Zero,
                 end = Offset(size.width / 2, 0f),
-                strokeWidth = BRACKET_STROKE_WIDTH,
+                strokeWidth = 8f,
                 cap = StrokeCap.Round
             )
             drawLine(
                 color = mainBackgroundColor,
                 start = Offset(0f, size.height),
                 end = Offset(size.width / 2, size.height),
-                strokeWidth = BRACKET_STROKE_WIDTH,
+                strokeWidth = 8f,
                 cap = StrokeCap.Round
             )
             drawLine(
                 color = mainBackgroundColor,
                 start = Offset(size.width / 2, 0f),
                 end = Offset(size.width / 2, size.height),
-                strokeWidth = BRACKET_STROKE_WIDTH,
+                strokeWidth = 8f,
                 cap = StrokeCap.Round
             )
             drawLine(
                 color = mainBackgroundColor,
                 start = Offset(size.width / 2, size.height / 2),
                 end = Offset(size.width, size.height / 2),
-                strokeWidth = BRACKET_STROKE_WIDTH,
+                strokeWidth = 8f,
                 cap = StrokeCap.Round
             )
         }
