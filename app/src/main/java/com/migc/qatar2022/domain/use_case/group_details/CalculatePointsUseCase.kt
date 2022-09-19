@@ -143,8 +143,15 @@ class CalculatePointsUseCase(
             }
         }
         if (completedFixtures.isNotEmpty()) {
-            teamStats.forEach {
+            var i = 1
+            teamStats.sortWith(compareBy<TeamStat>(
+                { it.points },
+                { it.goalsInFavor - it.goalsAgainst },
+                { it.goalsInFavor }).reversed())
+            teamStats.map {
                 Log.d("CalculatePointsUseCase", "teamStat: $it")
+                it.groupPosition = i
+                i++
             }
             fixtureRepository.updateFixture(completedFixtures)
             standingsRepository.insertTeams(teamStats)
