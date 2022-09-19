@@ -68,6 +68,10 @@ class StandingsRepositoryImpl @Inject constructor(
         qatarDatabase.standingsDao.insertStandings(standings)
     }
 
+    override suspend fun updateTeamStage(teamId: String, stage: Int) {
+        qatarDatabase.standingsDao.updateTeamStage(teamId, stage)
+    }
+
     override suspend fun getTeamsByGroup(group: String): List<TeamStat> {
         val teamsStats = qatarDatabase.standingsDao.getStandingsByGroup(group).map {
             it.toTeamsStat()
@@ -76,11 +80,12 @@ class StandingsRepositoryImpl @Inject constructor(
         return teamsStats
     }
 
-    override suspend fun getTeamByGroupPosition(groupKey: String, position: Int): TeamStat {
-        return qatarDatabase.standingsDao.getStandingByGroupPosition(
-            group = groupKey,
+    override suspend fun getTeamsByGroupPosition(position: Int): List<TeamStat> {
+        return qatarDatabase.standingsDao.getStandingsByGroupPosition(
             position = position
-        ).toTeamsStat()
+        ).map {
+            it.toTeamsStat()
+        }
     }
 
     override fun getStatsPerGroup(): Map<Group, List<Team>> {

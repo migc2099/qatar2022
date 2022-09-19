@@ -25,6 +25,12 @@ object Constants {
     const val GROUP_G_KEY = "G"
     const val GROUP_H_KEY = "H"
 
+    const val GROUP_STAGE = 3
+    const val ROUND_OF_16_STAGE = 4
+    const val ROUND_OF_8_STAGE = 5
+    const val SEMI_FINAL_STAGE = 6
+    const val FINAL_STAGE = 7
+
     const val TOTAL_GROUP_MATCHES = 48
     const val TOTAL_GROUPS = 8
     const val TOTAL_TEAMS = 32

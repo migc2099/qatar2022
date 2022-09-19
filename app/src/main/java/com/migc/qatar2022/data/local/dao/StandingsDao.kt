@@ -19,8 +19,16 @@ interface StandingsDao {
     @Query("SELECT * FROM standings_table WHERE groupKey=:group")
     suspend fun getStandingsByGroup(group: String): List<StandingsEntity>
 
-    @Query("SELECT * FROM standings_table WHERE groupKey=:group AND groupPosition=:position LIMIT 1")
-    suspend fun getStandingByGroupPosition(group: String, position: Int): StandingsEntity
+    @Query(
+        "SELECT * FROM standings_table WHERE groupPosition=:position " +
+                "ORDER BY points DESC, " +
+                "(goalsInFavor - goalsAgainst) DESC, " +
+                "goalsInFavor DESC"
+    )
+    suspend fun getStandingsByGroupPosition(position: Int): List<StandingsEntity>
+
+    @Query("UPDATE OR IGNORE standings_table SET maxStage=:stage WHERE teamId=:teamId")
+    suspend fun updateTeamStage(teamId: String, stage: Int)
 
     @Query(
         "SELECT standings_table.teamId AS teamId, " +
@@ -48,11 +56,12 @@ interface StandingsDao {
         var points: Int
     )
 
-    @Query("SELECT teamId, gamesPlayed, " +
-            "CASE " +
-            "WHEN gamesPlayed = 3 THEN 1 ELSE 0 " +
-            "END AS result " +
-            "FROM standings_table WHERE groupKey=:groupKey"
+    @Query(
+        "SELECT teamId, gamesPlayed, " +
+                "CASE " +
+                "WHEN gamesPlayed = 3 THEN 1 ELSE 0 " +
+                "END AS result " +
+                "FROM standings_table WHERE groupKey=:groupKey"
     )
     fun areGroupGamesCompleted(groupKey: String): List<TeamGroupGamesPlayed>
 

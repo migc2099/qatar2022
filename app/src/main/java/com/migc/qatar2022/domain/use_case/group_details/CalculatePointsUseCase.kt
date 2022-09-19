@@ -1,6 +1,8 @@
 package com.migc.qatar2022.domain.use_case.group_details
 
 import android.util.Log
+import com.migc.qatar2022.common.Constants.GROUP_STAGE
+import com.migc.qatar2022.common.Constants.ROUND_OF_16_STAGE
 import com.migc.qatar2022.common.TeamsData
 import com.migc.qatar2022.data.local.mapper.toTeamsStat
 import com.migc.qatar2022.domain.model.Fixture
@@ -152,7 +154,7 @@ class CalculatePointsUseCase(
             teamStats.map {
                 Log.d("CalculatePointsUseCase", "teamStat: $it")
                 it.groupPosition = i
-                if (i <= 2) it.maxStage = 4 else it.maxStage = 3
+                if (i <= 2) it.maxStage = ROUND_OF_16_STAGE else it.maxStage = GROUP_STAGE
                 i++
             }
             fixtureRepository.updateFixture(completedFixtures)

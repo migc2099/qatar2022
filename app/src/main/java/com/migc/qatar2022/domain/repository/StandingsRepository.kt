@@ -9,8 +9,9 @@ interface StandingsRepository {
 
     fun setUpTeams(): List<TeamStat>
     suspend fun insertTeams(teamsStats: List<TeamStat>)
+    suspend fun updateTeamStage(teamId: String, stage: Int)
     suspend fun getTeamsByGroup(group: String): List<TeamStat>
-    suspend fun getTeamByGroupPosition(groupKey: String, position: Int): TeamStat
+    suspend fun getTeamsByGroupPosition(position: Int): List<TeamStat>
     fun getStatsPerGroup(): Map<Group, List<Team>>
     fun checkIfGroupGamesCompleted(groupKey: String): Boolean
 //    fun getQualifiedTeamsByGroup(groupKey: String): List<PlayOffTeam>

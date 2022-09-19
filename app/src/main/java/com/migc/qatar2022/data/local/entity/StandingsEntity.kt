@@ -17,5 +17,5 @@ data class StandingsEntity(
     val goalsInFavor: Int = 0,
     val goalsAgainst: Int = 0,
     val points: Int = 0,
-    val maxStage: Int = 3
+    var maxStage: Int = 3
 )

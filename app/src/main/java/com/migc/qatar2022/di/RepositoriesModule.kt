@@ -56,7 +56,8 @@ object RepositoriesModule {
     @Singleton
     fun providePlayoffUseCases(
         playoffRepository: PlayoffsRepository,
-        teamRepository: TeamRepository
+        teamRepository: TeamRepository,
+        standingsRepository: StandingsRepository
     ): PlayoffsUseCases {
         return PlayoffsUseCases(
             enterKnockOutResultUseCase = EnterKnockOutResultUseCase(playoffRepository),
@@ -65,7 +66,7 @@ object RepositoriesModule {
             setupPlayoffsUseCase = SetupPlayoffsUseCase(playoffRepository),
             updatePlayoffTeamUseCase = UpdatePlayoffTeamUseCase(playoffRepository),
             determinePlayoffWinnerUseCase = DeterminePlayoffWinnerUseCase(),
-            updatePlayoffResultsUseCase = UpdatePlayoffResultsUseCase(playoffRepository),
+            updatePlayoffResultsUseCase = UpdatePlayoffResultsUseCase(playoffRepository, standingsRepository),
             checkIfPlayoffCompletedUseCase = CheckIfPlayoffCompletedUseCase(playoffRepository),
             getBestThreeTeamsUseCase = GetBestThreeTeamsUseCase(playoffRepository, teamRepository)
         )
