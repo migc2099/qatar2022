@@ -19,6 +19,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
+import androidx.core.text.isDigitsOnly
 import com.migc.qatar2022.R
 import com.migc.qatar2022.common.TeamsData
 import com.migc.qatar2022.domain.model.Playoff
@@ -88,8 +89,9 @@ fun PlayoffDialog(
                             ScoreTextField(
                                 initialScore = editedPlayOff.firstTeamScore,
                                 onScoreChange = {
-                                    if (it.isNotEmpty()) {
-                                        editedPlayOff.firstTeamScore = it.toInt()
+                                    val score = it.trim()
+                                    if (score.isNotEmpty() && score.isDigitsOnly()) {
+                                        editedPlayOff.firstTeamScore = score.toInt()
                                         isScoreTied.value = editedPlayOff.firstTeamScore == editedPlayOff.secondTeamScore
                                     } else {
                                         editedPlayOff.firstTeamScore = -1
@@ -102,8 +104,9 @@ fun PlayoffDialog(
                                 ScoreTextField(
                                     initialScore = editedPlayOff.firstTeamPKScore,
                                     onScoreChange = {
-                                        if (it.isNotEmpty()) {
-                                            editedPlayOff.firstTeamPKScore = it.toInt()
+                                        val score = it.trim()
+                                        if (score.isNotEmpty() && score.isDigitsOnly()) {
+                                            editedPlayOff.firstTeamPKScore = score.toInt()
                                         } else {
                                             editedPlayOff.firstTeamPKScore = -1
                                         }
@@ -134,8 +137,9 @@ fun PlayoffDialog(
                             ScoreTextField(
                                 initialScore = editedPlayOff.secondTeamScore,
                                 onScoreChange = {
-                                    if (it.isNotEmpty()) {
-                                        editedPlayOff.secondTeamScore = it.toInt()
+                                    val score = it.trim()
+                                    if (score.isNotEmpty() && score.isDigitsOnly()) {
+                                        editedPlayOff.secondTeamScore = score.toInt()
                                         isScoreTied.value = editedPlayOff.firstTeamScore == editedPlayOff.secondTeamScore
                                     } else {
                                         editedPlayOff.secondTeamScore = -1
@@ -148,8 +152,9 @@ fun PlayoffDialog(
                                 ScoreTextField(
                                     initialScore = editedPlayOff.secondTeamPKScore,
                                     onScoreChange = {
-                                        if (it.isNotEmpty()) {
-                                            editedPlayOff.secondTeamPKScore = it.toInt()
+                                        val score = it.trim()
+                                        if (score.isNotEmpty() && score.isDigitsOnly()) {
+                                            editedPlayOff.secondTeamPKScore = score.toInt()
                                         } else {
                                             editedPlayOff.secondTeamPKScore = -1
                                         }
@@ -165,7 +170,9 @@ fun PlayoffDialog(
                 Spacer(modifier = Modifier.width(MEDIUM_VERTICAL_GAP))
                 Row(
                     horizontalArrangement = Arrangement.End,
-                    modifier = Modifier.fillMaxWidth().padding(horizontal = MEDIUM_PADDING)
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = MEDIUM_PADDING)
                 ) {
 
                     TextButton(onClick = onNegativeClick) {
@@ -237,8 +244,7 @@ fun ScoreTextField(initialScore: Int?, onScoreChange: (String) -> Unit) {
             scoreInput.value = it
             onScoreChange(it.text)
         },
-        modifier = Modifier
-            .width(50.dp),
+        modifier = Modifier.width(SCORE_TEXT_FIELD_WIDTH),
         textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.Center),
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
         singleLine = true,
