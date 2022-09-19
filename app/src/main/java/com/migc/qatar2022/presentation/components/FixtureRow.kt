@@ -18,6 +18,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.text.isDigitsOnly
 import com.migc.qatar2022.R
 import com.migc.qatar2022.common.TeamsData
 import com.migc.qatar2022.domain.model.Fixture
@@ -62,25 +63,9 @@ fun FixtureRow(
             fontSize = Typography.subtitle1.fontSize
         )
         Spacer(modifier = Modifier.width(EXTRA_SMALL_HORIZONTAL_PADDING))
-        TextField(
-            value = leftText.value,
-            onValueChange = {
-                leftText.value = it
-                if (it.text.isNotEmpty()) {
-                    homeTeamScore(it.text)
-                } else {
-                    homeTeamScore("")
-                }
-            },
-            modifier = Modifier
-                .width(50.dp),
-            textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.Center),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-            singleLine = true,
-            shape = CircleShape,
-            colors = TextFieldDefaults.textFieldColors(
-                textColor = Color.Black
-            )
+        ScoreTextField(
+            textValue = leftText.value,
+            onScoreChange = { homeTeamScore(it) }
         )
         Text(
             modifier = Modifier
@@ -90,25 +75,9 @@ fun FixtureRow(
             fontSize = Typography.subtitle2.fontSize,
             textAlign = TextAlign.Center
         )
-        TextField(
-            value = rightText.value,
-            onValueChange = {
-                rightText.value = it
-                if (it.text.isNotEmpty()) {
-                    awayTeamScore(it.text)
-                } else {
-                    awayTeamScore("")
-                }
-            },
-            modifier = Modifier
-                .width(50.dp),
-            textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.Center),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-            singleLine = true,
-            shape = CircleShape,
-            colors = TextFieldDefaults.textFieldColors(
-                textColor = Color.Black
-            )
+        ScoreTextField(
+            textValue = rightText.value,
+            onScoreChange = { awayTeamScore(it) }
         )
         Spacer(modifier = Modifier.width(EXTRA_SMALL_HORIZONTAL_PADDING))
         Text(
@@ -123,6 +92,34 @@ fun FixtureRow(
             modifier = Modifier.size(FLAG_ROW_IMAGE_SIZE)
         )
     }
+}
+
+@Composable
+fun ScoreTextField(textValue: TextFieldValue, onScoreChange: (String) -> Unit) {
+    val text = remember {
+        mutableStateOf(textValue)
+    }
+    TextField(
+        value = text.value,
+        onValueChange = {
+            text.value = it
+            val score = it.text.trim()
+            if (score.isNotEmpty() && score.isDigitsOnly()) {
+                onScoreChange(score)
+            } else {
+                onScoreChange("")
+            }
+        },
+        modifier = Modifier
+            .width(SCORE_TEXT_FIELD_WIDTH),
+        textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.Center),
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+        singleLine = true,
+        shape = CircleShape,
+        colors = TextFieldDefaults.textFieldColors(
+            textColor = Color.Black
+        )
+    )
 }
 
 @Composable
