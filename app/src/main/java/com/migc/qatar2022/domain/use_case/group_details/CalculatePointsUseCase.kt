@@ -147,10 +147,12 @@ class CalculatePointsUseCase(
             teamStats.sortWith(compareBy<TeamStat>(
                 { it.points },
                 { it.goalsInFavor - it.goalsAgainst },
-                { it.goalsInFavor }).reversed())
+                { it.goalsInFavor }).reversed()
+            )
             teamStats.map {
                 Log.d("CalculatePointsUseCase", "teamStat: $it")
                 it.groupPosition = i
+                if (i <= 2) it.maxStage = 4 else it.maxStage = 3
                 i++
             }
             fixtureRepository.updateFixture(completedFixtures)

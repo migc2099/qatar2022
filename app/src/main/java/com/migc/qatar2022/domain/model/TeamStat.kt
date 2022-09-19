@@ -10,5 +10,6 @@ data class TeamStat(
     var loses: Int = 0,
     var goalsInFavor: Int = 0,
     var goalsAgainst: Int = 0,
-    var points: Int = 0
+    var points: Int = 0,
+    var maxStage: Int = 3
 )

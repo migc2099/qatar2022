@@ -14,7 +14,8 @@ fun StandingsEntity.toTeamsStat(): TeamStat {
         loses = loses,
         goalsInFavor = goalsInFavor,
         goalsAgainst = goalsAgainst,
-        points = points
+        points = points,
+        maxStage = maxStage
     )
 }
 
@@ -29,6 +30,7 @@ fun TeamStat.toStandingsEntity(): StandingsEntity {
         loses = loses,
         goalsInFavor = goalsInFavor,
         goalsAgainst = goalsAgainst,
-        points = points
+        points = points,
+        maxStage = maxStage
     )
 }
