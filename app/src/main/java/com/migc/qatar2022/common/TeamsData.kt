@@ -1,74 +1,48 @@
 package com.migc.qatar2022.common
 
-import android.util.Log
 import com.migc.qatar2022.R
 import com.migc.qatar2022.data.local.entity.FixtureEntity
 import com.migc.qatar2022.data.local.entity.GroupEntity
 import com.migc.qatar2022.data.local.entity.StandingsEntity
 import com.migc.qatar2022.data.local.entity.TeamEntity
-import com.migc.qatar2022.domain.model.Group
-import com.migc.qatar2022.domain.model.Team
 
 object TeamsData {
 
-//    val listA = listOf(
-//        Team("QAT", "Qatar", R.drawable.flag_qatar),
-//        Team("ECU", "Ecuador", R.drawable.flag_ecuador),
-//        Team("SEN", "Senegal", R.drawable.flag_senegal),
-//        Team("NET", "Netherlands", R.drawable.flag_netherlands)
-//    )
-//    val listB = listOf(
-//        Team("ENG", "England", R.drawable.flag_england),
-//        Team("IRA", "Iran", R.drawable.flag_iran),
-//        Team("USA", "USA", R.drawable.flag_usa),
-//        Team("WAL", "Wales", R.drawable.flag_wales)
-//    )
-//    val listC = listOf(
-//        Team("ARG", "Argentina", R.drawable.flag_argentina),
-//        Team("SAU", "Saudi Arabia", R.drawable.flag_saudi),
-//        Team("MEX", "Mexico", R.drawable.flag_mexico),
-//        Team("POL", "Poland", R.drawable.flag_poland)
-//    )
-//    val listD = listOf(
-//        Team("FRA", "France", R.drawable.flag_france),
-//        Team("DEN", "Denmark", R.drawable.flag_denmark),
-//        Team("TUN", "Tunisia", R.drawable.flag_tunisia),
-//        Team("AUS", "Australia", R.drawable.flag_australia)
-//    )
-//    val listE = listOf(
-//        Team("SPA", "Spain", R.drawable.flag_spain),
-//        Team("GER", "Germany", R.drawable.flag_germany),
-//        Team("JAP", "Japan", R.drawable.flag_japan),
-//        Team("COS", "Costa Rica", R.drawable.flag_costa_rica)
-//    )
-//    val listF = listOf(
-//        Team("BEL", "Belgium", R.drawable.flag_belgium),
-//        Team("CAN", "Canada", R.drawable.flag_canada),
-//        Team("MOR", "Morocco", R.drawable.flag_morocco),
-//        Team("CRO", "Croatia", R.drawable.flag_croatia)
-//    )
-//    val listG = listOf(
-//        Team("BRA", "Brazil", R.drawable.flag_brazil),
-//        Team("SER", "Serbia", R.drawable.flag_serbia),
-//        Team("SWI", "Switzerland", R.drawable.flag_switzerland),
-//        Team("CAM", "Cameroon", R.drawable.flag_cameroon)
-//    )
-//    val listH = listOf(
-//        Team("POR", "Portugal", R.drawable.flag_portugal),
-//        Team("GHA", "Ghana", R.drawable.flag_ghana),
-//        Team("URU", "Uruguay", R.drawable.flag_uruguay),
-//        Team("KOR", "Korea Republic", R.drawable.flag_south_korea)
-//    )
-//    val allGroups = listOf(
-//        Group("Group A", listA),
-//        Group("Group B", listB),
-//        Group("Group C", listC),
-//        Group("Group D", listD),
-//        Group("Group E", listE),
-//        Group("Group F", listF),
-//        Group("Group G", listG),
-//        Group("Group H", listH),
-//    )
+    val countriesMap: Map<String, String> = mapOf(
+        "QAT" to "Qatar",
+        "ECU" to "Ecuador",
+        "SEN" to "Senegal",
+        "NET" to "Netherlands",
+        "ENG" to "England",
+        "IRA" to "Iran",
+        "USA" to "USA",
+        "WAL" to "Wales",
+        "ARG" to "Argentina",
+        "SAU" to "Saudi Arabia",
+        "MEX" to "Mexico",
+        "POL" to "Poland",
+        "FRA" to "France",
+        "DEN" to "Denmark",
+        "TUN" to "Tunisia",
+        "AUS" to "Australia",
+        "SPA" to "Spain",
+        "GER" to "Germany",
+        "JAP" to "Japan",
+        "COS" to "Costa Rica",
+        "BEL" to "Belgium",
+        "CAN" to "Canada",
+        "MOR" to "Morocco",
+        "CRO" to "Croatia",
+        "BRA" to "Brazil",
+        "SER" to "Serbia",
+        "SWI" to "Switzerland",
+        "CAM" to "Cameroon",
+        "POR" to "Portugal",
+        "GHA" to "Ghana",
+        "URU" to "Uruguay",
+        "KOR" to "Korea Republic",
+    )
+
     val flagsMap: Map<String, Int> = mapOf(
         "QAT" to R.drawable.flag_qatar,
         "ECU" to R.drawable.flag_ecuador,
@@ -236,31 +210,4 @@ object TeamsData {
         TeamEntity("KOR", "Korea Republic", "H", R.drawable.flag_south_korea)
     )
 
-//    fun getTeamsByGroup(groupId: String): List<Team> {
-//        return when (groupId.lowercase()) {
-//            "A", "a" -> listA
-//            "B", "b" -> listB
-//            "C", "c" -> listC
-//            "D", "d" -> listD
-//            "E", "e" -> listE
-//            "F", "f" -> listF
-//            "G", "g" -> listG
-//            "H", "h" -> listH
-//            else -> emptyList()
-//        }
-//    }
-//
-//    fun getTeamInGroup(teamId: String, groupId: String): Team {
-//        var team: Team
-//        Log.d("TeamsData.getTeamInGroup", "teamId: $teamId groupId: $groupId")
-//        val teams = getTeamsByGroup(groupId)
-//        Log.d("TeamsData", teams.toString())
-//        teams.let { existingList ->
-//            team = existingList.first {
-//                Log.d("log", it.toString())
-//                it.teamId.lowercase() == teamId.substring(0..2).lowercase()
-//            }
-//        }
-//        return team
-//    }
 }

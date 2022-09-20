@@ -17,4 +17,11 @@
     <string name="close_text">Close</string>
     <string name="show_winners_text">Show Winners</string>
     <string name="reset_playoffs_text">Reset Playoffs</string>
+    <string name="final_standings_text">Final Standings</string>
+    <string name="points_acronym">Pts</string>
+    <string name="wins_acronym">W</string>
+    <string name="draw_acronym">D</string>
+    <string name="loses_acronym">L</string>
+    <string name="goals_difference_acronym">GD</string>
+    <string name="final_standings_title">Final Standings</string>
 </resources>

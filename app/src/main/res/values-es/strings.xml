@@ -17,4 +17,11 @@
     <string name="close_text">Cerrar</string>
     <string name="show_winners_text">Mostrar Ganadores</string>
     <string name="reset_playoffs_text">Reiniciar Cuartos de Final</string>
+    <string name="final_standings_text">Table de Posiciones</string>
+    <string name="points_acronym">Pts</string>
+    <string name="wins_acronym">G</string>
+    <string name="draw_acronym">E</string>
+    <string name="loses_acronym">P</string>
+    <string name="goals_difference_acronym">DG</string>
+    <string name="final_standings_title">Tabla de Posiciones</string>
 </resources>

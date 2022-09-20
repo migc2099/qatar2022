@@ -63,7 +63,7 @@ fun HomeScreen(
                     .height(GROUP_LAZY_ROW_HEIGHT),
                 state = listState
             ) {
-                item{
+                item {
                     Spacer(modifier = Modifier.width(LARGE_PADDING))
                 }
                 teamStatsMap.forEach { (group, teamStats) ->
@@ -149,6 +149,25 @@ fun HomeScreen(
             ) {
                 Text(
                     text = stringResource(R.string.reset_playoffs_text),
+                    color = mainColor
+                )
+            }
+        }
+        item {
+            TextButton(
+                modifier = Modifier
+                    .padding(MEDIUM_PADDING)
+                    .height(LARGE_BUTTON_HEIGHT)
+                    .fillMaxSize(),
+                enabled = playoffCompletedState.value,
+                onClick = {
+                    navHostController.navigate(Screen.Standings.route)
+                },
+                shape = RoundedCornerShape(MEDIUM_ROUND_CORNER),
+                border = BorderStroke(2.dp, mainColor)
+            ) {
+                Text(
+                    text = stringResource(R.string.final_standings_text),
                     color = mainColor
                 )
             }

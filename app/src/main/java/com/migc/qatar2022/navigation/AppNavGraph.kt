@@ -8,6 +8,7 @@ import com.migc.qatar2022.common.Constants.PARAM_GROUP_ID
 import com.migc.qatar2022.presentation.screens.group_details.GroupDetailsScreen
 import com.migc.qatar2022.presentation.screens.home.HomeScreen
 import com.migc.qatar2022.presentation.screens.splash.SplashScreen
+import com.migc.qatar2022.presentation.screens.standings.StandingScreen
 
 @Composable
 fun AppNavGraph(navHostController: NavHostController) {
@@ -23,6 +24,9 @@ fun AppNavGraph(navHostController: NavHostController) {
         }
         composable(route = Screen.GroupDetails.route + "/{$PARAM_GROUP_ID}"){
             GroupDetailsScreen(navHostController = navHostController)
+        }
+        composable(route = Screen.Standings.route){
+            StandingScreen()
         }
     }
 }

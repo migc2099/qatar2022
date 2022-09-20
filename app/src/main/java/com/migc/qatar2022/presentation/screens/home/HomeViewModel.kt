@@ -65,7 +65,7 @@ class HomeViewModel @Inject constructor(
             is HomeUiEvent.OnNavigateToGroupDetails -> {
                 listPosition = event.listIndex
                 listOffSet = event.scrollOffSet
-                if (_playoffs.value.isNotEmpty()){
+                if (_playoffs.value.isNotEmpty()) {
                     viewModelScope.launch(Dispatchers.IO) {
                         resetPlayoffs()
                         fillRoundOf16Games()
@@ -95,6 +95,11 @@ class HomeViewModel @Inject constructor(
                 viewModelScope.launch(Dispatchers.IO) {
                     resetPlayoffs()
                     fillRoundOf16Games()
+                }
+            }
+            is HomeUiEvent.OnShowStandingsClicked -> {
+                viewModelScope.launch(Dispatchers.IO) {
+                    getFinalStandings()
                 }
             }
         }
@@ -179,6 +184,12 @@ class HomeViewModel @Inject constructor(
                     _statsPerGroup.value = statsMap
                 }
             refreshPlayoffsGrid()
+        }
+    }
+
+    private fun getFinalStandings() {
+        viewModelScope.launch(Dispatchers.IO) {
+            standingsUsesCases.calculateFinalStandingsUseCase()
         }
     }
 
