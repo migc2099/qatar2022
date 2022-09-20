@@ -1,6 +1,9 @@
 package com.migc.qatar2022.presentation.components
 
 import android.util.Log
+import androidx.compose.animation.core.Animatable
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -9,19 +12,19 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.Dp
-import androidx.compose.ui.unit.dp
 import com.migc.qatar2022.R
 import com.migc.qatar2022.domain.model.Group
 import com.migc.qatar2022.domain.model.Team
-import com.migc.qatar2022.domain.model.TeamStat
 import com.migc.qatar2022.ui.theme.*
 
 @Composable
@@ -31,11 +34,25 @@ fun GroupCard(
     teamsStats: List<Team>,
     onClick: (String) -> Unit
 ) {
+    val rowScale = remember { Animatable(1.1f) }
+    LaunchedEffect(key1 = true) {
+        rowScale.animateTo(
+            targetValue = 1f,
+            animationSpec = tween(
+                durationMillis = 500,
+                easing = FastOutSlowInEasing
+            )
+        )
+    }
     Card(
         modifier = modifier
             .size(GROUP_CARD_SIZE)
             .clickable {
                 onClick(group.groupId)
+            }
+            .graphicsLayer {
+                scaleX = rowScale.value
+                scaleY = rowScale.value
             },
         shape = GroupCardShape(),
         backgroundColor = mainColor
@@ -64,7 +81,11 @@ fun GroupCard(
                     Card(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(EXTRA_SMALL_VERTICAL_PADDING),
+                            .padding(EXTRA_SMALL_VERTICAL_PADDING)
+                            .graphicsLayer {
+                                scaleX = rowScale.value
+                                scaleY = rowScale.value
+                            },
                         shape = RoundedCornerShape(MEDIUM_ROUND_CORNER),
                         backgroundColor = mainBackgroundColor
                     ) {
