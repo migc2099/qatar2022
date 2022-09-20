@@ -35,14 +35,17 @@ object RepositoriesModule {
 
     @Provides
     @Singleton
-    fun provideStandingsUseCases(repository: StandingsRepository): StandingsUseCases {
+    fun provideStandingsUseCases(
+        repository: StandingsRepository,
+        playoffRepository: PlayoffsRepository
+    ): StandingsUseCases {
         return StandingsUseCases(
             setupStandingsUseCase = SetupStandingsUseCase(repository),
             getTeamsByGroupUseCase = GetTeamsByGroupUseCase(repository),
-            getTeamByGroupPositionUseCase = GetTeamByGroupPositionUseCase(repository),
             updateStandingsUseCase = UpdateStandingsUseCase(repository),
             getTeamsStatsPerGroupUseCase = GetTeamsStatsPerGroupUseCase(repository),
-            checkIfGroupGamesCompletedUseCase = CheckIfGroupGamesCompletedUseCase(repository)
+            checkIfGroupGamesCompletedUseCase = CheckIfGroupGamesCompletedUseCase(repository),
+            calculateFinalStandingsUseCase = CalculateFinalStandingsUseCase(repository, playoffRepository)
         )
     }
 

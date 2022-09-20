@@ -4,7 +4,6 @@ import android.util.Log
 import com.migc.qatar2022.data.QatarDatabase
 import com.migc.qatar2022.data.local.mapper.*
 import com.migc.qatar2022.domain.model.Group
-import com.migc.qatar2022.domain.model.PlayOffTeam
 import com.migc.qatar2022.domain.model.Team
 import com.migc.qatar2022.domain.model.TeamStat
 import com.migc.qatar2022.domain.repository.StandingsRepository
@@ -66,6 +65,10 @@ class StandingsRepositoryImpl @Inject constructor(
         }
         Log.d(LOG_TAG, "inserting $standings")
         qatarDatabase.standingsDao.insertStandings(standings)
+    }
+
+    override suspend fun getTeamById(teamId: String): TeamStat {
+        return qatarDatabase.standingsDao.getTeamById(teamId).toTeamsStat()
     }
 
     override suspend fun updateTeamStage(teamId: String, stage: Int) {

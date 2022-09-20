@@ -14,7 +14,7 @@ interface StandingsDao {
     fun updateStandings(standings: List<StandingsEntity>)
 
     @Query("SELECT * FROM standings_table WHERE teamId=:teamId")
-    suspend fun getStandingByCountryId(teamId: String): StandingsEntity
+    suspend fun getTeamById(teamId: String): StandingsEntity
 
     @Query("SELECT * FROM standings_table WHERE groupKey=:group")
     suspend fun getStandingsByGroup(group: String): List<StandingsEntity>
