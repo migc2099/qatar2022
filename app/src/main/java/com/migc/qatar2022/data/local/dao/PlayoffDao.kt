@@ -21,10 +21,10 @@ interface PlayoffDao {
     @Query("UPDATE OR IGNORE playoffs_table SET secondTeamId=:teamId WHERE roundKey=:roundKey")
     suspend fun updateSecondTeam(roundKey: Int, teamId: String): Int
 
-    @Query("UPDATE OR IGNORE playoffs_table SET winnerTeam=:teamId Where roundKey=:roundKey")
+    @Query("UPDATE OR REPLACE playoffs_table SET winnerTeam=:teamId WHERE roundKey=:roundKey")
     suspend fun updateWinnerTeam(roundKey: Int, teamId: String)
 
-    @Query("UPDATE OR IGNORE playoffs_table SET loserTeam=:teamId Where roundKey=:roundKey")
+    @Query("UPDATE OR REPLACE playoffs_table SET loserTeam=:teamId WHERE roundKey=:roundKey")
     suspend fun updateLoserTeam(roundKey: Int, teamId: String)
 
     @Update
