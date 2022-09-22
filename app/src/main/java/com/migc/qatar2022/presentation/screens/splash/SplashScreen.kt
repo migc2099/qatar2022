@@ -36,8 +36,8 @@ fun SplashScreen(
         degrees.animateTo(
             targetValue = 360f,
             animationSpec = tween(
-                durationMillis = 1000,
-                delayMillis = 200
+                durationMillis = 800,
+                delayMillis = 100
             )
         )
         Log.d("SplashScreen", "onFixtureSetupCompleted=$onFixtureSetupCompleted")
@@ -56,7 +56,7 @@ fun SplashScreen(
         if (!onTeamsSetupCompleted) {
             splashViewModel.setDatabaseTeams()
         }
-        delay(200)
+        delay(100)
         navController.popBackStack()
         navController.navigate(Screen.Home.route)
     }
