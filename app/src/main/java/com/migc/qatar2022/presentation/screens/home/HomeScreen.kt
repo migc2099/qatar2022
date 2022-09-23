@@ -1,7 +1,8 @@
 package com.migc.qatar2022.presentation.screens.home
 
 import android.util.Log
-import androidx.compose.foundation.BorderStroke
+import androidx.compose.animation.core.Spring
+import androidx.compose.animation.core.spring
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -10,20 +11,18 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.migc.qatar2022.R
 import com.migc.qatar2022.navigation.Screen
-import com.migc.qatar2022.presentation.components.CountDownDisplay
-import com.migc.qatar2022.presentation.components.DisplayWinnersButton
-import com.migc.qatar2022.presentation.components.GroupCard
+import com.migc.qatar2022.presentation.components.*
 import com.migc.qatar2022.presentation.screens.playoffs.PlayoffDialog
 import com.migc.qatar2022.presentation.screens.playoffs.PlayoffsGrid
 import com.migc.qatar2022.presentation.screens.playoffs.PodiumDialog
 import com.migc.qatar2022.ui.theme.*
+import kotlinx.coroutines.launch
 
+@ExperimentalMaterialApi
 @Composable
 fun HomeScreen(
     navHostController: NavHostController,
@@ -46,130 +45,147 @@ fun HomeScreen(
     val selectedPlayoff = homeViewModel.selectedPlayoff.collectAsState()
     val bestTeams = homeViewModel.bestTeams.collectAsState()
 
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-    ) {
-        item {
-            CountDownDisplay(modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp))
-        }
-        item {
-            Spacer(modifier = Modifier.height(MEDIUM_VERTICAL_GAP))
-        }
-        item {
-            LazyRow(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(GROUP_LAZY_ROW_HEIGHT),
-                state = listState
-            ) {
-                item {
-                    Spacer(modifier = Modifier.width(LARGE_PADDING))
+    val sheetState = rememberBottomSheetState(
+        initialValue = BottomSheetValue.Collapsed,
+        animationSpec = spring(
+            dampingRatio = Spring.DampingRatioMediumBouncy
+        )
+    )
+
+    val scaffoldState = rememberBottomSheetScaffoldState(
+        bottomSheetState = sheetState
+    )
+
+    val coroutineScope = rememberCoroutineScope()
+    BottomSheetScaffold(
+        scaffoldState = scaffoldState,
+        topBar = {
+            HomeTopBar {
+                coroutineScope.launch {
+                    if (sheetState.isCollapsed) {
+                        Log.d("coroutineScope", "playoffs expand")
+                        sheetState.expand()
+                    } else {
+                        Log.d("coroutineScope", "playoffs collapse")
+                        sheetState.collapse()
+                    }
                 }
-                teamStatsMap.forEach { (group, teamStats) ->
-                    Log.d("HomeScreen", "GROUP $group")
-                    Log.d("HomeScreen", "TEAMSTATS $teamStats")
+            }
+        },
+        sheetContent = {
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                shape = RoundedCornerShape(MEDIUM_ROUND_CORNER)
+            ) {
+                HomeBottomSheetContent(
+                    isResetEnabled = playoffs.value.isNotEmpty(),
+                    isShowWinnersEnabled = playoffCompletedState.value,
+                    isFinalStandingsEnabled = playoffCompletedState.value,
+                    playoffCompletedState = playoffCompletedState.value,
+                    onResetPlayoffClick = {
+                        homeViewModel.onEvent(HomeUiEvent.OnResetPlayoffsClicked)
+                        coroutineScope.launch {
+                            if (sheetState.isCollapsed) {
+                                Log.d("coroutineScope", "playoffs expand")
+                                sheetState.expand()
+                            } else {
+                                Log.d("coroutineScope", "playoffs collapse")
+                                sheetState.collapse()
+                            }
+                        }
+                    },
+                    onShowWinnersClick = {
+                        showPodiumDialog.value = true
+                    },
+                    onFinalStandingsClick = {
+                        navHostController.navigate(Screen.Standings.route)
+                    }
+                )
+            }
+        },
+        sheetBackgroundColor = mainBackgroundColor,
+        sheetPeekHeight = 0.dp
+    ) {
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+        ) {
+            item {
+                CountDownDisplay(modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp))
+            }
+            item {
+                Spacer(modifier = Modifier.height(MEDIUM_VERTICAL_GAP))
+            }
+            item {
+                LazyRow(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(GROUP_LAZY_ROW_HEIGHT),
+                    state = listState
+                ) {
                     item {
-                        Row(modifier = Modifier.padding(horizontal = MEDIUM_PADDING)) {
-                            GroupCard(
-                                modifier = Modifier,
-                                group = group,
-                                teamsStats = teamStats
-                            ) {
-                                homeViewModel.onEvent(
-                                    HomeUiEvent.OnNavigateToGroupDetails(
-                                        listIndex = listState.firstVisibleItemIndex,
-                                        scrollOffSet = listState.firstVisibleItemScrollOffset
+                        Spacer(modifier = Modifier.width(LARGE_PADDING))
+                    }
+                    teamStatsMap.forEach { (group, teamStats) ->
+                        Log.d("HomeScreen", "GROUP $group")
+                        Log.d("HomeScreen", "TEAMSTATS $teamStats")
+                        item {
+                            Row(modifier = Modifier.padding(horizontal = MEDIUM_PADDING)) {
+                                GroupCard(
+                                    modifier = Modifier,
+                                    group = group,
+                                    teamsStats = teamStats
+                                ) {
+                                    homeViewModel.onEvent(
+                                        HomeUiEvent.OnNavigateToGroupDetails(
+                                            listIndex = listState.firstVisibleItemIndex,
+                                            scrollOffSet = listState.firstVisibleItemScrollOffset
+                                        )
                                     )
-                                )
-                                navHostController.navigate(Screen.GroupDetails.route + "/$it")
+                                    navHostController.navigate(Screen.GroupDetails.route + "/$it")
+                                }
                             }
                         }
                     }
-                }
-                item {
-                    Spacer(modifier = Modifier.width(LARGE_PADDING))
-                }
-            }
-        }
-        item {
-            Spacer(modifier = Modifier.height(MEDIUM_VERTICAL_GAP))
-        }
-        item {
-            LazyRow(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(384.dp)
-            ) {
-                item { Spacer(modifier = Modifier.width(8.dp)) }
-                item {
-                    Card(
-                        modifier = Modifier
-                            .width(620.dp)
-                            .height(384.dp),
-                        shape = RoundedCornerShape(SMALL_ROUND_CORNER),
-                        backgroundColor = mainColor
-                    ) {
-                        PlayoffsGrid(
-                            modifier = Modifier.padding(horizontal = MEDIUM_PADDING),
-                            playoffs = playoffs.value
-                        ) {
-                            Log.d("LazyRow", "roundKey clicked: $it")
-                            homeViewModel.onEvent(HomeUiEvent.OnPlayoffDialogClicked(it))
-                            showPlayoffDialog.value = true
-                        }
+                    item {
+                        Spacer(modifier = Modifier.width(LARGE_PADDING))
                     }
                 }
-                item { Spacer(modifier = Modifier.width(8.dp)) }
             }
-        }
-        item {
-            Spacer(modifier = Modifier.height(MEDIUM_VERTICAL_GAP))
-        }
-        item {
-            DisplayWinnersButton(
-                enabled = playoffCompletedState.value,
-                onClick = {
-                    showPodiumDialog.value = true
+            item {
+                Spacer(modifier = Modifier.height(MEDIUM_VERTICAL_GAP))
+            }
+            item {
+                LazyRow(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(384.dp)
+                ) {
+                    item { Spacer(modifier = Modifier.width(8.dp)) }
+                    item {
+                        Card(
+                            modifier = Modifier
+                                .width(620.dp)
+                                .height(384.dp),
+                            shape = RoundedCornerShape(SMALL_ROUND_CORNER),
+                            backgroundColor = mainColor
+                        ) {
+                            PlayoffsGrid(
+                                modifier = Modifier.padding(horizontal = MEDIUM_PADDING),
+                                playoffs = playoffs.value
+                            ) {
+                                Log.d("LazyRow", "roundKey clicked: $it")
+                                homeViewModel.onEvent(HomeUiEvent.OnPlayoffDialogClicked(it))
+                                showPlayoffDialog.value = true
+                            }
+                        }
+                    }
+                    item { Spacer(modifier = Modifier.width(8.dp)) }
                 }
-            )
-        }
-        item {
-            TextButton(
-                modifier = Modifier
-                    .padding(MEDIUM_PADDING)
-                    .height(LARGE_BUTTON_HEIGHT)
-                    .fillMaxSize(),
-                enabled = true,
-                onClick = {
-                    homeViewModel.onEvent(HomeUiEvent.OnResetPlayoffsClicked)
-                },
-                shape = RoundedCornerShape(MEDIUM_ROUND_CORNER),
-                border = BorderStroke(2.dp, mainColor)
-            ) {
-                Text(
-                    text = stringResource(R.string.reset_playoffs_text),
-                    color = mainColor
-                )
             }
-        }
-        item {
-            TextButton(
-                modifier = Modifier
-                    .padding(MEDIUM_PADDING)
-                    .height(LARGE_BUTTON_HEIGHT)
-                    .fillMaxSize(),
-                enabled = playoffCompletedState.value,
-                onClick = {
-                    navHostController.navigate(Screen.Standings.route)
-                },
-                shape = RoundedCornerShape(MEDIUM_ROUND_CORNER),
-                border = BorderStroke(2.dp, mainColor)
-            ) {
-                Text(
-                    text = stringResource(R.string.final_standings_text),
-                    color = mainColor
-                )
+            item {
+                Spacer(modifier = Modifier.height(MEDIUM_VERTICAL_GAP))
             }
         }
     }

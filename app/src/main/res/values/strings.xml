@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">World Cup Qatar 2022 Simulator</string>
+    <string name="app_top_bar_title">Qatar 2022</string>
     <string name="soccer_logo">Football</string>
     <string name="days_text">Days</string>
     <string name="hours_text">Hours</string>
@@ -25,4 +26,5 @@
     <string name="goals_difference_acronym">GD</string>
     <string name="final_standings_title">Final Standings</string>
     <string name="penalty_kick_text">pk</string>
+    <string name="menu_text">Menu</string>
 </resources>

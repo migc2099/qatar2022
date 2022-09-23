@@ -1,5 +1,6 @@
 package com.migc.qatar2022.navigation
 
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -10,6 +11,7 @@ import com.migc.qatar2022.presentation.screens.home.HomeScreen
 import com.migc.qatar2022.presentation.screens.splash.SplashScreen
 import com.migc.qatar2022.presentation.screens.standings.StandingScreen
 
+@ExperimentalMaterialApi
 @Composable
 fun AppNavGraph(navHostController: NavHostController) {
     NavHost(
