@@ -59,7 +59,9 @@ fun PlayoffDialog(
             elevation = SMALL_ELEVATION
         ) {
             Column(
-                modifier = Modifier.fillMaxWidth(),
+                modifier = Modifier
+                    .width(DIALOG_WIDTH)
+                    .padding(MEDIUM_PADDING),
                 verticalArrangement = Arrangement.Center,
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
@@ -79,7 +81,7 @@ fun PlayoffDialog(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Start
                 ) {
-                    FlagAndName(teamId = playoff.firstTeam, teamName = playoff.firstTeam)
+                    FlagAndName(teamId = playoff.firstTeam)
                     Spacer(modifier = Modifier.width(MEDIUM_HORIZONTAL_GAP))
                     Box(
                         modifier = Modifier.fillMaxWidth(),
@@ -97,7 +99,8 @@ fun PlayoffDialog(
                                         editedPlayOff.firstTeamScore = -1
                                         isScoreTied.value = false
                                     }
-                                }
+                                },
+                                isPkField = false
                             )
                             Spacer(modifier = Modifier.width(MEDIUM_HORIZONTAL_GAP))
                             if (isScoreTied.value) {
@@ -110,7 +113,8 @@ fun PlayoffDialog(
                                         } else {
                                             editedPlayOff.firstTeamPKScore = -1
                                         }
-                                    }
+                                    },
+                                    isPkField = true
                                 )
                             } else {
                                 Spacer(modifier = Modifier.width(50.dp))
@@ -127,7 +131,7 @@ fun PlayoffDialog(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.Start
                 ) {
-                    FlagAndName(teamId = playoff.secondTeam, teamName = playoff.secondTeam)
+                    FlagAndName(teamId = playoff.secondTeam)
                     Spacer(modifier = Modifier.width(MEDIUM_HORIZONTAL_GAP))
                     Box(
                         modifier = Modifier.fillMaxWidth(),
@@ -145,7 +149,8 @@ fun PlayoffDialog(
                                         editedPlayOff.secondTeamScore = -1
                                         isScoreTied.value = false
                                     }
-                                }
+                                },
+                                isPkField = false
                             )
                             Spacer(modifier = Modifier.width(MEDIUM_HORIZONTAL_GAP))
                             if (isScoreTied.value) {
@@ -158,7 +163,8 @@ fun PlayoffDialog(
                                         } else {
                                             editedPlayOff.secondTeamPKScore = -1
                                         }
-                                    }
+                                    },
+                                    isPkField = true
                                 )
                             } else {
                                 Spacer(modifier = Modifier.width(50.dp))
@@ -216,7 +222,7 @@ fun PlayoffDialog(
 }
 
 @Composable
-fun FlagAndName(teamId: String, teamName: String) {
+fun FlagAndName(teamId: String) {
     Image(
         painter = painterResource(id = TeamsData.flagsMap[teamId]!!),
         modifier = Modifier.size(FLAG_ROW_IMAGE_SIZE),
@@ -226,13 +232,13 @@ fun FlagAndName(teamId: String, teamName: String) {
     Text(
         modifier = Modifier.width(100.dp),
         color = Color.Black,
-        text = teamName,
+        text = TeamsData.countriesMap[teamId]!!,
         fontSize = Typography.subtitle2.fontSize
     )
 }
 
 @Composable
-fun ScoreTextField(initialScore: Int?, onScoreChange: (String) -> Unit) {
+fun ScoreTextField(initialScore: Int?, onScoreChange: (String) -> Unit, isPkField: Boolean) {
     var score = ""
     if (initialScore != null) {
         score = initialScore.toString()
@@ -246,6 +252,7 @@ fun ScoreTextField(initialScore: Int?, onScoreChange: (String) -> Unit) {
         },
         modifier = Modifier.width(SCORE_TEXT_FIELD_WIDTH),
         textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.Center),
+        label = { if (isPkField) Text(stringResource(R.string.penalty_kick_text), color = Color.DarkGray.copy(alpha = 0.5f)) },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
         singleLine = true,
         shape = CircleShape,

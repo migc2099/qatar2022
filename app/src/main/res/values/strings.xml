@@ -24,4 +24,5 @@
     <string name="loses_acronym">L</string>
     <string name="goals_difference_acronym">GD</string>
     <string name="final_standings_title">Final Standings</string>
+    <string name="penalty_kick_text">pk</string>
 </resources>

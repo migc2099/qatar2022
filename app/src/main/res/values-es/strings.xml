@@ -24,4 +24,5 @@
     <string name="loses_acronym">P</string>
     <string name="goals_difference_acronym">DG</string>
     <string name="final_standings_title">Tabla de Posiciones</string>
+    <string name="penalty_kick_text">p</string>
 </resources>
