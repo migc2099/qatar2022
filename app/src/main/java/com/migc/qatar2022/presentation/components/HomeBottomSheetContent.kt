@@ -9,6 +9,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -46,102 +47,66 @@ fun HomeBottomSheetContent(
             ) { }
         }
         if (isResetEnabled) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable {
-                        onResetPlayoffClick()
-                    }
-                    .padding(horizontal = LARGE_PADDING, vertical = MEDIUM_VERTICAL_PADDING)
+            BottomSheetRow(
+                icon = painterResource(R.drawable.ic_reset_playoffs),
+                title = stringResource(R.string.reset_playoffs_text)
             ) {
-                Icon(
-                    painter = painterResource(R.drawable.ic_reset_playoffs),
-                    contentDescription = stringResource(R.string.reset_playoffs_text),
-                    tint = mainColor
-                )
-                Spacer(modifier = Modifier.width(LARGE_PADDING))
-                Text(
-                    modifier = Modifier,
-                    text = stringResource(R.string.reset_playoffs_text),
-                    color = mainColor,
-                    fontSize = Typography.subtitle1.fontSize
-                )
+                onResetPlayoffClick()
             }
         }
 
         if (isShowWinnersEnabled) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable {
-                        if (playoffCompletedState) {
-                            onShowWinnersClick()
-                        }
-                    }
-                    .padding(horizontal = LARGE_PADDING, vertical = MEDIUM_VERTICAL_PADDING)
+            BottomSheetRow(
+                icon = painterResource(R.drawable.ic_show_winners),
+                title = stringResource(R.string.show_winners_text)
             ) {
-                Icon(
-                    painter = painterResource(R.drawable.ic_show_winners),
-                    contentDescription = stringResource(R.string.show_winners_text),
-                    tint = mainColor
-                )
-                Spacer(modifier = Modifier.width(LARGE_PADDING))
-                Text(
-                    modifier = Modifier,
-                    text = stringResource(R.string.show_winners_text),
-                    color = mainColor,
-                    fontSize = Typography.subtitle1.fontSize
-                )
+                if (playoffCompletedState) {
+                    onShowWinnersClick()
+                }
             }
         }
 
         if (isFinalStandingsEnabled) {
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .clickable {
-                        if (playoffCompletedState) {
-                            onFinalStandingsClick()
-                        }
-                    }
-                    .padding(horizontal = LARGE_PADDING, vertical = MEDIUM_VERTICAL_PADDING)
+            BottomSheetRow(
+                icon = painterResource(R.drawable.ic_final_standings),
+                title = stringResource(R.string.final_standings_text)
             ) {
-                Icon(
-                    painter = painterResource(R.drawable.ic_final_standings),
-                    contentDescription = stringResource(R.string.final_standings_text),
-                    tint = mainColor
-                )
-                Spacer(modifier = Modifier.width(LARGE_PADDING))
-                Text(
-                    modifier = Modifier,
-                    text = stringResource(R.string.final_standings_text),
-                    color = mainColor,
-                    fontSize = Typography.subtitle1.fontSize
-                )
+                if (playoffCompletedState) {
+                    onFinalStandingsClick()
+                }
             }
         }
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clickable {
-                    onTeamsMapClick()
-                }
-                .padding(horizontal = LARGE_PADDING, vertical = MEDIUM_VERTICAL_PADDING)
+        BottomSheetRow(
+            icon = painterResource(R.drawable.ic_countries_map),
+            title = stringResource(id = R.string.countries_map_text)
         ) {
-            Icon(
-                painter = painterResource(R.drawable.ic_countries_map),
-                contentDescription = stringResource(id = R.string.countries_map_text),
-                tint = mainColor
-            )
-            Spacer(modifier = Modifier.width(LARGE_PADDING))
-            Text(
-                modifier = Modifier,
-                text = stringResource(id = R.string.countries_map_text),
-                color = mainColor,
-                fontSize = Typography.subtitle1.fontSize
-            )
+            onTeamsMapClick()
         }
 
+    }
+}
 
+@Composable
+fun BottomSheetRow(icon: Painter, title: String, onClick: () -> Unit) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable {
+                onClick()
+            }
+            .padding(horizontal = LARGE_PADDING, vertical = MEDIUM_VERTICAL_PADDING)
+    ) {
+        Icon(
+            painter = icon,
+            contentDescription = title,
+            tint = mainColor
+        )
+        Spacer(modifier = Modifier.width(LARGE_PADDING))
+        Text(
+            modifier = Modifier,
+            text = title,
+            color = mainColor,
+            fontSize = Typography.h6.fontSize
+        )
     }
 }

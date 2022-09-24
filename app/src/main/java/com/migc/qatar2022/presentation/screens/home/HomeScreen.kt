@@ -73,42 +73,37 @@ fun HomeScreen(
             }
         },
         sheetContent = {
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth(),
-                shape = RoundedCornerShape(MEDIUM_ROUND_CORNER)
-            ) {
-                HomeBottomSheetContent(
-                    isResetEnabled = playoffs.value.isNotEmpty(),
-                    isShowWinnersEnabled = playoffCompletedState.value,
-                    isFinalStandingsEnabled = playoffCompletedState.value,
-                    playoffCompletedState = playoffCompletedState.value,
-                    onResetPlayoffClick = {
-                        homeViewModel.onEvent(HomeUiEvent.OnResetPlayoffsClicked)
-                        coroutineScope.launch {
-                            if (sheetState.isCollapsed) {
-                                Log.d("coroutineScope", "playoffs expand")
-                                sheetState.expand()
-                            } else {
-                                Log.d("coroutineScope", "playoffs collapse")
-                                sheetState.collapse()
-                            }
+            HomeBottomSheetContent(
+                isResetEnabled = playoffs.value.isNotEmpty(),
+                isShowWinnersEnabled = playoffCompletedState.value,
+                isFinalStandingsEnabled = playoffCompletedState.value,
+                playoffCompletedState = playoffCompletedState.value,
+                onResetPlayoffClick = {
+                    homeViewModel.onEvent(HomeUiEvent.OnResetPlayoffsClicked)
+                    coroutineScope.launch {
+                        if (sheetState.isCollapsed) {
+                            Log.d("coroutineScope", "playoffs expand")
+                            sheetState.expand()
+                        } else {
+                            Log.d("coroutineScope", "playoffs collapse")
+                            sheetState.collapse()
                         }
-                    },
-                    onShowWinnersClick = {
-                        showPodiumDialog.value = true
-                    },
-                    onFinalStandingsClick = {
-                        navHostController.navigate(Screen.Standings.route)
-                    },
-                    onTeamsMapClick = {
-                        navHostController.navigate(Screen.TeamsMapScreen.route)
                     }
-                )
-            }
+                },
+                onShowWinnersClick = {
+                    showPodiumDialog.value = true
+                },
+                onFinalStandingsClick = {
+                    navHostController.navigate(Screen.Standings.route)
+                },
+                onTeamsMapClick = {
+                    navHostController.navigate(Screen.TeamsMapScreen.route)
+                }
+            )
         },
         sheetBackgroundColor = mainBackgroundColor,
-        sheetPeekHeight = 0.dp
+        sheetPeekHeight = 0.dp,
+        sheetShape = RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp),
     ) {
         LazyColumn(
             modifier = Modifier
