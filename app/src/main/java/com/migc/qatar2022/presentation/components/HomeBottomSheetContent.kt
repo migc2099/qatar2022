@@ -24,6 +24,7 @@ fun HomeBottomSheetContent(
     onResetPlayoffClick: () -> Unit,
     onShowWinnersClick: () -> Unit,
     onFinalStandingsClick: () -> Unit,
+    onTeamsMapClick: () -> Unit
 ) {
     Column(
         modifier = Modifier
@@ -119,6 +120,28 @@ fun HomeBottomSheetContent(
                 )
             }
         }
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .clickable {
+                    onTeamsMapClick()
+                }
+                .padding(horizontal = LARGE_PADDING, vertical = MEDIUM_VERTICAL_PADDING)
+        ) {
+            Icon(
+                painter = painterResource(R.drawable.ic_countries_map),
+                contentDescription = stringResource(id = R.string.countries_map_text),
+                tint = mainColor
+            )
+            Spacer(modifier = Modifier.width(LARGE_PADDING))
+            Text(
+                modifier = Modifier,
+                text = stringResource(id = R.string.countries_map_text),
+                color = mainColor,
+                fontSize = Typography.subtitle1.fontSize
+            )
+        }
+
 
     }
 }

@@ -10,6 +10,7 @@ import com.migc.qatar2022.presentation.screens.group_details.GroupDetailsScreen
 import com.migc.qatar2022.presentation.screens.home.HomeScreen
 import com.migc.qatar2022.presentation.screens.splash.SplashScreen
 import com.migc.qatar2022.presentation.screens.standings.StandingScreen
+import com.migc.qatar2022.presentation.screens.teams_map.TeamsMapScreen
 
 @ExperimentalMaterialApi
 @Composable
@@ -29,6 +30,9 @@ fun AppNavGraph(navHostController: NavHostController) {
         }
         composable(route = Screen.Standings.route){
             StandingScreen()
+        }
+        composable(route = Screen.TeamsMapScreen.route){
+            TeamsMapScreen()
         }
     }
 }

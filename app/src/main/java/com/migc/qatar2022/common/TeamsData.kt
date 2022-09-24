@@ -1,5 +1,6 @@
 package com.migc.qatar2022.common
 
+import com.google.android.gms.maps.model.LatLng
 import com.migc.qatar2022.R
 import com.migc.qatar2022.data.local.entity.FixtureEntity
 import com.migc.qatar2022.data.local.entity.GroupEntity
@@ -76,6 +77,41 @@ object TeamsData {
         "GHA" to R.drawable.flag_ghana,
         "URU" to R.drawable.flag_uruguay,
         "KOR" to R.drawable.flag_south_korea
+    )
+
+    val locationMap: Map<String, LatLng> = mapOf(
+        "QAT" to LatLng(25.3548, 51.1839),
+        "ECU" to LatLng(-1.8312, -78.1834),
+        "SEN" to LatLng(14.4974, -14.4524),
+        "NET" to LatLng(52.1326, 5.2913),
+        "ENG" to LatLng(52.3555, -1.1743),
+        "IRA" to LatLng(32.4279, 53.6880),
+        "USA" to LatLng(37.0902, -95.7129),
+        "WAL" to LatLng(52.1307, -3.7837),
+        "ARG" to LatLng(-38.4161, -63.6167),
+        "SAU" to LatLng(23.8859, 45.0792),
+        "MEX" to LatLng(23.6345, -102.5528),
+        "POL" to LatLng(51.9194, 19.1451),
+        "FRA" to LatLng(46.2276, 2.2137),
+        "DEN" to LatLng(56.2639, 9.5018),
+        "TUN" to LatLng(33.8869, 9.5375),
+        "AUS" to LatLng(-25.2744, 133.7751),
+        "SPA" to LatLng(40.4637, -3.7492),
+        "GER" to LatLng(51.1657, 10.4515),
+        "JAP" to LatLng(36.2048, 138.2529),
+        "COS" to LatLng(9.7489, -83.7534),
+        "BEL" to LatLng(50.5039, 4.4699),
+        "CAN" to LatLng(56.1304, -106.3468),
+        "MOR" to LatLng(31.7917, -7.0926),
+        "CRO" to LatLng(45.1000, 15.2000),
+        "BRA" to LatLng(-14.2350, -51.9253),
+        "SER" to LatLng(44.0165, 21.0059),
+        "SWI" to LatLng(46.8182, 8.2275),
+        "CAM" to LatLng(7.3697, 12.3547),
+        "POR" to LatLng(39.3999, -8.2245),
+        "GHA" to LatLng(7.9465, 1.0232),
+        "URU" to LatLng(-32.5228, -55.7658),
+        "KOR" to LatLng(35.9078, 127.7669)
     )
 
     val groups = listOf(

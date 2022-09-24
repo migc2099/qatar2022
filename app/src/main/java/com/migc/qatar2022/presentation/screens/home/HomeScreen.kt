@@ -100,6 +100,9 @@ fun HomeScreen(
                     },
                     onFinalStandingsClick = {
                         navHostController.navigate(Screen.Standings.route)
+                    },
+                    onTeamsMapClick = {
+                        navHostController.navigate(Screen.TeamsMapScreen.route)
                     }
                 )
             }
