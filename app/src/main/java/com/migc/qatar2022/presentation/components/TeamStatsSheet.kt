@@ -1,56 +1,77 @@
 package com.migc.qatar2022.presentation.components
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.tooling.preview.Preview
+import com.migc.qatar2022.R
+import com.migc.qatar2022.common.TeamsData
 import com.migc.qatar2022.domain.model.CountryInfo
 import com.migc.qatar2022.ui.theme.*
 
 @Composable
 fun TeamStatsSheet(countryInfo: CountryInfo) {
     val championships: List<Int> = countryInfo.championships
+    val finals: List<Int> = countryInfo.runnerUps
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .padding(LARGE_PADDING),
         contentAlignment = Alignment.Center
     ) {
-        Row() {
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(
-                    text = "Appearances",
-                    fontSize = Typography.h5.fontSize,
-                    color = mainColor
-                )
-                Spacer(modifier = Modifier.height(MEDIUM_VERTICAL_GAP))
-                Text(
-                    text = "2",
-                    fontSize = Typography.h3.fontSize,
-                    color = mainColor
-                )
-            }
-            Spacer(modifier = Modifier.width(MEDIUM_HORIZONTAL_GAP))
-            if (championships.isNotEmpty()) {
-                LazyColumn(
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.Top
+        ) {
+            Column(modifier = Modifier.weight(1f)) {
+                Row(
+                    horizontalArrangement = Arrangement.Start,
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
-                    items(championships) { year ->
-                        Text(
-                            text = year.toString(),
-                            fontSize = Typography.h6.fontSize,
-                            color = mainColor
+                    if (countryInfo.teamId.isNotEmpty()){
+                        Image(
+                            painter = painterResource(id = TeamsData.flagsMap[countryInfo.teamId]!!),
+                            contentDescription = stringResource(R.string.home_team_flag),
+                            modifier = Modifier.size(FLAG_ROW_IMAGE_SIZE)
                         )
                     }
+                    Spacer(modifier = Modifier.width(LARGE_PADDING))
+                    Text(
+                        text = countryInfo.teamName,
+                        color = mainColor,
+                        fontSize = Typography.h6.fontSize,
+                        fontStyle = FontStyle.Italic
+                    )
                 }
+
+                Spacer(modifier = Modifier.height(MEDIUM_VERTICAL_GAP))
+                StarsWidget(
+                    modifier = Modifier,
+                    years = championships,
+                    color = goldColor
+                )
+                Spacer(modifier = Modifier.height(MEDIUM_VERTICAL_GAP))
+                StarsWidget(
+                    modifier = Modifier,
+                    years = finals,
+                    color = silverColor
+                )
             }
-
-
+            Column(
+                modifier = Modifier.weight(0.4f),
+                verticalArrangement = Arrangement.SpaceEvenly,
+                horizontalAlignment = Alignment.End
+            ) {
+                Coin(title = stringResource(id = R.string.ranking_text), value = countryInfo.ranking)
+                Spacer(modifier = Modifier.height(SMALL_VERTICAL_GAP))
+                Coin(title = stringResource(id = R.string.appearances_text), value = countryInfo.appearances)
+            }
         }
 
     }
@@ -65,8 +86,9 @@ fun TeamStatsSheetPreview() {
             "Uruguay",
             18.34,
             12.48,
+            appearances = 5,
             championships = listOf(1930, 1950),
-            finals = listOf(1930, 1950),
+            runnerUps = listOf(1970, 1994),
             ranking = 13
         )
     )
