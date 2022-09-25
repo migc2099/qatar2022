@@ -23,6 +23,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.migc.qatar2022.R
+import com.migc.qatar2022.common.TeamsData
 import com.migc.qatar2022.domain.model.Group
 import com.migc.qatar2022.domain.model.Team
 import com.migc.qatar2022.ui.theme.*
@@ -97,7 +98,7 @@ fun GroupCard(
                             horizontalArrangement = Arrangement.Start
                         ) {
                             Image(
-                                painter = painterResource(id = teamStats.flagUri),
+                                painter = painterResource(id = TeamsData.flagsMap[teamStats.teamId]!!),
                                 modifier = Modifier.size(FLAG_ROW_IMAGE_SIZE),
                                 contentDescription = stringResource(R.string.team_flag)
                             )
