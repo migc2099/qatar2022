@@ -1,5 +1,6 @@
 package com.migc.qatar2022.presentation.screens.teams_map
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.migc.qatar2022.domain.model.CountryInfo
@@ -26,6 +27,7 @@ class TeamsMapViewModel @Inject constructor(
                     _data.value = it
                 }
                 .onFailure {
+                    Log.e("TeamsMapViewModel", it.message.toString())
                     _data.value = emptyList()
                 }
         }

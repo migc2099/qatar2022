@@ -61,12 +61,13 @@ fun TeamsMapScreen(
             countriesInfo = countriesData.value,
             onCountryClicked = { countryInfo ->
                 coroutineScope.launch {
-                    selectedCountry.value = countryInfo
                     if (sheetState.isCollapsed) {
                         Log.d("coroutineScope", countryInfo.teamName)
+                        selectedCountry.value = countryInfo
                         sheetState.expand()
                     } else {
                         sheetState.collapse()
+                        selectedCountry.value = countryInfo
                         sheetState.expand()
                         Log.d("coroutineScope", countryInfo.teamName)
                     }
