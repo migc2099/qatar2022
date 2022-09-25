@@ -2,6 +2,7 @@ package com.migc.qatar2022.di
 
 import android.content.Context
 import com.migc.qatar2022.data.QatarDatabase
+import com.migc.qatar2022.data.remote.CountriesInfoApi
 import com.migc.qatar2022.data.repository.*
 import com.migc.qatar2022.domain.repository.*
 import com.migc.qatar2022.domain.use_case.*
@@ -16,6 +17,7 @@ import com.migc.qatar2022.domain.use_case.group_details.UpdateFixtureUseCase
 import com.migc.qatar2022.domain.use_case.playoffs.*
 import com.migc.qatar2022.domain.use_case.standings.*
 import com.migc.qatar2022.domain.use_case.team.GetTeamByIdUseCase
+import com.migc.qatar2022.domain.use_case.teams_map.GetCountriesInfoUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -107,6 +109,20 @@ object RepositoriesModule {
         teamRepository: TeamRepository
     ): GetTeamByIdUseCase {
         return GetTeamByIdUseCase(teamRepository)
+    }
+
+    @Provides
+    @Singleton
+    fun provideCountriesInfoRepository(api: CountriesInfoApi): CountriesInfoRepository {
+        return CountriesInfoRepositoryImpl(countriesInfoApi = api)
+    }
+
+    @Provides
+    @Singleton
+    fun provideGetCountriesInfoUseCase(
+        countriesInfoRepository: CountriesInfoRepository
+    ): GetCountriesInfoUseCase {
+        return GetCountriesInfoUseCase(countriesInfoRepository)
     }
 
     @Provides
