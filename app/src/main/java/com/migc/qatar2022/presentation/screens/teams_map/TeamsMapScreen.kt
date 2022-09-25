@@ -1,5 +1,6 @@
 package com.migc.qatar2022.presentation.screens.teams_map
 
+import android.content.pm.ActivityInfo
 import android.util.Log
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
@@ -8,6 +9,7 @@ import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.migc.qatar2022.common.Utils.LockScreenOrientation
 import com.migc.qatar2022.domain.model.CountryInfo
 import com.migc.qatar2022.presentation.components.EarthMap
 import com.migc.qatar2022.presentation.components.TeamStatsSheet
@@ -19,10 +21,11 @@ import kotlinx.coroutines.launch
 fun TeamsMapScreen(
     viewModel: TeamsMapViewModel = hiltViewModel()
 ) {
+    LockScreenOrientation(orientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
     val countriesData = viewModel.data.collectAsState()
     val selectedCountry = remember {
         mutableStateOf(
-            CountryInfo(teamId = "QAT", teamName = "Qatar", latitude = 25.3548, longitude = 51.1839, ranking = 36)
+            CountryInfo()
         )
     }
 
@@ -42,7 +45,13 @@ fun TeamsMapScreen(
     BottomSheetScaffold(
         scaffoldState = scaffoldState,
         sheetContent = {
-            TeamStatsSheet(countryInfo = selectedCountry.value)
+            if (selectedCountry.value.teamId.isEmpty() && sheetState.isExpanded) {
+                coroutineScope.launch {
+                    sheetState.collapse()
+                }
+            } else {
+                TeamStatsSheet(countryInfo = selectedCountry.value)
+            }
         },
         sheetBackgroundColor = mainBackgroundColor,
         sheetPeekHeight = 0.dp,
