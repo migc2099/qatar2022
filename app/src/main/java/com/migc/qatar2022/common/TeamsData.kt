@@ -84,7 +84,7 @@ object TeamsData {
         "ECU" to LatLng(-1.8312, -78.1834),
         "SEN" to LatLng(14.4974, -14.4524),
         "NET" to LatLng(52.1326, 5.2913),
-        "ENG" to LatLng(52.3555, -1.1743),
+        "ENG" to LatLng(52.0200, 0.0545),
         "IRA" to LatLng(32.4279, 53.6880),
         "USA" to LatLng(37.0902, -95.7129),
         "WAL" to LatLng(52.1307, -3.7837),
@@ -107,9 +107,9 @@ object TeamsData {
         "BRA" to LatLng(-14.2350, -51.9253),
         "SER" to LatLng(44.0165, 21.0059),
         "SWI" to LatLng(46.8182, 8.2275),
-        "CAM" to LatLng(7.3697, 12.3547),
+        "CAM" to LatLng(5.2657, 12.5003),
         "POR" to LatLng(39.3999, -8.2245),
-        "GHA" to LatLng(7.9465, 1.0232),
+        "GHA" to LatLng(6.8152, -1.5087),
         "URU" to LatLng(-32.5228, -55.7658),
         "KOR" to LatLng(35.9078, 127.7669)
     )

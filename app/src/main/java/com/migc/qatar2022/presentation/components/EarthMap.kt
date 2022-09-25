@@ -11,12 +11,14 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.*
 import com.migc.qatar2022.common.TeamsData
 import com.migc.qatar2022.common.Utils
+import com.migc.qatar2022.domain.model.CountryInfo
 
 private const val LOG_TAG = "EarthMap"
 
 @Composable
 fun EarthMap(
-    teamsLocations: Map<String, LatLng>
+    countriesInfo: List<CountryInfo>,
+    onCountryClicked: (CountryInfo) -> Unit
 ) {
     val mapUiSettings = MapUiSettings(
         compassEnabled = false,
@@ -50,13 +52,18 @@ fun EarthMap(
             Log.d(LOG_TAG, "onMapLoaded")
         }
     ) {
-        teamsLocations.forEach { map ->
+        countriesInfo.forEach { country ->
             Marker(
-                state = MarkerState(map.value),
+                state = MarkerState(LatLng(country.latitude, country.longitude)),
                 icon = BitmapDescriptorFactory.fromBitmap(
-                    Utils.getBitmap(LocalContext.current, TeamsData.flagsMap[map.key]!!)!!
+                    Utils.getBitmap(LocalContext.current, TeamsData.flagsMap[country.teamId]!!)!!
                 ),
-                title = TeamsData.countriesMap[map.key]
+                title = country.teamName,
+                tag = country.teamId,
+                onClick = {
+                    onCountryClicked(country)
+                    true
+                }
             )
         }
 

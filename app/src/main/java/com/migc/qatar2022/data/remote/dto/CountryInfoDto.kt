@@ -3,13 +3,13 @@ package com.migc.qatar2022.data.remote.dto
 import com.migc.qatar2022.domain.model.CountryInfo
 
 data class CountryInfoDto(
-    val championships: List<Int>? = emptyList(),
-    val finals: List<Int>? = emptyList(),
+    val team_id: String,
+    val team_name: String,
     val latitude: Double,
     val longitude: Double,
-    val ranking: Int,
-    val team_id: String,
-    val team_name: String
+    val championships: List<Int> = emptyList(),
+    val finals: List<Int> = emptyList(),
+    val ranking: Int
 )
 
 fun CountryInfoDto.toCountryInfo(): CountryInfo {

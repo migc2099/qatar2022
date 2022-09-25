@@ -5,7 +5,7 @@ data class CountryInfo(
     val teamName: String,
     val latitude: Double,
     val longitude: Double,
-    val championships: List<Int>? = emptyList(),
-    val finals: List<Int>? = emptyList(),
+    val championships: List<Int> = emptyList(),
+    val finals: List<Int> = emptyList(),
     val ranking: Int
 )
