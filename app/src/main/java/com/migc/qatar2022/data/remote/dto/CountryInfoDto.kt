@@ -7,8 +7,9 @@ data class CountryInfoDto(
     val team_name: String,
     val latitude: Double,
     val longitude: Double,
+    val appearances: Int,
     val championships: List<Int> = emptyList(),
-    val finals: List<Int> = emptyList(),
+    val runner_ups: List<Int> = emptyList(),
     val ranking: Int
 )
 
@@ -18,8 +19,9 @@ fun CountryInfoDto.toCountryInfo(): CountryInfo {
         teamName = team_name,
         latitude = latitude,
         longitude = longitude,
+        appearances = appearances,
         championships = championships,
-        finals = finals,
+        runnerUps = runner_ups,
         ranking = ranking
     )
 }
