@@ -14,7 +14,6 @@ import com.migc.qatar2022.domain.model.CountryInfo
 import com.migc.qatar2022.presentation.components.EarthMap
 import com.migc.qatar2022.presentation.components.TeamStatsSheet
 import com.migc.qatar2022.ui.theme.mainBackgroundColor
-import kotlinx.coroutines.launch
 
 @ExperimentalMaterialApi
 @Composable
@@ -40,18 +39,22 @@ fun TeamsMapScreen(
     val scaffoldState = rememberBottomSheetScaffoldState(
         bottomSheetState = sheetState
     )
-    val coroutineScope = rememberCoroutineScope()
+
+    LaunchedEffect(key1 = selectedCountry.value) {
+        Log.d("LaunchedEffect", selectedCountry.value.teamName)
+        if (sheetState.isCollapsed) {
+            sheetState.expand()
+        } else {
+            if (selectedCountry.value.teamId.isEmpty()) {
+                sheetState.collapse()
+            }
+        }
+    }
 
     BottomSheetScaffold(
         scaffoldState = scaffoldState,
         sheetContent = {
-            if (selectedCountry.value.teamId.isEmpty() && sheetState.isExpanded) {
-                coroutineScope.launch {
-                    sheetState.collapse()
-                }
-            } else {
-                TeamStatsSheet(countryInfo = selectedCountry.value)
-            }
+            TeamStatsSheet(countryInfo = selectedCountry.value)
         },
         sheetBackgroundColor = mainBackgroundColor,
         sheetPeekHeight = 0.dp,
@@ -59,22 +62,10 @@ fun TeamsMapScreen(
     ) {
         EarthMap(
             countriesInfo = countriesData.value,
-            onCountryClicked = { countryInfo ->
-                coroutineScope.launch {
-                    if (sheetState.isCollapsed) {
-                        Log.d("coroutineScope", countryInfo.teamName)
-                        selectedCountry.value = countryInfo
-                        sheetState.expand()
-                    } else {
-                        sheetState.collapse()
-                        selectedCountry.value = countryInfo
-                        sheetState.expand()
-                        Log.d("coroutineScope", countryInfo.teamName)
-                    }
-                }
+            onCountryClicked = {
+                selectedCountry.value = it
             }
         )
     }
-
 
 }

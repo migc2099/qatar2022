@@ -19,61 +19,64 @@ import com.migc.qatar2022.ui.theme.*
 fun TeamStatsSheet(countryInfo: CountryInfo) {
     val championships: List<Int> = countryInfo.championships
     val finals: List<Int> = countryInfo.runnerUps
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(LARGE_PADDING),
-        contentAlignment = Alignment.Center
-    ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.Top
+    Column(modifier = Modifier.fillMaxWidth()) {
+        BottomSheetHandle()
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(LARGE_PADDING),
+            contentAlignment = Alignment.Center
         ) {
-            Column(modifier = Modifier.weight(1f)) {
-                Row(
-                    horizontalArrangement = Arrangement.Start,
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-                    if (countryInfo.teamId.isNotEmpty()){
-                        Image(
-                            painter = painterResource(id = TeamsData.flagsMap[countryInfo.teamId]!!),
-                            contentDescription = stringResource(R.string.home_team_flag),
-                            modifier = Modifier.size(FLAG_ROW_IMAGE_SIZE)
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                verticalAlignment = Alignment.Top
+            ) {
+                Column(modifier = Modifier.weight(1f)) {
+                    Row(
+                        horizontalArrangement = Arrangement.Start,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        if (countryInfo.teamId.isNotEmpty()) {
+                            Image(
+                                painter = painterResource(id = TeamsData.flagsMap[countryInfo.teamId]!!),
+                                contentDescription = stringResource(R.string.home_team_flag),
+                                modifier = Modifier.size(FLAG_ROW_IMAGE_SIZE)
+                            )
+                        }
+                        Spacer(modifier = Modifier.width(LARGE_PADDING))
+                        Text(
+                            text = countryInfo.teamName,
+                            color = mainColor,
+                            fontSize = Typography.h6.fontSize,
+                            fontStyle = FontStyle.Italic
                         )
                     }
-                    Spacer(modifier = Modifier.width(LARGE_PADDING))
-                    Text(
-                        text = countryInfo.teamName,
-                        color = mainColor,
-                        fontSize = Typography.h6.fontSize,
-                        fontStyle = FontStyle.Italic
+
+                    Spacer(modifier = Modifier.height(MEDIUM_VERTICAL_GAP))
+                    StarsWidget(
+                        modifier = Modifier,
+                        years = championships,
+                        color = goldColor
+                    )
+                    Spacer(modifier = Modifier.height(MEDIUM_VERTICAL_GAP))
+                    StarsWidget(
+                        modifier = Modifier,
+                        years = finals,
+                        color = silverColor
                     )
                 }
+                Column(
+                    modifier = Modifier.weight(0.4f),
+                    verticalArrangement = Arrangement.SpaceEvenly,
+                    horizontalAlignment = Alignment.End
+                ) {
+                    Coin(title = stringResource(id = R.string.ranking_text), value = countryInfo.ranking)
+                    Spacer(modifier = Modifier.height(SMALL_VERTICAL_GAP))
+                    Coin(title = stringResource(id = R.string.appearances_text), value = countryInfo.appearances)
+                }
+            }
 
-                Spacer(modifier = Modifier.height(MEDIUM_VERTICAL_GAP))
-                StarsWidget(
-                    modifier = Modifier,
-                    years = championships,
-                    color = goldColor
-                )
-                Spacer(modifier = Modifier.height(MEDIUM_VERTICAL_GAP))
-                StarsWidget(
-                    modifier = Modifier,
-                    years = finals,
-                    color = silverColor
-                )
-            }
-            Column(
-                modifier = Modifier.weight(0.4f),
-                verticalArrangement = Arrangement.SpaceEvenly,
-                horizontalAlignment = Alignment.End
-            ) {
-                Coin(title = stringResource(id = R.string.ranking_text), value = countryInfo.ranking)
-                Spacer(modifier = Modifier.height(SMALL_VERTICAL_GAP))
-                Coin(title = stringResource(id = R.string.appearances_text), value = countryInfo.appearances)
-            }
         }
-
     }
 }
 

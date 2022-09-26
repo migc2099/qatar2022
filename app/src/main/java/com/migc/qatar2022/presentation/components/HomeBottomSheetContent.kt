@@ -2,17 +2,13 @@ package com.migc.qatar2022.presentation.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.unit.dp
 import com.migc.qatar2022.R
 import com.migc.qatar2022.ui.theme.*
 
@@ -32,20 +28,7 @@ fun HomeBottomSheetContent(
             .fillMaxWidth()
             .padding(bottom = SMALL_VERTICAL_PADDING)
     ) {
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(MEDIUM_PADDING),
-            contentAlignment = Alignment.Center
-        ) {
-            Card(
-                modifier = Modifier
-                    .width(HANDLE_WIDTH)
-                    .height(HANDLE_HEIGHT),
-                shape = RoundedCornerShape(25.dp),
-                backgroundColor = mainColor
-            ) { }
-        }
+        BottomSheetHandle()
         if (isResetEnabled) {
             BottomSheetRow(
                 icon = painterResource(R.drawable.ic_reset_playoffs),
