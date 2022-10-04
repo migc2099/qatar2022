@@ -102,15 +102,15 @@ fun HomeScreen(
             )
         },
         sheetBackgroundColor = mainBackgroundColor,
-        sheetPeekHeight = 0.dp,
-        sheetShape = RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp),
+        sheetPeekHeight = BOTTOM_SHEET_HEIGHT,
+        sheetShape = RoundedCornerShape(topStart = MEDIUM_ROUND_CORNER, topEnd = MEDIUM_ROUND_CORNER),
     ) {
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
         ) {
             item {
-                CountDownDisplay(modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp))
+                CountDownDisplay(modifier = Modifier.padding(horizontal = LARGE_PADDING, vertical = MEDIUM_PADDING))
             }
             item {
                 Spacer(modifier = Modifier.height(MEDIUM_VERTICAL_GAP))
@@ -160,7 +160,7 @@ fun HomeScreen(
                         .fillMaxWidth()
                         .height(384.dp)
                 ) {
-                    item { Spacer(modifier = Modifier.width(8.dp)) }
+                    item { Spacer(modifier = Modifier.width(MEDIUM_PADDING)) }
                     item {
                         Card(
                             modifier = Modifier
@@ -179,7 +179,7 @@ fun HomeScreen(
                             }
                         }
                     }
-                    item { Spacer(modifier = Modifier.width(8.dp)) }
+                    item { Spacer(modifier = Modifier.width(MEDIUM_PADDING)) }
                 }
             }
             item {
