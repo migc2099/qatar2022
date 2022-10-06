@@ -12,6 +12,7 @@ import com.migc.qatar2022.domain.use_case.database_setup.SetStandingsUseCase
 import com.migc.qatar2022.domain.use_case.database_setup.SetTeamsUseCase
 import com.migc.qatar2022.domain.use_case.datastore.*
 import com.migc.qatar2022.domain.use_case.group_details.CalculatePointsUseCase
+import com.migc.qatar2022.domain.use_case.group_details.CalculateWeightedResultUseCase
 import com.migc.qatar2022.domain.use_case.group_details.GetFixtureByGroupUseCase
 import com.migc.qatar2022.domain.use_case.group_details.UpdateFixtureUseCase
 import com.migc.qatar2022.domain.use_case.playoffs.*
@@ -93,7 +94,8 @@ object RepositoriesModule {
 //            getMatchesByGroupUseCase = GetMatchesByGroupUseCase(repository),
             getFixtureByGroupUseCase = GetFixtureByGroupUseCase(fixtureRepository),
             updateFixtureUseCase = UpdateFixtureUseCase(fixtureRepository),
-            calculatePointsUseCase = CalculatePointsUseCase(fixtureRepository, standingsRepository)
+            calculatePointsUseCase = CalculatePointsUseCase(fixtureRepository, standingsRepository),
+            calculateWeightedResultUseCase = CalculateWeightedResultUseCase()
         )
     }
 

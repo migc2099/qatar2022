@@ -79,6 +79,41 @@ object TeamsData {
         "KOR" to R.drawable.flag_south_korea
     )
 
+    val weightMap: Map<String, Double> = mapOf(
+        "QAT" to 0.16,
+        "ECU" to 0.25,
+        "SEN" to 0.29,
+        "NET" to 0.65,
+        "ENG" to 0.78,
+        "IRA" to 0.12,
+        "USA" to 0.30,
+        "WAL" to 0.32,
+        "ARG" to 0.79,
+        "SAU" to 0.09,
+        "MEX" to 0.31,
+        "POL" to 0.32,
+        "FRA" to 0.90,
+        "DEN" to 0.69,
+        "TUN" to 0.14,
+        "AUS" to 0.18,
+        "SPA" to 0.68,
+        "GER" to 0.72,
+        "JAP" to 0.19,
+        "COS" to 0.16,
+        "BEL" to 0.75,
+        "CAN" to 0.18,
+        "MOR" to 0.28,
+        "CRO" to 0.66,
+        "BRA" to 0.91,
+        "SER" to 0.31,
+        "SWI" to 0.46,
+        "CAM" to 0.17,
+        "POR" to 0.72,
+        "GHA" to 0.18,
+        "URU" to 0.46,
+        "KOR" to 0.22
+    )
+
     val locationMap: Map<String, LatLng> = mapOf(
         "QAT" to LatLng(25.3548, 51.1839),
         "ECU" to LatLng(-1.8312, -78.1834),

@@ -2,6 +2,7 @@ package com.migc.qatar2022.data.local.dao
 
 import androidx.room.*
 import com.migc.qatar2022.data.local.entity.FixtureEntity
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface FixtureDao {
@@ -10,7 +11,7 @@ interface FixtureDao {
     suspend fun insertFixture(matches: List<FixtureEntity>) : List<Long>
 
     @Query("SELECT * FROM fixture_table WHERE groupKey=:group")
-    suspend fun getGroupMatches(group: String): List<FixtureEntity>
+    fun getGroupMatches(group: String): Flow<List<FixtureEntity>>
 
     @Update()
     suspend fun updateFixture(results: List<FixtureEntity>)
