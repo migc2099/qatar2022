@@ -247,8 +247,10 @@ fun ScoreTextField(initialScore: Int?, onScoreChange: (String) -> Unit, isPkFiel
     TextField(
         value = scoreInput.value,
         onValueChange = {
-            scoreInput.value = it
-            onScoreChange(it.text)
+            if (it.text.length <= 2) {
+                scoreInput.value = it
+                onScoreChange(it.text)
+            }
         },
         modifier = Modifier.width(SCORE_TEXT_FIELD_WIDTH),
         textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.Center),
