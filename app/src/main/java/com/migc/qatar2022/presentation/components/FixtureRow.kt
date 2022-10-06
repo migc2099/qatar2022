@@ -100,16 +100,20 @@ fun FixtureRow(
 @Composable
 fun ScoreTextField(textValue: TextFieldValue, onScoreChange: (String) -> Unit) {
     val text = remember {
-        mutableStateOf("")
+        mutableStateOf(textValue)
     }
-    text.value = textValue.text
-    Log.d("ScoreTextField", text.value)
+    LaunchedEffect(key1 = textValue.text){
+        text.value = textValue
+    }
+    Log.d("ScoreTextField", text.value.text)
     TextField(
         value = text.value,
         onValueChange = {
-            text.value = it
-            val score = it.trim()
-            if (score.isNotEmpty() && score.isDigitsOnly()) {
+            val score = it.text
+            if (score.length <= 2){
+                text.value = it
+            }
+            if (score.trim().length <= 2 && score.trim().isNotEmpty() && score.trim().isDigitsOnly()) {
                 onScoreChange(score)
             } else {
                 onScoreChange("")
