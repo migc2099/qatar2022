@@ -9,7 +9,8 @@ object Constants {
     const val PREFERENCES_TEAMS_KEY = "teams_key"
 
     const val FIXTURE_BASE_URL = "https://fixturedownload.com/"
-    const val RANKINGS_BASE_URL = "https://gist.githubusercontent.com/"
+//    const val RANKINGS_BASE_URL = "https://gist.githubusercontent.com/"
+    const val TEAMS_RANKINGS_JSON_FILE = "teams_rankings.json"
 
     const val QATAR_DATABASE = "qatar_database"
     const val STANDINGS_TABLE = "standings_table"

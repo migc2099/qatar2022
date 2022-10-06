@@ -1,9 +1,7 @@
 package com.migc.qatar2022.di
 
 import com.migc.qatar2022.common.Constants.FIXTURE_BASE_URL
-import com.migc.qatar2022.common.Constants.RANKINGS_BASE_URL
 import com.migc.qatar2022.data.remote.FixtureApi
-import com.migc.qatar2022.data.remote.CountriesInfoApi
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -26,14 +24,14 @@ object NetworkModule {
             .create(FixtureApi::class.java)
     }
 
-    @Provides
-    @Singleton
-    fun provideRankingRetrofitInstance(): CountriesInfoApi {
-        return Retrofit.Builder()
-            .baseUrl(RANKINGS_BASE_URL)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(CountriesInfoApi::class.java)
-    }
+//    @Provides
+//    @Singleton
+//    fun provideRankingRetrofitInstance(): CountriesInfoApi {
+//        return Retrofit.Builder()
+//            .baseUrl(RANKINGS_BASE_URL)
+//            .addConverterFactory(GsonConverterFactory.create())
+//            .build()
+//            .create(CountriesInfoApi::class.java)
+//    }
 
 }

@@ -1,0 +1,322 @@
+[
+  {
+    "team_id": "QAT",
+    "team_name": "Qatar",
+    "longitude": 51.1839,
+    "latitude": 25.3548,
+    "appearances": 1,
+    "championships": [],
+    "runner_ups": [],
+    "ranking": 48
+  },
+  {
+    "team_id": "ECU",
+    "team_name": "Ecuador",
+    "longitude": -78.1834,
+    "latitude": -1.8312,
+    "appearances": 4,
+    "championships": [],
+    "runner_ups": [],
+    "ranking": 44
+  },
+  {
+    "team_id": "SEN",
+    "team_name": "Senegal",
+    "longitude": -14.4524,
+    "latitude": 14.4974,
+    "appearances": 3,
+    "championships": [],
+    "runner_ups": [],
+    "ranking": 18
+  },
+  {
+    "team_id": "NET",
+    "team_name": "Netherlands",
+    "longitude": 5.2913,
+    "latitude": 52.1326,
+    "appearances": 11,
+    "championships": [],
+    "runner_ups": [1974, 1978, 2010],
+    "ranking": 8
+  },
+  {
+    "team_id": "ENG",
+    "team_name": "England",
+    "longitude": 0.0545,
+    "latitude": 52.0200,
+    "appearances": 16,
+    "championships": [1966],
+    "runner_ups": [],
+    "ranking": 5
+  },
+  {
+    "team_id": "IRA",
+    "team_name": "Iran",
+    "longitude": 53.6880,
+    "latitude": 32.4279,
+    "appearances": 6,
+    "championships": [],
+    "runner_ups": [],
+    "ranking": 22
+  },
+  {
+    "team_id": "USA",
+    "team_name": "United States",
+    "longitude": -95.7129,
+    "latitude": 37.0902,
+    "appearances": 11,
+    "championships": [],
+    "runner_ups": [],
+    "ranking": 14
+  },
+  {
+    "team_id": "WAL",
+    "team_name": "Wales",
+    "longitude": -3.7837,
+    "latitude": 52.1307,
+    "appearances": 2,
+    "championships": [],
+    "runner_ups": [],
+    "ranking": 19
+  },
+  {
+    "team_id": "ARG",
+    "team_name": "Argentina",
+    "longitude": -63.6167,
+    "latitude": -38.4161,
+    "appearances": 18,
+    "championships": [1978, 1986],
+    "runner_ups": [1930, 1990, 2014],
+    "ranking": 3
+  },
+  {
+    "team_id": "SAU",
+    "team_name": "Saudi Arabia",
+    "longitude": 45.0792,
+    "latitude": 23.8859,
+    "appearances": 6,
+    "championships": [],
+    "runner_ups": [],
+    "ranking": 53
+  },
+  {
+    "team_id": "MEX",
+    "team_name": "Mexico",
+    "longitude": -102.5528,
+    "latitude": 23.6345,
+    "appearances": 17,
+    "championships": [],
+    "runner_ups": [],
+    "ranking": 12
+  },
+  {
+    "team_id": "POL",
+    "team_name": "Poland",
+    "longitude": 19.1451,
+    "latitude": 51.9194,
+    "appearances": 9,
+    "championships": [],
+    "runner_ups": [],
+    "ranking": 26
+  },
+  {
+    "team_id": "FRA",
+    "team_name": "France",
+    "longitude": 2.2137,
+    "latitude": 46.2276,
+    "appearances": 16,
+    "championships": [1998, 2018],
+    "runner_ups": [2006],
+    "ranking": 4
+  },
+  {
+    "team_id": "DEN",
+    "team_name": "Denmark",
+    "longitude": 9.5018,
+    "latitude": 56.2639,
+    "appearances": 6,
+    "championships": [],
+    "runner_ups": [],
+    "ranking": 10
+  },
+  {
+    "team_id": "TUN",
+    "team_name": "Tunisia",
+    "longitude": 9.5375,
+    "latitude": 33.8869,
+    "appearances": 6,
+    "championships": [],
+    "runner_ups": [],
+    "ranking": 30
+  },
+  {
+    "team_id": "AUS",
+    "team_name": "Australia",
+    "longitude": 133.7751,
+    "latitude": -25.2744,
+    "appearances": 6,
+    "championships": [],
+    "runner_ups": [],
+    "ranking": 39
+  },
+  {
+    "team_id": "SPA",
+    "team_name": "Spain",
+    "longitude": -3.7492,
+    "latitude": 40.4637,
+    "appearances": 16,
+    "championships": [2010],
+    "runner_ups": [],
+    "ranking": 6
+  },
+  {
+    "team_id": "GER",
+    "team_name": "Germany",
+    "longitude": 10.4515,
+    "latitude": 51.1657,
+    "appearances": 20,
+    "championships": [1954, 1974, 1990, 2014],
+    "runner_ups": [1966, 1982, 1986, 2002],
+    "ranking": 11
+  },
+  {
+    "team_id": "JAP",
+    "team_name": "Japan",
+    "longitude": 138.2529,
+    "latitude": 36.2048,
+    "appearances": 7,
+    "championships": [],
+    "runner_ups": [],
+    "ranking": 24
+  },
+  {
+    "team_id": "COS",
+    "team_name": "Costa Rica",
+    "longitude": -83.7534,
+    "latitude": 9.7489,
+    "appearances": 6,
+    "championships": [],
+    "runner_ups": [],
+    "ranking": 34
+  },
+  {
+    "team_id": "BEL",
+    "team_name": "Belgium",
+    "longitude": 4.4699,
+    "latitude": 50.5039,
+    "appearances": 14,
+    "championships": [],
+    "runner_ups": [],
+    "ranking": 2
+  },
+  {
+    "team_id": "CAN",
+    "team_name": "Canada",
+    "longitude": -106.3468,
+    "latitude": 56.1304,
+    "appearances": 2,
+    "championships": [],
+    "runner_ups": [],
+    "ranking": 43
+  },
+  {
+    "team_id": "MOR",
+    "team_name": "Morocco",
+    "longitude": -7.0926,
+    "latitude": 31.7917,
+    "appearances": 6,
+    "championships": [],
+    "runner_ups": [],
+    "ranking": 23
+  },
+  {
+    "team_id": "CRO",
+    "team_name": "Croatia",
+    "longitude": 15.2000,
+    "latitude": 45.1000,
+    "appearances": 6,
+    "championships": [],
+    "runner_ups": [2018],
+    "ranking": 15
+  },
+  {
+    "team_id": "BRA",
+    "team_name": "Brazil",
+    "longitude": -51.9253,
+    "latitude": -14.2350,
+    "appearances": 22,
+    "championships": [1958, 1962, 1970, 1994, 2002],
+    "runner_ups": [1950, 1998],
+    "ranking": 1
+  },
+  {
+    "team_id": "SER",
+    "team_name": "Serbia",
+    "longitude": 21.0059,
+    "latitude": 44.0165,
+    "appearances": 13,
+    "championships": [],
+    "runner_ups": [],
+    "ranking": 25
+  },
+  {
+    "team_id": "SWI",
+    "team_name": "Switzerland",
+    "longitude": 8.2275,
+    "latitude": 46.8182,
+    "appearances": 12,
+    "championships": [],
+    "runner_ups": [],
+    "ranking": 16
+  },
+  {
+    "team_id": "CAM",
+    "team_name": "Cameroon",
+    "longitude": 12.5003,
+    "latitude": 5.2657,
+    "appearances": 8,
+    "championships": [],
+    "runner_ups": [],
+    "ranking": 38
+  },
+  {
+    "team_id": "POR",
+    "team_name": "Portugal",
+    "longitude": -8.2245,
+    "latitude": 39.3999,
+    "appearances": 8,
+    "championships": [],
+    "runner_ups": [],
+    "ranking": 9
+  },
+  {
+    "team_id": "GHA",
+    "team_name": "Ghana",
+    "longitude": -1.5087,
+    "latitude": 6.8152,
+    "appearances": 4,
+    "championships": [],
+    "runner_ups": [],
+    "ranking": 60
+  },
+  {
+    "team_id": "URU",
+    "team_name": "Uruguay",
+    "longitude": -55.7658,
+    "latitude": -32.5228,
+    "appearances": 14,
+    "championships": [1930, 1950],
+    "runner_ups": [],
+    "ranking": 13
+  },
+  {
+    "team_id": "KOR",
+    "team_name": "Korea Republic",
+    "longitude": 127.7669,
+    "latitude": 35.9078,
+    "appearances": 11,
+    "championships": [],
+    "runner_ups": [],
+    "ranking": 28
+  }
+]

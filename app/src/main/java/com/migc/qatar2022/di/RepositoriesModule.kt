@@ -115,8 +115,8 @@ object RepositoriesModule {
 
     @Provides
     @Singleton
-    fun provideCountriesInfoRepository(api: CountriesInfoApi): CountriesInfoRepository {
-        return CountriesInfoRepositoryImpl(countriesInfoApi = api)
+    fun provideCountriesInfoRepository(@ApplicationContext context: Context): CountriesInfoRepository {
+        return CountriesInfoRepositoryImpl(context = context)
     }
 
     @Provides
