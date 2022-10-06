@@ -1,7 +1,7 @@
 package com.migc.qatar2022.presentation.screens.group_details
 
 import android.util.Log
-import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.*
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -9,12 +9,8 @@ import com.migc.qatar2022.common.Constants.PARAM_GROUP_ID
 import com.migc.qatar2022.domain.model.Fixture
 import com.migc.qatar2022.domain.use_case.GroupDetailsUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.*
 import javax.inject.Inject
 
 @HiltViewModel
@@ -36,11 +32,36 @@ class GroupDetailsViewModel @Inject constructor(
         }
     }
 
-    private fun getFixture(groupId: String) {
+    fun onEvent(event: GroupDetailUiEvent) {
+        when (event) {
+            is GroupDetailUiEvent.OnSaveChangesClicked -> {
+                saveScores()
+            }
+            is GroupDetailUiEvent.OnGenerateScoredClicked -> {
+                generateWeightedResult()
+            }
+        }
+    }
+
+    private fun generateWeightedResult() {
         viewModelScope.launch(Dispatchers.IO) {
-            Log.d("getFixture", "groupId: $groupId")
-            _selectedGroup.value = useCases.getFixtureByGroupUseCase(group = groupId)
-            editableFixture = _selectedGroup.value.toMutableList()
+            useCases.calculateWeightedResultUseCase(matches = _selectedGroup.value)
+                .collect {
+                    Log.d("generateWeight", it.toString())
+                    _selectedGroup.value = it
+                    editableFixture = it.toMutableList()
+                }
+        }
+    }
+
+    private fun getFixture(groupId: String) {
+        Log.d("getFixture", "groupId: $groupId")
+        viewModelScope.launch(Dispatchers.IO) {
+            useCases.getFixtureByGroupUseCase(group = groupId)
+                .collect {
+                    _selectedGroup.value = it
+                    editableFixture = it.toMutableStateList()
+                }
         }
     }
 
@@ -63,11 +84,11 @@ class GroupDetailsViewModel @Inject constructor(
     }
 
     @OptIn(DelicateCoroutinesApi::class)
-    fun onSaveButtonClicked(group: String) {
-        Log.d("GroupDetailsViewModel","onSaveButtonClicked" )
+    private fun saveScores() {
+        Log.d("GroupDetailsViewModel", "onSaveButtonClicked")
         GlobalScope.launch(Dispatchers.IO) {
-            Log.d("GroupDetailsViewModel","currentGroup: ${currentGroup.value.last()}" )
-            useCases.calculatePointsUseCase(editableFixture, group.last().toString())
+            Log.d("GroupDetailsViewModel", "currentGroup: ${currentGroup.value.last()}")
+            useCases.calculatePointsUseCase(editableFixture, currentGroup.value.last().toString())
         }
     }
 

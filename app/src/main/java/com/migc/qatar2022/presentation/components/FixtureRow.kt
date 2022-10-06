@@ -27,17 +27,20 @@ import com.migc.qatar2022.ui.theme.*
 @Composable
 fun FixtureRow(
     fixture: Fixture,
-    homeTeamScoreValue: String,
-    awayTeamScoreValue: String,
+    homeTeamScoreValue: () -> String,
+    awayTeamScoreValue: () -> String,
     homeTeamScore: (String) -> Unit,
     awayTeamScore: (String) -> Unit
 ) {
     val leftText = remember {
-        mutableStateOf(TextFieldValue(homeTeamScoreValue))
+        mutableStateOf(TextFieldValue(""))
     }
     val rightText = remember {
-        mutableStateOf(TextFieldValue(awayTeamScoreValue))
+        mutableStateOf(TextFieldValue(""))
     }
+    leftText.value = TextFieldValue(homeTeamScoreValue())
+    rightText.value = TextFieldValue(awayTeamScoreValue())
+    Log.d("FixtureRow", "leftText: ${leftText.value} - rightText: ${rightText.value}")
     Log.d("FixtureRow", "${fixture.homeTeam} ${fixture.homeTeamScore}vs${fixture.awayTeamScore} ${fixture.awayTeam}")
     val homeTeamFlag = TeamsData.flagsMap[fixture.homeTeam] ?: R.drawable.ic_launcher_foreground
     val awayTeamFlag = TeamsData.flagsMap[fixture.awayTeam] ?: R.drawable.ic_launcher_foreground
@@ -45,8 +48,8 @@ fun FixtureRow(
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .background(mainBackgroundColor)
             .height(64.dp)
+            .background(mainBackgroundColor)
             .padding(horizontal = MEDIUM_PADDING, vertical = SMALL_VERTICAL_PADDING),
         horizontalArrangement = Arrangement.Center,
         verticalAlignment = Alignment.CenterVertically
@@ -97,21 +100,22 @@ fun FixtureRow(
 @Composable
 fun ScoreTextField(textValue: TextFieldValue, onScoreChange: (String) -> Unit) {
     val text = remember {
-        mutableStateOf(textValue)
+        mutableStateOf("")
     }
+    text.value = textValue.text
+    Log.d("ScoreTextField", text.value)
     TextField(
         value = text.value,
         onValueChange = {
             text.value = it
-            val score = it.text.trim()
+            val score = it.trim()
             if (score.isNotEmpty() && score.isDigitsOnly()) {
                 onScoreChange(score)
             } else {
                 onScoreChange("")
             }
         },
-        modifier = Modifier
-            .width(SCORE_TEXT_FIELD_WIDTH),
+        modifier = Modifier.width(SCORE_TEXT_FIELD_WIDTH),
         textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.Center),
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
         singleLine = true,
@@ -127,8 +131,8 @@ fun ScoreTextField(textValue: TextFieldValue, onScoreChange: (String) -> Unit) {
 fun FixtureRowPreview() {
     FixtureRow(
         fixture = Fixture(1, 1, "A", 0, "My Stadium", "QAT", "ECU"),
-        homeTeamScoreValue = "1",
-        awayTeamScoreValue = "0",
+        homeTeamScoreValue = { "1" },
+        awayTeamScoreValue = { "0" },
         homeTeamScore = {},
         awayTeamScore = {}
     )
