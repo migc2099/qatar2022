@@ -10,7 +10,6 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.migc.qatar2022.common.Utils.LockScreenOrientation
-import com.migc.qatar2022.domain.model.CountryInfo
 import com.migc.qatar2022.presentation.components.EarthMap
 import com.migc.qatar2022.presentation.components.TeamStatsSheet
 import com.migc.qatar2022.ui.theme.mainBackgroundColor
@@ -22,13 +21,8 @@ fun TeamsMapScreen(
 ) {
     LockScreenOrientation(orientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
     val countriesData = viewModel.data.collectAsState()
-    val selectedCountry = remember {
-        mutableStateOf(
-            CountryInfo()
-        )
-    }
-
-    Log.d("TeamsMapScreen", "countriesData ${countriesData.value.size}")
+    val currentCountry = viewModel.countryInfo.collectAsState()
+    val teamOdds = viewModel.odds.collectAsState()
 
     val sheetState = rememberBottomSheetState(
         initialValue = BottomSheetValue.Collapsed,
@@ -40,12 +34,12 @@ fun TeamsMapScreen(
         bottomSheetState = sheetState
     )
 
-    LaunchedEffect(key1 = selectedCountry.value) {
-        Log.d("LaunchedEffect", selectedCountry.value.teamName)
+    LaunchedEffect(key1 = currentCountry.value) {
+        Log.d("LaunchedEffect", currentCountry.value.teamName)
         if (sheetState.isCollapsed) {
             sheetState.expand()
         } else {
-            if (selectedCountry.value.teamId.isEmpty()) {
+            if (currentCountry.value.teamId.isEmpty()) {
                 sheetState.collapse()
             }
         }
@@ -54,7 +48,13 @@ fun TeamsMapScreen(
     BottomSheetScaffold(
         scaffoldState = scaffoldState,
         sheetContent = {
-            TeamStatsSheet(countryInfo = selectedCountry.value)
+            TeamStatsSheet(
+                countryInfo = currentCountry.value,
+                oddDetailsState = teamOdds.value,
+                onOddClicked = {
+                    viewModel.onEvent(TeamsMapUiEvent.OnSeeOddsClicked(it))
+                }
+            )
         },
         sheetBackgroundColor = mainBackgroundColor,
         sheetPeekHeight = 0.dp,
@@ -63,7 +63,7 @@ fun TeamsMapScreen(
         EarthMap(
             countriesInfo = countriesData.value,
             onCountryClicked = {
-                selectedCountry.value = it
+                viewModel.onEvent(TeamsMapUiEvent.OnCountryFlagClicked(it))
             }
         )
     }

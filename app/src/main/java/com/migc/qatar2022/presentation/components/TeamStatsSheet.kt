@@ -1,7 +1,11 @@
 package com.migc.qatar2022.presentation.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Card
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -13,14 +17,52 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.migc.qatar2022.R
 import com.migc.qatar2022.common.TeamsData
 import com.migc.qatar2022.domain.model.CountryInfo
+import com.migc.qatar2022.presentation.screens.teams_map.OddsDetailsState
 import com.migc.qatar2022.ui.theme.*
 
 @Composable
-fun TeamStatsSheet(countryInfo: CountryInfo) {
+fun TeamStatsSheet(countryInfo: CountryInfo, oddDetailsState: OddsDetailsState, onOddClicked: (String) -> Unit) {
     val championships: List<Int> = countryInfo.championships
     val finals: List<Int> = countryInfo.runnerUps
     Column(modifier = Modifier.fillMaxWidth()) {
         BottomSheetHandle()
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = LARGE_PADDING),
+            horizontalArrangement = Arrangement.End,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Card(
+                modifier = Modifier
+                    .width(COIN_SIZE)
+                    .height(ODDS_BUTTON_HEIGHT)
+                    .clickable {
+                        onOddClicked(countryInfo.teamId)
+                    },
+                backgroundColor = mainColor,
+                shape = RoundedCornerShape(EXTRA_LARGE_ROUND_CORNER)
+            ) {
+                Box(contentAlignment = Alignment.Center) {
+                    if (oddDetailsState.isLoading) {
+                        CircularProgressIndicator(
+                            modifier = Modifier.size(SMALL_CIRCULAR_PROGRESS_SIZE),
+                            color = mainBackgroundColor
+                        )
+                    } else {
+                        var odd = stringResource(id = R.string.see_odds_text)
+                        if (oddDetailsState.bettingOdds != null) {
+                            odd = oddDetailsState.bettingOdds.wc.toString()
+                        }
+                        Text(
+                            color = mainBackgroundColor,
+                            text = odd,
+                            fontSize = Typography.caption.fontSize
+                        )
+                    }
+                }
+            }
+        }
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -93,6 +135,8 @@ fun TeamStatsSheetPreview() {
             championships = listOf(1930, 1950),
             runnerUps = listOf(1970, 1994),
             ranking = 13
-        )
+        ),
+        oddDetailsState = OddsDetailsState(),
+        onOddClicked = {},
     )
 }
