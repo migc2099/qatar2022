@@ -19,6 +19,7 @@ import com.migc.qatar2022.domain.use_case.playoffs.*
 import com.migc.qatar2022.domain.use_case.standings.*
 import com.migc.qatar2022.domain.use_case.team.GetTeamByIdUseCase
 import com.migc.qatar2022.domain.use_case.teams_map.GetCountriesInfoUseCase
+import com.migc.qatar2022.domain.use_case.teams_map.GetTeamOddsUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -123,8 +124,11 @@ object RepositoriesModule {
     @Singleton
     fun provideGetCountriesInfoUseCase(
         countriesInfoRepository: CountriesInfoRepository
-    ): GetCountriesInfoUseCase {
-        return GetCountriesInfoUseCase(countriesInfoRepository)
+    ): TeamsMapUseCases {
+        return TeamsMapUseCases(
+            getCountriesInfoUseCase = GetCountriesInfoUseCase(countriesInfoRepository),
+            getTeamOddsUseCase = GetTeamOddsUseCase(countriesInfoRepository)
+        )
     }
 
     @Provides
