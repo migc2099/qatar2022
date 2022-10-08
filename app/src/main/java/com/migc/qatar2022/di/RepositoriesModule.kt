@@ -75,7 +75,8 @@ object RepositoriesModule {
             determinePlayoffWinnerUseCase = DeterminePlayoffWinnerUseCase(),
             updatePlayoffResultsUseCase = UpdatePlayoffResultsUseCase(playoffRepository, standingsRepository),
             checkIfPlayoffCompletedUseCase = CheckIfPlayoffCompletedUseCase(playoffRepository),
-            getBestThreeTeamsUseCase = GetBestThreeTeamsUseCase(playoffRepository, teamRepository)
+            getBestThreeTeamsUseCase = GetBestThreeTeamsUseCase(playoffRepository, teamRepository),
+            uploadWinnerCountersUseCase = UploadWinnerCountersUseCase(playoffRepository)
         )
     }
 

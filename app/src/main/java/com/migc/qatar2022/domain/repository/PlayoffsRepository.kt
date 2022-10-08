@@ -1,6 +1,7 @@
 package com.migc.qatar2022.domain.repository
 
 import com.migc.qatar2022.domain.model.Playoff
+import com.migc.qatar2022.domain.model.Team
 
 interface PlayoffsRepository {
 
@@ -15,5 +16,6 @@ interface PlayoffsRepository {
     suspend fun updateLoserTeam(roundKey: Int, teamId: String)
     suspend fun updatePlayoffs(playoffs: List<Playoff>)
     suspend fun getPlayoffsByTeamId(teamId: String): List<Playoff>
+    suspend fun uploadWinners(teams: List<Team>)
 
 }

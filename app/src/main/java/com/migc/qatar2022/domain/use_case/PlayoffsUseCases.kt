@@ -11,5 +11,6 @@ data class PlayoffsUseCases(
     val determinePlayoffWinnerUseCase: DeterminePlayoffWinnerUseCase,
     val updatePlayoffResultsUseCase: UpdatePlayoffResultsUseCase,
     val checkIfPlayoffCompletedUseCase: CheckIfPlayoffCompletedUseCase,
-    val getBestThreeTeamsUseCase: GetBestThreeTeamsUseCase
+    val getBestThreeTeamsUseCase: GetBestThreeTeamsUseCase,
+    val uploadWinnerCountersUseCase: UploadWinnerCountersUseCase
 )

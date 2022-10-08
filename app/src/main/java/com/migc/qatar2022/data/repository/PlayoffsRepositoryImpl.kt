@@ -1,9 +1,14 @@
 package com.migc.qatar2022.data.repository
 
+import android.util.Log
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.FirebaseFirestore
 import com.migc.qatar2022.data.QatarDatabase
 import com.migc.qatar2022.data.local.mapper.toPlayoff
 import com.migc.qatar2022.data.local.mapper.toPlayoffEntity
 import com.migc.qatar2022.domain.model.Playoff
+import com.migc.qatar2022.domain.model.Team
 import com.migc.qatar2022.domain.repository.PlayoffsRepository
 
 class PlayoffsRepositoryImpl constructor(
@@ -81,6 +86,31 @@ class PlayoffsRepositoryImpl constructor(
             .map {
                 it.toPlayoff()
             }
+    }
+
+    override suspend fun uploadWinners(teams: List<Team>) {
+        Log.d("PlayoffRep", teams.toString())
+        if (teams.size == 3){
+            Log.d("PlayoffRep", "updating ${teams[0].teamId}")
+            val firstRef: DocumentReference = FirebaseFirestore.getInstance()
+                .collection("odds")
+                .document(teams[0].teamId)
+            firstRef.update("first", FieldValue.increment(1))
+
+//            delay(1000)
+            Log.d("PlayoffRep", "updating ${teams[1].teamId}")
+            val secondRef: DocumentReference = FirebaseFirestore.getInstance()
+                .collection("odds")
+                .document(teams[1].teamId)
+            secondRef.update("second", FieldValue.increment(1))
+
+//            delay(1000)
+            Log.d("PlayoffRep", "updating ${teams[2].teamId}")
+            val thirdRef: DocumentReference = FirebaseFirestore.getInstance()
+                .collection("odds")
+                .document(teams[2].teamId)
+            thirdRef.update("third", FieldValue.increment(1))
+        }
     }
 
 }
