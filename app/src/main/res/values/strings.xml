@@ -14,6 +14,7 @@
     <string name="enter_match_result_text">Enter Match Result</string>
     <string name="cancel_text">Cancel</string>
     <string name="okay_text">Accept</string>
+    <string name="upload_winners_text">Upload Winners</string>
     <string name="start_over_text">Start Over</string>
     <string name="close_text">Close</string>
     <string name="show_winners_text">Show Winners</string>

@@ -3,14 +3,20 @@ package com.migc.qatar2022.presentation.screens.home
 import android.util.Log
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.asAndroidBitmap
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.semantics.Role.Companion.Image
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
@@ -20,6 +26,8 @@ import com.migc.qatar2022.presentation.screens.playoffs.PlayoffDialog
 import com.migc.qatar2022.presentation.screens.playoffs.PlayoffsGrid
 import com.migc.qatar2022.presentation.screens.playoffs.PodiumDialog
 import com.migc.qatar2022.ui.theme.*
+import com.smarttoolfactory.screenshot.ScreenshotBox
+import com.smarttoolfactory.screenshot.rememberScreenshotState
 import kotlinx.coroutines.launch
 
 @ExperimentalMaterialApi
@@ -57,6 +65,12 @@ fun HomeScreen(
     )
 
     val coroutineScope = rememberCoroutineScope()
+//    val screenshotState = rememberScreenshotState()
+//    val screenshotClicked = remember { mutableStateOf(false) }
+
+    var gridHeight = 384.dp
+    var gridWidth = 620.dp
+
     BottomSheetScaffold(
         scaffoldState = scaffoldState,
         topBar = {
@@ -96,6 +110,10 @@ fun HomeScreen(
                 onFinalStandingsClick = {
                     navHostController.navigate(Screen.Standings.route)
                 },
+//                onSharePlayoffGridClick = {
+//                    screenshotState.capture()
+//                    screenshotClicked.value = true
+//                },
                 onTeamsMapClick = {
                     navHostController.navigate(Screen.TeamsMapScreen.route)
                 }
@@ -162,20 +180,22 @@ fun HomeScreen(
                 ) {
                     item { Spacer(modifier = Modifier.width(MEDIUM_PADDING)) }
                     item {
-                        Card(
-                            modifier = Modifier
-                                .width(620.dp)
-                                .height(384.dp),
-                            shape = RoundedCornerShape(SMALL_ROUND_CORNER),
-                            backgroundColor = mainColor
-                        ) {
-                            PlayoffsGrid(
-                                modifier = Modifier.padding(horizontal = MEDIUM_PADDING),
-                                playoffs = playoffs.value
+//                        ScreenshotBox(screenshotState = screenshotState) {
+                            Card(
+                                modifier = Modifier
+                                    .width(gridWidth)
+                                    .height(gridHeight),
+                                shape = RoundedCornerShape(SMALL_ROUND_CORNER),
+                                backgroundColor = mainColor
                             ) {
-                                Log.d("LazyRow", "roundKey clicked: $it")
-                                homeViewModel.onEvent(HomeUiEvent.OnPlayoffDialogClicked(it))
-                                showPlayoffDialog.value = true
+                                PlayoffsGrid(
+                                    modifier = Modifier.padding(horizontal = MEDIUM_PADDING),
+                                    playoffs = playoffs.value
+                                ) {
+                                    Log.d("LazyRow", "roundKey clicked: $it")
+                                    homeViewModel.onEvent(HomeUiEvent.OnPlayoffDialogClicked(it))
+                                    showPlayoffDialog.value = true
+//                                }
                             }
                         }
                     }
@@ -210,6 +230,9 @@ fun HomeScreen(
         PodiumDialog(
             teams = bestTeams.value,
             onDismiss = { showPodiumDialog.value = false },
+            onUploadWinners = {
+                homeViewModel.onEvent(HomeUiEvent.OnUploadWinnersClicked(it))
+            },
             onStartOver = {
                 showPodiumDialog.value = false
                 homeViewModel.resetTournament()
@@ -217,5 +240,21 @@ fun HomeScreen(
             onClose = { showPodiumDialog.value = false }
         )
     }
+
+//    if (screenshotClicked.value) {
+//        screenshotState.imageBitmap?.let {
+//
+//            LazyRow() {
+//                item {
+//                    Image(
+//                        modifier = Modifier
+//                            .size(256.dp),
+//                        bitmap = it,
+//                        contentDescription = ""
+//                    )
+//                }
+//            }
+//        }
+//    }
 
 }

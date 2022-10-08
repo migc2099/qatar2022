@@ -1,6 +1,7 @@
 package com.migc.qatar2022.presentation.screens.home
 
 import com.migc.qatar2022.domain.model.Playoff
+import com.migc.qatar2022.domain.model.Team
 
 sealed class HomeUiEvent {
 
@@ -10,5 +11,6 @@ sealed class HomeUiEvent {
     data class OnPlayoffDialogCompleted(val playoff: Playoff): HomeUiEvent()
     object OnResetPlayoffsClicked: HomeUiEvent()
     object OnShowStandingsClicked: HomeUiEvent()
+    data class OnUploadWinnersClicked(val winners: List<Team>): HomeUiEvent()
 
 }

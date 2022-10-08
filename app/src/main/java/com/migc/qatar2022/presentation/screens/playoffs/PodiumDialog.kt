@@ -29,6 +29,7 @@ import com.migc.qatar2022.ui.theme.*
 fun PodiumDialog(
     teams: Array<Team>,
     onDismiss: () -> Unit,
+    onUploadWinners: (List<Team>) -> Unit,
     onStartOver: () -> Unit,
     onClose: () -> Unit
 ) {
@@ -40,8 +41,8 @@ fun PodiumDialog(
     ) {
         Card(
             modifier = Modifier
-                .width(256.dp)
-                .height(244.dp),
+                .width(312.dp)
+                .height(396.dp),
             shape = RoundedCornerShape(MEDIUM_ROUND_CORNER),
             backgroundColor = mainBackgroundColor,
             elevation = SMALL_ELEVATION
@@ -65,30 +66,43 @@ fun PodiumDialog(
                     }
                 }
                 Spacer(modifier = Modifier.height(EXTRA_LARGE_PADDING))
-                Row(
-                    horizontalArrangement = Arrangement.End,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = MEDIUM_PADDING)
+                Box(
+                    modifier = Modifier.fillMaxWidth(),
+                    contentAlignment = Alignment.CenterEnd
                 ) {
-                    TextButton(
-                        onClick = {
-                            onStartOver()
-                        }
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = MEDIUM_PADDING),
+                        horizontalAlignment = Alignment.End
                     ) {
-                        Text(text = stringResource(R.string.start_over_text))
-                    }
-                    Spacer(modifier = Modifier.width(LARGE_PADDING))
-                    TextButton(
-                        onClick = {
-                            onClose()
+                        TextButton(
+                            onClick = {
+                                val winners = listOf(teams[0], teams[1], teams[2])
+                                onUploadWinners(winners)
+                            }
+                        ) {
+                            Text(text = stringResource(R.string.upload_winners_text))
                         }
-                    ) {
-                        Text(text = stringResource(R.string.close_text))
+                        Spacer(modifier = Modifier.height(MEDIUM_VERTICAL_GAP))
+                        TextButton(
+                            onClick = {
+                                onStartOver()
+                            }
+                        ) {
+                            Text(text = stringResource(R.string.start_over_text))
+                        }
+                        Spacer(modifier = Modifier.height(MEDIUM_VERTICAL_GAP))
+                        TextButton(
+                            onClick = {
+                                onClose()
+                            }
+                        ) {
+                            Text(text = stringResource(R.string.close_text))
+                        }
                     }
                 }
             }
-
         }
 
     }
@@ -167,6 +181,7 @@ fun PodiumDialogPreview() {
     PodiumDialog(
         teams = emptyArray(),
         onDismiss = { },
+        onUploadWinners = { },
         onStartOver = { },
         onClose = { }
     )

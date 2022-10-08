@@ -102,6 +102,11 @@ class HomeViewModel @Inject constructor(
                     getFinalStandings()
                 }
             }
+            is HomeUiEvent.OnUploadWinnersClicked -> {
+                viewModelScope.launch(Dispatchers.IO) {
+                    playoffsUseCases.uploadWinnerCountersUseCase(teams = event.winners)
+                }
+            }
         }
     }
 

@@ -14,6 +14,7 @@
     <string name="enter_match_result_text">Ingrese resultados del partido</string>
     <string name="cancel_text">Cancelar</string>
     <string name="okay_text">Aceptar</string>
+    <string name="upload_winners_text">Subir Ganadores</string>
     <string name="start_over_text">Empezar de Nuevo</string>
     <string name="close_text">Cerrar</string>
     <string name="show_winners_text">Mostrar Ganadores</string>
