@@ -2,7 +2,6 @@ package com.migc.qatar2022.di
 
 import android.content.Context
 import com.migc.qatar2022.data.QatarDatabase
-import com.migc.qatar2022.data.remote.CountriesInfoApi
 import com.migc.qatar2022.data.repository.*
 import com.migc.qatar2022.domain.repository.*
 import com.migc.qatar2022.domain.use_case.*
