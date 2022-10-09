@@ -19,6 +19,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.semantics.Role.Companion.Image
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.migc.qatar2022.navigation.Screen
 import com.migc.qatar2022.presentation.components.*
@@ -74,17 +75,22 @@ fun HomeScreen(
     BottomSheetScaffold(
         scaffoldState = scaffoldState,
         topBar = {
-            HomeTopBar {
-                coroutineScope.launch {
-                    if (sheetState.isCollapsed) {
-                        Log.d("coroutineScope", "playoffs expand")
-                        sheetState.expand()
-                    } else {
-                        Log.d("coroutineScope", "playoffs collapse")
-                        sheetState.collapse()
+            HomeTopBar(
+                onSignInClick = {
+                    navHostController.navigate(Screen.Login.route)
+                },
+                onMenuClick = {
+                    coroutineScope.launch {
+                        if (sheetState.isCollapsed) {
+                            Log.d("coroutineScope", "playoffs expand")
+                            sheetState.expand()
+                        } else {
+                            Log.d("coroutineScope", "playoffs collapse")
+                            sheetState.collapse()
+                        }
                     }
                 }
-            }
+            )
         },
         sheetContent = {
             HomeBottomSheetContent(
@@ -181,20 +187,20 @@ fun HomeScreen(
                     item { Spacer(modifier = Modifier.width(MEDIUM_PADDING)) }
                     item {
 //                        ScreenshotBox(screenshotState = screenshotState) {
-                            Card(
-                                modifier = Modifier
-                                    .width(gridWidth)
-                                    .height(gridHeight),
-                                shape = RoundedCornerShape(SMALL_ROUND_CORNER),
-                                backgroundColor = mainColor
+                        Card(
+                            modifier = Modifier
+                                .width(gridWidth)
+                                .height(gridHeight),
+                            shape = RoundedCornerShape(SMALL_ROUND_CORNER),
+                            backgroundColor = mainColor
+                        ) {
+                            PlayoffsGrid(
+                                modifier = Modifier.padding(horizontal = MEDIUM_PADDING),
+                                playoffs = playoffs.value
                             ) {
-                                PlayoffsGrid(
-                                    modifier = Modifier.padding(horizontal = MEDIUM_PADDING),
-                                    playoffs = playoffs.value
-                                ) {
-                                    Log.d("LazyRow", "roundKey clicked: $it")
-                                    homeViewModel.onEvent(HomeUiEvent.OnPlayoffDialogClicked(it))
-                                    showPlayoffDialog.value = true
+                                Log.d("LazyRow", "roundKey clicked: $it")
+                                homeViewModel.onEvent(HomeUiEvent.OnPlayoffDialogClicked(it))
+                                showPlayoffDialog.value = true
 //                                }
                             }
                         }

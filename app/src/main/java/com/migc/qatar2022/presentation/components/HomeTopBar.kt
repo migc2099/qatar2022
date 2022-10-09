@@ -10,13 +10,14 @@ import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.migc.qatar2022.R
 import com.migc.qatar2022.ui.theme.*
 
 @Composable
-fun HomeTopBar(onClick: () -> Unit) {
+fun HomeTopBar(onSignInClick: () -> Unit, onMenuClick: () -> Unit) {
     TopAppBar(
         title = {
             Text(
@@ -28,7 +29,18 @@ fun HomeTopBar(onClick: () -> Unit) {
         actions = {
             IconButton(
                 onClick = {
-                    onClick()
+                    onSignInClick()
+                }
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_authenticate),
+                    contentDescription = stringResource(id = R.string.authenticate_text),
+                    tint = mainBackgroundColor
+                )
+            }
+            IconButton(
+                onClick = {
+                    onMenuClick()
                 }
             ) {
                 Icon(Icons.Filled.Menu, stringResource(R.string.menu_text))
@@ -44,5 +56,5 @@ fun HomeTopBar(onClick: () -> Unit) {
 @Composable
 @Preview
 fun HomeTopBarPreview() {
-    HomeTopBar(onClick = {})
+    HomeTopBar(onSignInClick = {}, onMenuClick = {})
 }
