@@ -28,10 +28,12 @@
     <string name="final_standings_title">Tabla de Posiciones</string>
     <string name="penalty_kick_text">p</string>
     <string name="menu_text">Menu</string>
+    <string name="authenticate_text">Autentificar</string>
     <string name="countries_map_text">Mapa de Paises</string>
     <string name="appearances_text">Apariciones</string>
     <string name="ranking_text">Posición</string>
     <string name="see_odds_text">Ver Chances</string>
     <string name="star_path">M14,21.288,21.416,26l-1.968-8.88L26,11.145l-8.628-.771L14,2l-3.372,8.375L2,11.145,8.552,17.12,6.584,26Z</string>
     <string name="generate_scores">Generar Resultados Realistas (Beta)</string>
+    <string name="go_back_text">Volver</string>
 </resources>
