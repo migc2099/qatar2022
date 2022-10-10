@@ -12,12 +12,11 @@ import com.migc.qatar2022.common.Constants.GROUP_E_KEY
 import com.migc.qatar2022.common.Constants.GROUP_F_KEY
 import com.migc.qatar2022.common.Constants.GROUP_G_KEY
 import com.migc.qatar2022.common.Constants.GROUP_H_KEY
+import com.migc.qatar2022.common.Resource
 import com.migc.qatar2022.domain.model.Group
 import com.migc.qatar2022.domain.model.Playoff
 import com.migc.qatar2022.domain.model.Team
-import com.migc.qatar2022.domain.use_case.DatabaseSetupUseCases
-import com.migc.qatar2022.domain.use_case.PlayoffsUseCases
-import com.migc.qatar2022.domain.use_case.StandingsUseCases
+import com.migc.qatar2022.domain.use_case.*
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -29,7 +28,9 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val standingsUsesCases: StandingsUseCases,
     private val playoffsUseCases: PlayoffsUseCases,
-    private val databaseSetupUseCases: DatabaseSetupUseCases
+    private val databaseSetupUseCases: DatabaseSetupUseCases,
+    private val firebaseUseCases: FirebaseUseCases,
+    private val dataStoreUseCases: DataStoreUseCases
 ) : ViewModel() {
 
     var listPosition = 0
@@ -50,10 +51,19 @@ class HomeViewModel @Inject constructor(
     private var _bestTeams: MutableStateFlow<Array<Team>> = MutableStateFlow(emptyArray())
     val bestTeams = _bestTeams.asStateFlow()
 
+    private val _userState: MutableStateFlow<UserState> = MutableStateFlow(UserState())
+    val userState = _userState.asStateFlow()
+
+    private val _transactionState: MutableStateFlow<TransactionState> = MutableStateFlow(TransactionState())
+    val transactionState = _transactionState.asStateFlow()
+
+    private val _tournamentActionState: MutableStateFlow<TournamentActionType> = MutableStateFlow(TournamentActionType.Undefined)
+    val tournamentActionState = _tournamentActionState.asStateFlow()
 
     fun onEvent(event: HomeUiEvent) {
         when (event) {
             is HomeUiEvent.OnStart -> {
+                _userState.value = UserState(firebaseUseCases.getFirebaseAuthUseCase())
                 viewModelScope.launch(Dispatchers.IO) {
                     standingsUsesCases.getTeamsStatsPerGroupUseCase()
                         .collect { statsMap ->
@@ -79,6 +89,7 @@ class HomeViewModel @Inject constructor(
                 }
             }
             is HomeUiEvent.OnPlayoffDialogCompleted -> {
+                _tournamentActionState.value = TournamentActionType.PlayoffPlayed
                 viewModelScope.launch(Dispatchers.IO) {
                     Log.d("LOG", "updatePlayoffResultsUseCase: ${event.playoff}")
                     val completedPlayoff = playoffsUseCases.determinePlayoffWinnerUseCase(event.playoff)
@@ -103,8 +114,22 @@ class HomeViewModel @Inject constructor(
                 }
             }
             is HomeUiEvent.OnUploadWinnersClicked -> {
+                Log.d("test", "??")
                 viewModelScope.launch(Dispatchers.IO) {
-                    playoffsUseCases.uploadWinnerCountersUseCase(teams = event.winners)
+                    val result = playoffsUseCases.uploadWinnerCountersUseCase(teams = event.winners)
+                    when (result) {
+                        is Resource.Loading -> {
+                            _transactionState.value = TransactionState(inProgress = true)
+                        }
+                        is Resource.Success -> {
+                            _transactionState.value = TransactionState(inProgress = false, success = true)
+                            dataStoreUseCases.saveOnWinnersUploadActionUseCase(true)
+                            _tournamentActionState.value = TournamentActionType.WinnersUpload
+                        }
+                        is Resource.Error -> {
+                            _transactionState.value = TransactionState(inProgress = false, failed = true)
+                        }
+                    }
                 }
             }
         }
@@ -155,6 +180,8 @@ class HomeViewModel @Inject constructor(
     }
 
     private suspend fun resetPlayoffs() {
+        dataStoreUseCases.saveOnWinnersUploadActionUseCase(false)
+        _tournamentActionState.value = TournamentActionType.GroupPhasePlayed
         playoffsUseCases.setupPlayoffsUseCase()
     }
 
@@ -168,6 +195,16 @@ class HomeViewModel @Inject constructor(
     private fun refreshPlayoffCompletionStatus() {
         viewModelScope.launch(Dispatchers.IO) {
             _playoffCompletedState.value = playoffsUseCases.checkIfPlayoffCompletedUseCase()
+            if (_playoffCompletedState.value) {
+                _tournamentActionState.value = TournamentActionType.FinalsFinished
+                Log.d("HomeViewModel", "readOnWinnersUploadActionUseCase() ${TournamentActionType.FinalsFinished}")
+                dataStoreUseCases.readOnWinnersUploadActionUseCase().collect {
+                    if (it) {
+                        Log.d("HomeViewModel", "readOnWinnersUploadActionUseCase() ${TournamentActionType.WinnersUpload}")
+                        _tournamentActionState.value = TournamentActionType.WinnersUpload
+                    }
+                }
+            }
         }
     }
 
@@ -189,6 +226,8 @@ class HomeViewModel @Inject constructor(
                     _statsPerGroup.value = statsMap
                 }
             refreshPlayoffsGrid()
+            dataStoreUseCases.saveOnWinnersUploadActionUseCase(false)
+            _tournamentActionState.value = TournamentActionType.TournamentRestarted
         }
     }
 

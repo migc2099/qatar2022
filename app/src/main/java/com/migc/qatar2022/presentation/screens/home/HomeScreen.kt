@@ -1,34 +1,28 @@
 package com.migc.qatar2022.presentation.screens.home
 
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.asAndroidBitmap
-import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.semantics.Role.Companion.Image
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
+import com.migc.qatar2022.R
 import com.migc.qatar2022.navigation.Screen
 import com.migc.qatar2022.presentation.components.*
 import com.migc.qatar2022.presentation.screens.playoffs.PlayoffDialog
 import com.migc.qatar2022.presentation.screens.playoffs.PlayoffsGrid
 import com.migc.qatar2022.presentation.screens.playoffs.PodiumDialog
 import com.migc.qatar2022.ui.theme.*
-import com.smarttoolfactory.screenshot.ScreenshotBox
-import com.smarttoolfactory.screenshot.rememberScreenshotState
 import kotlinx.coroutines.launch
 
 @ExperimentalMaterialApi
@@ -38,6 +32,10 @@ fun HomeScreen(
     homeViewModel: HomeViewModel = hiltViewModel()
 ) {
 
+    val mContext = LocalContext.current
+    val tournamentActionState = homeViewModel.tournamentActionState.collectAsState()
+    val userState = homeViewModel.userState.collectAsState()
+    val transactionState = homeViewModel.transactionState.collectAsState()
     val teamStatsMap = homeViewModel.statsPerGroup.value
     val playoffs = homeViewModel.playoffs.collectAsState()
     val playoffCompletedState = homeViewModel.playoffCompletedState.collectAsState()
@@ -235,9 +233,24 @@ fun HomeScreen(
     if (playoffCompletedState.value && showPodiumDialog.value) {
         PodiumDialog(
             teams = bestTeams.value,
+            isUserAuthenticated = userState.value.user != null,
+            lastTournamentActionType = tournamentActionState.value,
+            transactionState = transactionState.value,
             onDismiss = { showPodiumDialog.value = false },
             onUploadWinners = {
-                homeViewModel.onEvent(HomeUiEvent.OnUploadWinnersClicked(it))
+                Log.d("onUploadWinners", "userState ${userState.value.user}")
+                Log.d("onUploadWinners", "userState ${userState.value.user!!.uid}")
+                if (userState.value.user != null) {
+                    Log.d("onUploadWinners", "tournamentActionState ${tournamentActionState.value}")
+                    if (tournamentActionState.value == TournamentActionType.FinalsFinished) {
+                        Log.d("onUploadWinners", "true")
+                        homeViewModel.onEvent(HomeUiEvent.OnUploadWinnersClicked(it))
+                    } else {
+                        Log.d("onUploadWinners", "false")
+                        Toast.makeText(mContext, mContext.getString(R.string.reupload_prevention_message), Toast.LENGTH_LONG)
+                            .show()
+                    }
+                }
             },
             onStartOver = {
                 showPodiumDialog.value = false

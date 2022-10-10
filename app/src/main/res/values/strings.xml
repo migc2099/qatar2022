@@ -18,6 +18,8 @@
     <string name="start_over_text">Start Over</string>
     <string name="close_text">Close</string>
     <string name="show_winners_text">Show Winners</string>
+    <string name="authentication_required_text">(Requires Sign In)</string>
+    <string name="reset_required_text">(Requires Playoffs Reset)</string>
     <string name="reset_playoffs_text">Reset Playoffs</string>
     <string name="final_standings_text">Final Standings</string>
     <string name="points_acronym">Pts</string>
@@ -36,4 +38,5 @@
     <string name="star_path">M14,21.288,21.416,26l-1.968-8.88L26,11.145l-8.628-.771L14,2l-3.372,8.375L2,11.145,8.552,17.12,6.584,26Z</string>
     <string name="generate_scores">Generate Realistic Scores (Beta)</string>
     <string name="go_back_text">Go Back</string>
+    <string name="reupload_prevention_message">You have already uploaded this tournament\'s winners</string>
 </resources>

@@ -8,9 +8,12 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -23,17 +26,27 @@ import androidx.compose.ui.window.Dialog
 import com.migc.qatar2022.R
 import com.migc.qatar2022.domain.model.Team
 import com.migc.qatar2022.presentation.components.TeamFlag
+import com.migc.qatar2022.presentation.screens.home.TournamentActionType
+import com.migc.qatar2022.presentation.screens.home.TransactionState
 import com.migc.qatar2022.ui.theme.*
 
 @Composable
 fun PodiumDialog(
     teams: Array<Team>,
+    isUserAuthenticated: Boolean,
+    lastTournamentActionType: TournamentActionType,
+    transactionState: TransactionState,
     onDismiss: () -> Unit,
     onUploadWinners: (List<Team>) -> Unit,
     onStartOver: () -> Unit,
     onClose: () -> Unit
 ) {
-    Log.d("PodiumDialog", teams.toString())
+    Log.d("PodiumDialog", "transactionState: $transactionState")
+
+    val isUploadWinnersProcessing = remember {
+        mutableStateOf(false)
+    }
+    isUploadWinnersProcessing.value = transactionState.inProgress
     Dialog(
         onDismissRequest = {
             onDismiss()
@@ -78,11 +91,40 @@ fun PodiumDialog(
                     ) {
                         TextButton(
                             onClick = {
+                                isUploadWinnersProcessing.value = true
                                 val winners = listOf(teams[0], teams[1], teams[2])
                                 onUploadWinners(winners)
-                            }
+                            },
+                            enabled = isUserAuthenticated
+                                    && lastTournamentActionType == TournamentActionType.FinalsFinished
+                                    && !isUploadWinnersProcessing.value
                         ) {
-                            Text(text = stringResource(R.string.upload_winners_text))
+                            Box(
+                                contentAlignment = Alignment.Center
+                            ) {
+                                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                                    Text(text = stringResource(id = R.string.upload_winners_text))
+                                    if (!isUserAuthenticated) {
+                                        Text(
+                                            color = Color.Gray,
+                                            text = stringResource(id = R.string.authentication_required_text),
+                                            fontSize = Typography.overline.fontSize
+                                        )
+                                    } else {
+                                        if (lastTournamentActionType == TournamentActionType.WinnersUpload){
+                                            Text(
+                                                color = Color.Gray,
+                                                text = stringResource(id = R.string.reset_required_text),
+                                                fontSize = Typography.overline.fontSize
+                                            )
+                                        }
+                                    }
+                                }
+                                if (isUploadWinnersProcessing.value) {
+                                    Log.d("PodiumDialog", "transactionState: ${transactionState.inProgress}")
+                                    CircularProgressIndicator(modifier = Modifier.size(SMALL_CIRCULAR_PROGRESS_SIZE))
+                                }
+                            }
                         }
                         Spacer(modifier = Modifier.height(MEDIUM_VERTICAL_GAP))
                         TextButton(
@@ -180,6 +222,9 @@ fun PlaceColumnPreview() {
 fun PodiumDialogPreview() {
     PodiumDialog(
         teams = emptyArray(),
+        isUserAuthenticated = true,
+        lastTournamentActionType = TournamentActionType.WinnersUpload,
+        transactionState = TransactionState(),
         onDismiss = { },
         onUploadWinners = { },
         onStartOver = { },
