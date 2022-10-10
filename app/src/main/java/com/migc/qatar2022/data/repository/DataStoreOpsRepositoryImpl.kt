@@ -12,6 +12,7 @@ import com.migc.qatar2022.common.Constants.PREFERENCES_GROUPS_KEY
 import com.migc.qatar2022.common.Constants.PREFERENCES_NAME
 import com.migc.qatar2022.common.Constants.PREFERENCES_STANDINGS_KEY
 import com.migc.qatar2022.common.Constants.PREFERENCES_TEAMS_KEY
+import com.migc.qatar2022.common.Constants.PREFERENCES_WINNERS_UPLOAD_ACTION_KEY
 import com.migc.qatar2022.domain.repository.DataStoreOpsRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
@@ -31,6 +32,7 @@ class DataStoreOpsRepositoryImpl(context: Context) : DataStoreOpsRepository {
         val onStandingsSetupCompletedKey = booleanPreferencesKey(name = PREFERENCES_STANDINGS_KEY)
         val onGroupsSetupCompletedKey = booleanPreferencesKey(name = PREFERENCES_GROUPS_KEY)
         val onTeamsSetupCompletedKey = booleanPreferencesKey(name = PREFERENCES_TEAMS_KEY)
+        val onUploadWinnerActionCompleted = booleanPreferencesKey(name = PREFERENCES_WINNERS_UPLOAD_ACTION_KEY)
     }
 
     override suspend fun saveOnFixtureSetupCompleted(completed: Boolean) {
@@ -114,6 +116,27 @@ class DataStoreOpsRepositoryImpl(context: Context) : DataStoreOpsRepository {
             .map { preferences ->
                 val onTeamsSetupCompleted = preferences[PreferencesKey.onTeamsSetupCompletedKey] ?: false
                 onTeamsSetupCompleted
+            }
+    }
+
+    override suspend fun saveOnWinnerUploadActionCompleted(completed: Boolean) {
+        dataStore.edit { preferences ->
+            preferences[PreferencesKey.onUploadWinnerActionCompleted] = completed
+        }
+    }
+
+    override fun readOnWinnerUploadActionCompleted(): Flow<Boolean> {
+        return dataStore.data
+            .catch { exception ->
+                if (exception is IOException){
+                    emit(emptyPreferences())
+                } else {
+                    throw exception
+                }
+            }
+            .map { preferences ->
+                val onWinnersUploadActionCompleted = preferences[PreferencesKey.onUploadWinnerActionCompleted] ?: false
+                onWinnersUploadActionCompleted
             }
     }
 

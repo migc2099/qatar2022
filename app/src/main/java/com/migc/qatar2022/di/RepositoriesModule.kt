@@ -169,7 +169,9 @@ object RepositoriesModule {
             saveOnGroupsSetupUseCase = SaveOnGroupsSetupUseCase(repository),
             readOnGroupsSetupUseCase = ReadOnGroupsSetupUseCase(repository),
             saveOnTeamsSetupUseCase = SaveOnTeamsSetupUseCase(repository),
-            readOnTeamsSetupUseCase = ReadOnTeamsSetupUseCase(repository)
+            readOnTeamsSetupUseCase = ReadOnTeamsSetupUseCase(repository),
+            saveOnWinnersUploadActionUseCase = SaveOnWinnersUploadActionUseCase(repository),
+            readOnWinnersUploadActionUseCase = ReadOnWinnersUploadActionUseCase(repository)
         )
     }
 

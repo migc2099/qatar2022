@@ -7,6 +7,12 @@ object Constants {
     const val PREFERENCES_STANDINGS_KEY = "standings_key"
     const val PREFERENCES_GROUPS_KEY = "groups_key"
     const val PREFERENCES_TEAMS_KEY = "teams_key"
+    const val PREFERENCES_WINNERS_UPLOAD_ACTION_KEY = "winners_upload_action_key"
+
+    const val NODE_ODDS = "odds"
+    const val FIELD_FIRST = "first"
+    const val FIELD_SECOND = "second"
+    const val FIELD_THIRD = "third"
 
     const val FIXTURE_BASE_URL = "https://fixturedownload.com/"
 //    const val RANKINGS_BASE_URL = "https://gist.githubusercontent.com/"

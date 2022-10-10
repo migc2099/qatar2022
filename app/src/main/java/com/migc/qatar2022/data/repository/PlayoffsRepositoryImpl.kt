@@ -4,12 +4,19 @@ import android.util.Log
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import com.migc.qatar2022.common.Constants.FIELD_FIRST
+import com.migc.qatar2022.common.Constants.FIELD_SECOND
+import com.migc.qatar2022.common.Constants.FIELD_THIRD
+import com.migc.qatar2022.common.Constants.NODE_ODDS
 import com.migc.qatar2022.data.QatarDatabase
 import com.migc.qatar2022.data.local.mapper.toPlayoff
 import com.migc.qatar2022.data.local.mapper.toPlayoffEntity
 import com.migc.qatar2022.domain.model.Playoff
 import com.migc.qatar2022.domain.model.Team
 import com.migc.qatar2022.domain.repository.PlayoffsRepository
+import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
 
 class PlayoffsRepositoryImpl constructor(
     private val qatarDatabase: QatarDatabase
@@ -88,29 +95,36 @@ class PlayoffsRepositoryImpl constructor(
             }
     }
 
-    override suspend fun uploadWinners(teams: List<Team>) {
+    override suspend fun uploadWinners(teams: List<Team>): Boolean {
         Log.d("PlayoffRep", teams.toString())
-        if (teams.size == 3){
-            Log.d("PlayoffRep", "updating ${teams[0].teamId}")
-            val firstRef: DocumentReference = FirebaseFirestore.getInstance()
-                .collection("odds")
-                .document(teams[0].teamId)
-            firstRef.update("first", FieldValue.increment(1))
+        return suspendCancellableCoroutine { continuation ->
+            if (teams.size == 3) {
+                Log.d("PlayoffRep", "updating ${teams[0].teamId}")
+                val db = FirebaseFirestore.getInstance()
+                val firstRef: DocumentReference = db
+                    .collection(NODE_ODDS)
+                    .document(teams[0].teamId)
 
-//            delay(1000)
-            Log.d("PlayoffRep", "updating ${teams[1].teamId}")
-            val secondRef: DocumentReference = FirebaseFirestore.getInstance()
-                .collection("odds")
-                .document(teams[1].teamId)
-            secondRef.update("second", FieldValue.increment(1))
+                Log.d("PlayoffRep", "updating ${teams[1].teamId}")
+                val secondRef: DocumentReference = db
+                    .collection(NODE_ODDS)
+                    .document(teams[1].teamId)
 
-//            delay(1000)
-            Log.d("PlayoffRep", "updating ${teams[2].teamId}")
-            val thirdRef: DocumentReference = FirebaseFirestore.getInstance()
-                .collection("odds")
-                .document(teams[2].teamId)
-            thirdRef.update("third", FieldValue.increment(1))
+                Log.d("PlayoffRep", "updating ${teams[2].teamId}")
+                val thirdRef: DocumentReference = db
+                    .collection(NODE_ODDS)
+                    .document(teams[2].teamId)
+
+                db.runBatch { batch ->
+                    batch.update(firstRef, FIELD_FIRST, FieldValue.increment(1))
+                    batch.update(secondRef, FIELD_SECOND, FieldValue.increment(1))
+                    batch.update(thirdRef, FIELD_THIRD, FieldValue.increment(1))
+                }.addOnSuccessListener {
+                    continuation.resume(true)
+                }.addOnFailureListener { e ->
+                    continuation.resumeWithException(e)
+                }
+            }
         }
     }
-
 }

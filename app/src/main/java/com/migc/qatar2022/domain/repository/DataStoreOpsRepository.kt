@@ -11,4 +11,6 @@ interface DataStoreOpsRepository {
     fun readOnGroupsSetupCompleted(): Flow<Boolean>
     suspend fun saveOnTeamsSetupCompleted(completed: Boolean)
     fun readOnTeamsSetupCompleted(): Flow<Boolean>
+    suspend fun saveOnWinnerUploadActionCompleted(completed: Boolean)
+    fun readOnWinnerUploadActionCompleted(): Flow<Boolean>
 }

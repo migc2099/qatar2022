@@ -10,5 +10,7 @@ data class DataStoreUseCases(
     val saveOnGroupsSetupUseCase: SaveOnGroupsSetupUseCase,
     val readOnGroupsSetupUseCase: ReadOnGroupsSetupUseCase,
     val saveOnTeamsSetupUseCase: SaveOnTeamsSetupUseCase,
-    val readOnTeamsSetupUseCase: ReadOnTeamsSetupUseCase
+    val readOnTeamsSetupUseCase: ReadOnTeamsSetupUseCase,
+    val saveOnWinnersUploadActionUseCase: SaveOnWinnersUploadActionUseCase,
+    val readOnWinnersUploadActionUseCase: ReadOnWinnersUploadActionUseCase
 )
