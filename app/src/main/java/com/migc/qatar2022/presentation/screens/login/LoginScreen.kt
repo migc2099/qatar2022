@@ -1,13 +1,16 @@
 package com.migc.qatar2022.presentation.screens.login
 
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -20,7 +23,15 @@ fun LoginScreen(
     navHostController: NavHostController,
     loginViewModel: LoginViewModel = hiltViewModel()
 ) {
+    val mContext = LocalContext.current
     val authState = loginViewModel.auth.collectAsState()
+
+    LaunchedEffect(Unit) {
+        loginViewModel.toastMessage.collect { message ->
+            Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show()
+        }
+    }
+
     Scaffold(
         topBar = {
             LoginTopBar(
