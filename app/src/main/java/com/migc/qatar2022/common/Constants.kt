@@ -47,4 +47,8 @@ object Constants {
 
     const val PARAM_GROUP_ID = "group_id"
 
+    const val UPLOAD_COMPLETED_MESSAGE = "Upload Completed"
+    const val UNEXPECTED_EXCEPTION_ERROR_MESSAGE = "An unexpected error occurred"
+    const val CONNECTION_EXCEPTION_ERROR_MESSAGE = "Couldn't reach server. Check internet connection"
+
 }

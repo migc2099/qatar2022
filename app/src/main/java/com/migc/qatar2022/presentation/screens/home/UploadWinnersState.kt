@@ -1,10 +1,8 @@
 package com.migc.qatar2022.presentation.screens.home
 
-data class TransactionState(
-    val inProgress: Boolean = false,
-    val success: Boolean = false,
-    val failed: Boolean = false,
-    val errorType: ErrorType = ErrorType.NoError
+data class UploadWinnersState(
+    val operationState: OperationState = OperationState.Idle,
+    val message: String = ""
 )
 
 enum class TournamentActionType{
@@ -22,10 +20,3 @@ enum class OperationState{
     Success,
     Failed
 }
-
-enum class ErrorType{
-    NoError,
-    NoInternet,
-    UnknownError
-}
-

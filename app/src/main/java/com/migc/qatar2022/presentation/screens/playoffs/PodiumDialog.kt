@@ -12,8 +12,6 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -27,7 +25,6 @@ import com.migc.qatar2022.R
 import com.migc.qatar2022.domain.model.Team
 import com.migc.qatar2022.presentation.components.TeamFlag
 import com.migc.qatar2022.presentation.screens.home.TournamentActionType
-import com.migc.qatar2022.presentation.screens.home.TransactionState
 import com.migc.qatar2022.ui.theme.*
 
 @Composable
@@ -35,18 +32,13 @@ fun PodiumDialog(
     teams: Array<Team>,
     isUserAuthenticated: Boolean,
     lastTournamentActionType: TournamentActionType,
-    transactionState: TransactionState,
+    isUploadWinnersProcessing: Boolean,
     onDismiss: () -> Unit,
     onUploadWinners: (List<Team>) -> Unit,
     onStartOver: () -> Unit,
     onClose: () -> Unit
 ) {
-    Log.d("PodiumDialog", "transactionState: $transactionState")
-
-    val isUploadWinnersProcessing = remember {
-        mutableStateOf(false)
-    }
-    isUploadWinnersProcessing.value = transactionState.inProgress
+    Log.d("PodiumDialog", "first line")
     Dialog(
         onDismissRequest = {
             onDismiss()
@@ -91,13 +83,13 @@ fun PodiumDialog(
                     ) {
                         TextButton(
                             onClick = {
-                                isUploadWinnersProcessing.value = true
+//                                isUploadWinnersProcessing.value = true
                                 val winners = listOf(teams[0], teams[1], teams[2])
                                 onUploadWinners(winners)
                             },
                             enabled = isUserAuthenticated
                                     && lastTournamentActionType == TournamentActionType.FinalsFinished
-                                    && !isUploadWinnersProcessing.value
+                                    && !isUploadWinnersProcessing
                         ) {
                             Box(
                                 contentAlignment = Alignment.Center
@@ -120,8 +112,8 @@ fun PodiumDialog(
                                         }
                                     }
                                 }
-                                if (isUploadWinnersProcessing.value) {
-                                    Log.d("PodiumDialog", "transactionState: ${transactionState.inProgress}")
+                                if (isUploadWinnersProcessing) {
+                                    Log.d("PodiumDialog", "isUploadWinnersProcessing: ${isUploadWinnersProcessing}")
                                     CircularProgressIndicator(modifier = Modifier.size(SMALL_CIRCULAR_PROGRESS_SIZE))
                                 }
                             }
@@ -224,7 +216,7 @@ fun PodiumDialogPreview() {
         teams = emptyArray(),
         isUserAuthenticated = true,
         lastTournamentActionType = TournamentActionType.WinnersUpload,
-        transactionState = TransactionState(),
+        isUploadWinnersProcessing = false,
         onDismiss = { },
         onUploadWinners = { },
         onStartOver = { },

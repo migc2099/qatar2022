@@ -12,6 +12,8 @@ import com.migc.qatar2022.common.Constants.GROUP_E_KEY
 import com.migc.qatar2022.common.Constants.GROUP_F_KEY
 import com.migc.qatar2022.common.Constants.GROUP_G_KEY
 import com.migc.qatar2022.common.Constants.GROUP_H_KEY
+import com.migc.qatar2022.common.Constants.CONNECTION_EXCEPTION_ERROR_MESSAGE
+import com.migc.qatar2022.common.Constants.UPLOAD_COMPLETED_MESSAGE
 import com.migc.qatar2022.common.Resource
 import com.migc.qatar2022.domain.model.Group
 import com.migc.qatar2022.domain.model.Playoff
@@ -30,7 +32,8 @@ class HomeViewModel @Inject constructor(
     private val playoffsUseCases: PlayoffsUseCases,
     private val databaseSetupUseCases: DatabaseSetupUseCases,
     private val firebaseUseCases: FirebaseUseCases,
-    private val dataStoreUseCases: DataStoreUseCases
+    private val dataStoreUseCases: DataStoreUseCases,
+    private val networkUseCases: NetworkUseCases
 ) : ViewModel() {
 
     var listPosition = 0
@@ -54,11 +57,11 @@ class HomeViewModel @Inject constructor(
     private val _userState: MutableStateFlow<UserState> = MutableStateFlow(UserState())
     val userState = _userState.asStateFlow()
 
-    private val _transactionState: MutableStateFlow<TransactionState> = MutableStateFlow(TransactionState())
-    val transactionState = _transactionState.asStateFlow()
-
     private val _tournamentActionState: MutableStateFlow<TournamentActionType> = MutableStateFlow(TournamentActionType.Undefined)
     val tournamentActionState = _tournamentActionState.asStateFlow()
+
+    private val _uploadState = MutableSharedFlow<UploadWinnersState>()
+    val uploadState = _uploadState.asSharedFlow()
 
     fun onEvent(event: HomeUiEvent) {
         when (event) {
@@ -114,21 +117,47 @@ class HomeViewModel @Inject constructor(
                 }
             }
             is HomeUiEvent.OnUploadWinnersClicked -> {
-                Log.d("test", "??")
-                viewModelScope.launch(Dispatchers.IO) {
-                    val result = playoffsUseCases.uploadWinnerCountersUseCase(teams = event.winners)
-                    when (result) {
-                        is Resource.Loading -> {
-                            _transactionState.value = TransactionState(inProgress = true)
+                Log.d("HomeViewModel", "HomeUiEvent.OnUploadWinnersClicked")
+                viewModelScope.launch {
+                    _uploadState.emit(UploadWinnersState(operationState = OperationState.Loading))
+                }
+                val isThereInternet = networkUseCases.checkIfInternetAvailableUseCase()
+                Log.d("isThereInternet", isThereInternet.toString())
+                if (isThereInternet) {
+                    viewModelScope.launch(Dispatchers.IO) {
+                        val result = playoffsUseCases.uploadWinnerCountersUseCase(teams = event.winners)
+                        when (result) {
+                            is Resource.Loading -> {
+                                _uploadState.emit(UploadWinnersState(operationState = OperationState.Loading))
+                            }
+                            is Resource.Success -> {
+                                dataStoreUseCases.saveOnWinnersUploadActionUseCase(true)
+                                _tournamentActionState.value = TournamentActionType.WinnersUpload
+                                _uploadState.emit(
+                                    UploadWinnersState(
+                                        operationState = OperationState.Success,
+                                        message = UPLOAD_COMPLETED_MESSAGE
+                                    )
+                                )
+                            }
+                            is Resource.Error -> {
+                                _uploadState.emit(
+                                    UploadWinnersState(
+                                        operationState = OperationState.Failed,
+                                        message = result.message.toString()
+                                    )
+                                )
+                            }
                         }
-                        is Resource.Success -> {
-                            _transactionState.value = TransactionState(inProgress = false, success = true)
-                            dataStoreUseCases.saveOnWinnersUploadActionUseCase(true)
-                            _tournamentActionState.value = TournamentActionType.WinnersUpload
-                        }
-                        is Resource.Error -> {
-                            _transactionState.value = TransactionState(inProgress = false, failed = true)
-                        }
+                    }
+                } else {
+                    viewModelScope.launch {
+                        _uploadState.emit(
+                            UploadWinnersState(
+                                OperationState.Failed,
+                                message = CONNECTION_EXCEPTION_ERROR_MESSAGE
+                            )
+                        )
                     }
                 }
             }

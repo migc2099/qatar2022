@@ -35,7 +35,6 @@ fun HomeScreen(
     val mContext = LocalContext.current
     val tournamentActionState = homeViewModel.tournamentActionState.collectAsState()
     val userState = homeViewModel.userState.collectAsState()
-    val transactionState = homeViewModel.transactionState.collectAsState()
     val teamStatsMap = homeViewModel.statsPerGroup.value
     val playoffs = homeViewModel.playoffs.collectAsState()
     val playoffCompletedState = homeViewModel.playoffCompletedState.collectAsState()
@@ -230,12 +229,32 @@ fun HomeScreen(
         )
     }
 
+    val uploadProcessingState = remember { mutableStateOf(false)}
+    LaunchedEffect(Unit) {
+        homeViewModel.uploadState.collect {
+            when (it.operationState) {
+                OperationState.Loading -> {
+                    uploadProcessingState.value = true
+                }
+                OperationState.Success -> {
+                    uploadProcessingState.value = false
+                    Toast.makeText(mContext, it.message, Toast.LENGTH_SHORT).show()
+                }
+                OperationState.Failed -> {
+                    uploadProcessingState.value = false
+                    Toast.makeText(mContext, it.message, Toast.LENGTH_LONG).show()
+                }
+                else -> {}
+            }
+        }
+    }
+
     if (playoffCompletedState.value && showPodiumDialog.value) {
         PodiumDialog(
             teams = bestTeams.value,
             isUserAuthenticated = userState.value.user != null,
             lastTournamentActionType = tournamentActionState.value,
-            transactionState = transactionState.value,
+            isUploadWinnersProcessing = uploadProcessingState.value,
             onDismiss = { showPodiumDialog.value = false },
             onUploadWinners = {
                 Log.d("onUploadWinners", "userState ${userState.value.user}")
