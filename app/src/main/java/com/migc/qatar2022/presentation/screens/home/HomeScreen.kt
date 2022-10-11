@@ -16,7 +16,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import com.migc.qatar2022.R
 import com.migc.qatar2022.navigation.Screen
 import com.migc.qatar2022.presentation.components.*
 import com.migc.qatar2022.presentation.screens.playoffs.PlayoffDialog
@@ -229,7 +228,7 @@ fun HomeScreen(
         )
     }
 
-    val uploadProcessingState = remember { mutableStateOf(false)}
+    val uploadProcessingState = remember { mutableStateOf(false) }
     LaunchedEffect(Unit) {
         homeViewModel.uploadState.collect {
             when (it.operationState) {
@@ -257,19 +256,8 @@ fun HomeScreen(
             isUploadWinnersProcessing = uploadProcessingState.value,
             onDismiss = { showPodiumDialog.value = false },
             onUploadWinners = {
-                Log.d("onUploadWinners", "userState ${userState.value.user}")
                 Log.d("onUploadWinners", "userState ${userState.value.user!!.uid}")
-                if (userState.value.user != null) {
-                    Log.d("onUploadWinners", "tournamentActionState ${tournamentActionState.value}")
-                    if (tournamentActionState.value == TournamentActionType.FinalsFinished) {
-                        Log.d("onUploadWinners", "true")
-                        homeViewModel.onEvent(HomeUiEvent.OnUploadWinnersClicked(it))
-                    } else {
-                        Log.d("onUploadWinners", "false")
-                        Toast.makeText(mContext, mContext.getString(R.string.reupload_prevention_message), Toast.LENGTH_LONG)
-                            .show()
-                    }
-                }
+                homeViewModel.onEvent(HomeUiEvent.OnUploadWinnersClicked(it))
             },
             onStartOver = {
                 showPodiumDialog.value = false

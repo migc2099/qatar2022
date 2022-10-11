@@ -13,6 +13,7 @@ import com.migc.qatar2022.common.Constants.GROUP_F_KEY
 import com.migc.qatar2022.common.Constants.GROUP_G_KEY
 import com.migc.qatar2022.common.Constants.GROUP_H_KEY
 import com.migc.qatar2022.common.Constants.CONNECTION_EXCEPTION_ERROR_MESSAGE
+import com.migc.qatar2022.common.Constants.UNEXPECTED_EXCEPTION_ERROR_MESSAGE
 import com.migc.qatar2022.common.Constants.UPLOAD_COMPLETED_MESSAGE
 import com.migc.qatar2022.common.Resource
 import com.migc.qatar2022.domain.model.Group
@@ -117,45 +118,48 @@ class HomeViewModel @Inject constructor(
                 }
             }
             is HomeUiEvent.OnUploadWinnersClicked -> {
-                Log.d("HomeViewModel", "HomeUiEvent.OnUploadWinnersClicked")
-                viewModelScope.launch {
+                viewModelScope.launch(Dispatchers.IO) {
                     _uploadState.emit(UploadWinnersState(operationState = OperationState.Loading))
-                }
-                val isThereInternet = networkUseCases.checkIfInternetAvailableUseCase()
-                Log.d("isThereInternet", isThereInternet.toString())
-                if (isThereInternet) {
-                    viewModelScope.launch(Dispatchers.IO) {
-                        val result = playoffsUseCases.uploadWinnerCountersUseCase(teams = event.winners)
-                        when (result) {
-                            is Resource.Loading -> {
-                                _uploadState.emit(UploadWinnersState(operationState = OperationState.Loading))
-                            }
-                            is Resource.Success -> {
-                                dataStoreUseCases.saveOnWinnersUploadActionUseCase(true)
-                                _tournamentActionState.value = TournamentActionType.WinnersUpload
-                                _uploadState.emit(
-                                    UploadWinnersState(
-                                        operationState = OperationState.Success,
-                                        message = UPLOAD_COMPLETED_MESSAGE
+                    if (_userState.value.user != null && _tournamentActionState.value == TournamentActionType.FinalsFinished) {
+                        val isThereInternet = networkUseCases.checkIfInternetAvailableUseCase()
+                        if (isThereInternet) {
+                            val result = playoffsUseCases.uploadWinnerCountersUseCase(teams = event.winners)
+                            when (result) {
+                                is Resource.Loading -> {
+                                    _uploadState.emit(UploadWinnersState(operationState = OperationState.Loading))
+                                }
+                                is Resource.Success -> {
+                                    dataStoreUseCases.saveOnWinnersUploadActionUseCase(true)
+                                    _tournamentActionState.value = TournamentActionType.WinnersUpload
+                                    _uploadState.emit(
+                                        UploadWinnersState(
+                                            operationState = OperationState.Success,
+                                            message = UPLOAD_COMPLETED_MESSAGE
+                                        )
                                     )
-                                )
-                            }
-                            is Resource.Error -> {
-                                _uploadState.emit(
-                                    UploadWinnersState(
-                                        operationState = OperationState.Failed,
-                                        message = result.message.toString()
+                                }
+                                is Resource.Error -> {
+                                    _uploadState.emit(
+                                        UploadWinnersState(
+                                            operationState = OperationState.Failed,
+                                            message = result.message.toString()
+                                        )
                                     )
-                                )
+                                }
                             }
+                        } else {
+                            _uploadState.emit(
+                                UploadWinnersState(
+                                    operationState = OperationState.Failed,
+                                    message = CONNECTION_EXCEPTION_ERROR_MESSAGE
+                                )
+                            )
                         }
-                    }
-                } else {
-                    viewModelScope.launch {
+                    } else {
                         _uploadState.emit(
                             UploadWinnersState(
-                                OperationState.Failed,
-                                message = CONNECTION_EXCEPTION_ERROR_MESSAGE
+                                operationState = OperationState.Failed,
+                                message = UNEXPECTED_EXCEPTION_ERROR_MESSAGE
                             )
                         )
                     }
