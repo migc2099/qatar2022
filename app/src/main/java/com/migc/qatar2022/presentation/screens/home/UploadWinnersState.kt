@@ -4,7 +4,7 @@ data class TransactionState(
     val inProgress: Boolean = false,
     val success: Boolean = false,
     val failed: Boolean = false,
-    val lastTournamentActionType: TournamentActionType = TournamentActionType.Undefined
+    val errorType: ErrorType = ErrorType.NoError
 )
 
 enum class TournamentActionType{
@@ -14,5 +14,18 @@ enum class TournamentActionType{
     PlayoffPlayed,
     FinalsFinished,
     WinnersUpload
+}
+
+enum class OperationState{
+    Idle,
+    Loading,
+    Success,
+    Failed
+}
+
+enum class ErrorType{
+    NoError,
+    NoInternet,
+    UnknownError
 }
 
