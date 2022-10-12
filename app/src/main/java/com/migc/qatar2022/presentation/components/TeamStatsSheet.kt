@@ -1,13 +1,11 @@
 package com.migc.qatar2022.presentation.components
 
+import android.util.Log
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
-import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.Divider
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
@@ -21,48 +19,91 @@ import com.migc.qatar2022.presentation.screens.teams_map.OddsDetailsState
 import com.migc.qatar2022.ui.theme.*
 
 @Composable
-fun TeamStatsSheet(countryInfo: CountryInfo, oddDetailsState: OddsDetailsState, onOddClicked: (String) -> Unit) {
+fun TeamStatsSheet(
+    countryInfo: CountryInfo,
+    oddsDetails: OddsDetailsState,
+    onOddClicked: (String) -> Unit
+) {
     val championships: List<Int> = countryInfo.championships
     val finals: List<Int> = countryInfo.runnerUps
+    Log.d("TeamStatsSheet", "init")
+
+    val seeText = stringResource(id = R.string.see_text)
+    val seeOddsText = stringResource(id = R.string.see_odds_text)
+    val firstText = remember { mutableStateOf(seeText) }
+    val secondText = remember { mutableStateOf(seeText) }
+    val thirdText = remember { mutableStateOf(seeText) }
+    val wcText = remember { mutableStateOf(seeOddsText) }
+
+    LaunchedEffect(key1 = oddsDetails) {
+        Log.d("LaunchedEffect", "oddsDetails.value $oddsDetails")
+        if (oddsDetails.bettingOdds != null) {
+            firstText.value = oddsDetails.bettingOdds.first.toString()
+            secondText.value = oddsDetails.bettingOdds.second.toString()
+            thirdText.value = oddsDetails.bettingOdds.third.toString()
+            wcText.value = oddsDetails.bettingOdds.wc.toString()
+        } else {
+            firstText.value = seeText
+            secondText.value = seeText
+            thirdText.value = seeText
+            wcText.value = seeOddsText
+        }
+    }
+
     Column(modifier = Modifier.fillMaxWidth()) {
         BottomSheetHandle()
+        Spacer(modifier = Modifier.height(MEDIUM_VERTICAL_GAP))
+        Text(
+            modifier = Modifier.padding(horizontal = LARGE_PADDING),
+            text = stringResource(id = R.string.team_app_performance_subtitle),
+            color = mainColor
+        )
+        Divider()
+        Spacer(modifier = Modifier.height(SMALL_VERTICAL_GAP))
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = LARGE_PADDING),
-            horizontalArrangement = Arrangement.End,
+            horizontalArrangement = Arrangement.SpaceEvenly,
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Card(
-                modifier = Modifier
-                    .width(COIN_SIZE)
-                    .height(ODDS_BUTTON_HEIGHT)
-                    .clickable {
-                        onOddClicked(countryInfo.teamId)
-                    },
+            TeamStatBadge(
+                countryInfo = countryInfo,
+                isValueLoading = oddsDetails.isLoading,
+                text = firstText.value,
+                backgroundColor = goldColor,
+                onClick = onOddClicked
+            )
+            TeamStatBadge(
+                countryInfo = countryInfo,
+                isValueLoading = oddsDetails.isLoading,
+                text = secondText.value,
+                backgroundColor = silverColor,
+                onClick = onOddClicked
+            )
+            TeamStatBadge(
+                countryInfo = countryInfo,
+                isValueLoading = oddsDetails.isLoading,
+                text = thirdText.value,
+                backgroundColor = bronzeColor,
+                onClick = onOddClicked
+            )
+            TeamStatBadge(
+                countryInfo = countryInfo,
+                isValueLoading = oddsDetails.isLoading,
+                text = wcText.value,
                 backgroundColor = mainColor,
-                shape = RoundedCornerShape(EXTRA_LARGE_ROUND_CORNER)
-            ) {
-                Box(contentAlignment = Alignment.Center) {
-                    if (oddDetailsState.isLoading) {
-                        CircularProgressIndicator(
-                            modifier = Modifier.size(SMALL_CIRCULAR_PROGRESS_SIZE),
-                            color = mainBackgroundColor
-                        )
-                    } else {
-                        var odd = stringResource(id = R.string.see_odds_text)
-                        if (oddDetailsState.bettingOdds != null) {
-                            odd = oddDetailsState.bettingOdds.wc.toString()
-                        }
-                        Text(
-                            color = mainBackgroundColor,
-                            text = odd,
-                            fontSize = Typography.caption.fontSize
-                        )
-                    }
-                }
-            }
+                textColor = mainBackgroundColor,
+                onClick = onOddClicked,
+            )
         }
+        Spacer(modifier = Modifier.height(MEDIUM_VERTICAL_GAP))
+        Text(
+            text = stringResource(id = R.string.team_facts_subtitle),
+            modifier = Modifier.padding(horizontal = LARGE_PADDING),
+            color = mainColor
+        )
+        Divider()
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -136,7 +177,7 @@ fun TeamStatsSheetPreview() {
             runnerUps = listOf(1970, 1994),
             ranking = 13
         ),
-        oddDetailsState = OddsDetailsState(),
+        oddsDetails = OddsDetailsState(),
         onOddClicked = {},
     )
 }

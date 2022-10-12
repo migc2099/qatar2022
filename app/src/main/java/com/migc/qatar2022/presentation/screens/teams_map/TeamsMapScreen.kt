@@ -22,7 +22,7 @@ fun TeamsMapScreen(
     LockScreenOrientation(orientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
     val countriesData = viewModel.data.collectAsState()
     val currentCountry = viewModel.countryInfo.collectAsState()
-    val teamOdds = viewModel.odds.collectAsState()
+    val oddsDetails = viewModel.odds.collectAsState()
 
     val sheetState = rememberBottomSheetState(
         initialValue = BottomSheetValue.Collapsed,
@@ -50,7 +50,7 @@ fun TeamsMapScreen(
         sheetContent = {
             TeamStatsSheet(
                 countryInfo = currentCountry.value,
-                oddDetailsState = teamOdds.value,
+                oddsDetails = oddsDetails.value,
                 onOddClicked = {
                     viewModel.onEvent(TeamsMapUiEvent.OnSeeOddsClicked(it))
                 }

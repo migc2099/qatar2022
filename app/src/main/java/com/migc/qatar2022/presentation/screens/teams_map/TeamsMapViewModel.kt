@@ -51,8 +51,9 @@ class TeamsMapViewModel @Inject constructor(
                 }
             }
             is TeamsMapUiEvent.OnCountryFlagClicked -> {
-                if (_currentCountry.value.teamId != teamsMapUiEvent.countryInfo.teamId){
+                if (_currentCountry.value.teamId != teamsMapUiEvent.countryInfo.teamId) {
                     _currentCountry.value = teamsMapUiEvent.countryInfo
+                    Log.d("onEvent", "_odds.value = OddsDetailsState()")
                     _odds.value = OddsDetailsState()
                 }
             }
