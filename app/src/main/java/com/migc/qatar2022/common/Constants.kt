@@ -49,6 +49,8 @@ object Constants {
 
     const val PARAM_GROUP_ID = "group_id"
 
+    const val SIGN_IN_SUCCESS_MESSAGE = "sign_in_success_message"
+    const val SIGN_OUT_SUCCESS_MESSAGE = "sign_out_success_message"
     const val UPLOAD_COMPLETED_MESSAGE = "upload_completed_message"
     const val UNEXPECTED_EXCEPTION_ERROR_MESSAGE = "unexpected_exception_error_message"
     const val SIGN_IN_EXCEPTION_TRY_AGAIN_MESSAGE = "sign_in_exception_try_again_message"

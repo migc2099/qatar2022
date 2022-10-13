@@ -1,11 +1,13 @@
 package com.migc.qatar2022.domain.use_case
 
-import com.migc.qatar2022.domain.use_case.firebase.GetFirebaseUserUseCase
-import com.migc.qatar2022.domain.use_case.firebase.SignInAnonymouslyUseCase
-import com.migc.qatar2022.domain.use_case.firebase.SignOutUseCase
+import com.migc.qatar2022.domain.use_case.firebase.*
 
 class FirebaseUseCases(
     val getFirebaseAuthUseCase: GetFirebaseUserUseCase,
     val signInAnonymouslyUseCase: SignInAnonymouslyUseCase,
-    val signOutUseCase: SignOutUseCase
+    val oneTapSignInUseCase: OneTapSignInUseCase,
+    val signInWithGoogleUseCase: SignInWithGoogleUseCase,
+    val signOutUseCase: SignOutUseCase,
+    val oneTapSignOutUseCase: OneTapSignOutUseCase,
+    val revokeAccessUseCase: RevokeAccessUseCase
 )
