@@ -42,4 +42,10 @@
     <string name="generate_scores">Generate Realistic Scores (Beta)</string>
     <string name="go_back_text">Go Back</string>
     <string name="reupload_prevention_message">You have already uploaded this tournament\'s winners</string>
+    <string name="web_client_id">778036367622-5frl7qm49cqjhffb660ged4ts6jo2aji.apps.googleusercontent.com</string>
+    <string name="sign_in_with_google_text">Sign In With Google</string>
+    <string name="message_upload_completed">Upload Completed</string>
+    <string name="message_unexpected_error">Unexpected Error Occurred</string>
+    <string name="message_sign_in_unexpected_error">Unexpected Error Occurred. Try a different method or try again</string>
+    <string name="message_connection_error">Couldn\'t reach server. Check internet connection</string>
 </resources>

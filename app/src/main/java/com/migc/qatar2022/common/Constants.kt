@@ -9,6 +9,8 @@ object Constants {
     const val PREFERENCES_TEAMS_KEY = "teams_key"
     const val PREFERENCES_WINNERS_UPLOAD_ACTION_KEY = "winners_upload_action_key"
 
+    const val SIGN_IN_REQUEST = "signInRequest"
+    const val SIGN_UP_REQUEST = "signUpRequest"
     const val NODE_ODDS = "odds"
     const val FIELD_FIRST = "first"
     const val FIELD_SECOND = "second"
@@ -47,8 +49,9 @@ object Constants {
 
     const val PARAM_GROUP_ID = "group_id"
 
-    const val UPLOAD_COMPLETED_MESSAGE = "Upload Completed"
-    const val UNEXPECTED_EXCEPTION_ERROR_MESSAGE = "An unexpected error occurred"
-    const val CONNECTION_EXCEPTION_ERROR_MESSAGE = "Couldn't reach server. Check internet connection"
+    const val UPLOAD_COMPLETED_MESSAGE = "upload_completed_message"
+    const val UNEXPECTED_EXCEPTION_ERROR_MESSAGE = "unexpected_exception_error_message"
+    const val SIGN_IN_EXCEPTION_TRY_AGAIN_MESSAGE = "sign_in_exception_try_again_message"
+    const val CONNECTION_EXCEPTION_ERROR_MESSAGE = "connection_exception_error_message"
 
 }

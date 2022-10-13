@@ -18,7 +18,7 @@ class UploadWinnerCountersUseCase(
             Log.d("invoke()", "success")
             Resource.Success(data = true)
         } catch (e: HttpException) {
-            Resource.Error(e.localizedMessage ?: UNEXPECTED_EXCEPTION_ERROR_MESSAGE)
+            Resource.Error(UNEXPECTED_EXCEPTION_ERROR_MESSAGE)
         } catch (e: IOException) {
             Resource.Error(CONNECTION_EXCEPTION_ERROR_MESSAGE)
         }

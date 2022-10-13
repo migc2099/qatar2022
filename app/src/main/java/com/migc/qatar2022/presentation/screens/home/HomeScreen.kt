@@ -16,6 +16,8 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import com.migc.qatar2022.R
+import com.migc.qatar2022.common.Constants
 import com.migc.qatar2022.navigation.Screen
 import com.migc.qatar2022.presentation.components.*
 import com.migc.qatar2022.presentation.screens.playoffs.PlayoffDialog
@@ -237,11 +239,18 @@ fun HomeScreen(
                 }
                 OperationState.Success -> {
                     uploadProcessingState.value = false
-                    Toast.makeText(mContext, it.message, Toast.LENGTH_SHORT).show()
+                    Toast.makeText(mContext, mContext.getString(R.string.message_upload_completed), Toast.LENGTH_SHORT).show()
                 }
                 OperationState.Failed -> {
                     uploadProcessingState.value = false
-                    Toast.makeText(mContext, it.message, Toast.LENGTH_LONG).show()
+                    var message = mContext.getString(R.string.message_unexpected_error)
+                    when (it.message) {
+                        Constants.CONNECTION_EXCEPTION_ERROR_MESSAGE -> message =
+                            mContext.getString(R.string.message_connection_error)
+                        Constants.SIGN_IN_EXCEPTION_TRY_AGAIN_MESSAGE -> message =
+                            mContext.getString(R.string.message_sign_in_unexpected_error)
+                    }
+                    Toast.makeText(mContext, message, Toast.LENGTH_LONG).show()
                 }
                 else -> {}
             }
