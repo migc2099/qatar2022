@@ -3,7 +3,11 @@ package com.migc.qatar2022.presentation.screens.teams_map
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.migc.qatar2022.common.Constants
+import com.migc.qatar2022.common.Resource
 import com.migc.qatar2022.domain.model.CountryInfo
+import com.migc.qatar2022.domain.use_case.FirebaseUseCases
+import com.migc.qatar2022.domain.use_case.NetworkUseCases
 import com.migc.qatar2022.domain.use_case.TeamsMapUseCases
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -14,7 +18,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class TeamsMapViewModel @Inject constructor(
-    private val teamsMapUseCases: TeamsMapUseCases
+    private val teamsMapUseCases: TeamsMapUseCases,
+    private val networkUseCases: NetworkUseCases,
+    private val firebaseUseCases: FirebaseUseCases
 ) : ViewModel() {
 
     private val _data: MutableStateFlow<List<CountryInfo>> = MutableStateFlow(emptyList())
@@ -42,12 +48,46 @@ class TeamsMapViewModel @Inject constructor(
     fun onEvent(teamsMapUiEvent: TeamsMapUiEvent) {
         when (teamsMapUiEvent) {
             is TeamsMapUiEvent.OnSeeOddsClicked -> {
-                if (_odds.value.bettingOdds == null){
-                    _odds.value = OddsDetailsState(isLoading = true)
-                    viewModelScope.launch(Dispatchers.IO) {
-                        val odds = teamsMapUseCases.getTeamOddsUseCase(teamId = teamsMapUiEvent.teamId)
-                        _odds.value = OddsDetailsState(isLoading = false, bettingOdds = odds)
+                _odds.value = OddsDetailsState(isLoading = true)
+                val connectionAvailable = networkUseCases.checkIfInternetAvailableUseCase()
+                if (connectionAvailable) {
+                    val user = firebaseUseCases.getFirebaseAuthUseCase()
+                    if (user != null) {
+                        if (_odds.value.bettingOdds == null) {
+                            viewModelScope.launch(Dispatchers.IO) {
+                                val result = teamsMapUseCases.getTeamOddsUseCase(teamId = teamsMapUiEvent.teamId)
+                                when (result) {
+                                    is Resource.Loading -> {
+                                        _odds.value = OddsDetailsState(
+                                            isLoading = true
+                                        )
+                                    }
+                                    is Resource.Success -> {
+                                        _odds.value = OddsDetailsState(
+                                            isLoading = false,
+                                            bettingOdds = result.data
+                                        )
+                                    }
+                                    is Resource.Error -> {
+                                        _odds.value = OddsDetailsState(
+                                            error = result.message.toString()
+                                        )
+                                    }
+                                }
+
+                            }
+                        }
+                    } else {
+                        _odds.value = OddsDetailsState(
+                            isLoading = false,
+                            error = Constants.SIGN_IN_REQUIRED_MESSAGE
+                        )
                     }
+                } else {
+                    _odds.value = OddsDetailsState(
+                        isLoading = false,
+                        error = Constants.CONNECTION_EXCEPTION_ERROR_MESSAGE
+                    )
                 }
             }
             is TeamsMapUiEvent.OnCountryFlagClicked -> {

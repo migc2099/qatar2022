@@ -96,6 +96,7 @@ class AuthRepositoryImpl @Inject constructor(
         return try {
             oneTapClient.signOut().await()
             auth.signOut()
+            firebaseUser = null
             Resource.Success(true)
         } catch (e: Exception) {
             Resource.Error(message = UNEXPECTED_EXCEPTION_ERROR_MESSAGE)

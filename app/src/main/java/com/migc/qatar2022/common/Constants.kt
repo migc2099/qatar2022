@@ -55,5 +55,8 @@ object Constants {
     const val UNEXPECTED_EXCEPTION_ERROR_MESSAGE = "unexpected_exception_error_message"
     const val SIGN_IN_EXCEPTION_TRY_AGAIN_MESSAGE = "sign_in_exception_try_again_message"
     const val CONNECTION_EXCEPTION_ERROR_MESSAGE = "connection_exception_error_message"
+    const val SIGN_IN_REQUIRED_MESSAGE = "sign_in_required_message"
+    const val GETTING_DATA_ERROR_MESSAGE = "getting_data_error_message"
+    const val PERMISSION_DENIED_MESSAGE = "PERMISSION_DENIED: Missing or insufficient permissions"
 
 }

@@ -50,4 +50,6 @@
     <string name="message_unexpected_error">Error Inesperado</string>
     <string name="message_sign_in_unexpected_error">Error Inesperado. Intenta otro metodo o intenta de nuevo</string>
     <string name="message_connection_error">No se pudo conectar con el servidor. Chequea tu conexion de internet</string>
+    <string name="message_sign_in_required">Se require inicio de sesion</string>
+    <string name="message_retrieving_data_error">No se pudo obtener los datos</string>
 </resources>

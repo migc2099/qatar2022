@@ -50,4 +50,6 @@
     <string name="message_unexpected_error">Unexpected Error Occurred</string>
     <string name="message_sign_in_unexpected_error">Unexpected Error Occurred. Try a different method or try again</string>
     <string name="message_connection_error">Couldn\'t reach server. Check internet connection</string>
+    <string name="message_sign_in_required">Sign In Required</string>
+    <string name="message_retrieving_data_error">Couldn\'t obtain data</string>
 </resources>

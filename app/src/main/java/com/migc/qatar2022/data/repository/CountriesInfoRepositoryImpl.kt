@@ -7,6 +7,9 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.migc.qatar2022.common.Constants
+import com.migc.qatar2022.common.Constants.NODE_ODDS
+import com.migc.qatar2022.common.Constants.PERMISSION_DENIED_MESSAGE
+import com.migc.qatar2022.common.Resource
 import com.migc.qatar2022.data.remote.dto.BettingOddsDto
 import com.migc.qatar2022.data.remote.dto.CountryInfoDto
 import com.migc.qatar2022.data.remote.dto.toCountryInfo
@@ -54,22 +57,37 @@ class CountriesInfoRepositoryImpl @Inject constructor(
         return Result.success(countries)
     }
 
-    override suspend fun getOdds(teamId: String): BettingOddsDto {
+    override suspend fun getOdds(teamId: String): Resource<BettingOddsDto> {
         val documentReference: DocumentReference = FirebaseFirestore.getInstance()
-            .collection("odds")
+            .collection(NODE_ODDS)
             .document(teamId)
 
         return suspendCancellableCoroutine { continuation ->
             documentReference
                 .get()
                 .addOnSuccessListener { document ->
-                    if (document != null){
+                    if (document != null) {
                         try {
                             val oddDto = document.toObject(BettingOddsDto::class.java)!!
-                            continuation.resume(oddDto)
-                        } catch (exception: Exception){
-                            Log.e("getOdd", exception.message.toString())
-                            continuation.resumeWithException(exception)
+                            continuation.resume(Resource.Success(data = oddDto))
+                        } catch (e: Exception) {
+                            Log.e("getOdd", e.message.toString())
+                            continuation.resumeWithException(e)
+                        }
+                    } else {
+                        continuation.resume(
+                            Resource.Error(message = Constants.GETTING_DATA_ERROR_MESSAGE)
+                        )
+                    }
+                }
+                .addOnFailureListener { e ->
+                    Log.e("CountriesInfoRepo", "getOdds() message ${e.message}")
+                    e.message?.let {
+                        Log.d("ssd", it)
+                        if (it.contains(PERMISSION_DENIED_MESSAGE)) {
+                            continuation.resume(Resource.Error(message = Constants.SIGN_IN_REQUIRED_MESSAGE))
+                        } else {
+                            continuation.resume(Resource.Error(message = Constants.UNEXPECTED_EXCEPTION_ERROR_MESSAGE))
                         }
                     }
                 }
