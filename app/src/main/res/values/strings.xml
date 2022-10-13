@@ -44,6 +44,8 @@
     <string name="reupload_prevention_message">You have already uploaded this tournament\'s winners</string>
     <string name="web_client_id">778036367622-5frl7qm49cqjhffb660ged4ts6jo2aji.apps.googleusercontent.com</string>
     <string name="sign_in_with_google_text">Sign In With Google</string>
+    <string name="sign_in_success_message">Signed in</string>
+    <string name="sign_out_success_message">Signed out</string>
     <string name="message_upload_completed">Upload Completed</string>
     <string name="message_unexpected_error">Unexpected Error Occurred</string>
     <string name="message_sign_in_unexpected_error">Unexpected Error Occurred. Try a different method or try again</string>
