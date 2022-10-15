@@ -122,6 +122,8 @@ class HomeViewModel @Inject constructor(
                     _uploadState.emit(UploadWinnersState(operationState = OperationState.Loading))
                     if (_userState.value.user != null && _tournamentActionState.value == TournamentActionType.FinalsFinished) {
                         val isThereInternet = networkUseCases.checkIfInternetAvailableUseCase()
+                        _uploadState.emit(UploadWinnersState(operationState = OperationState.InternetChecked))
+                        delay(1000)
                         if (isThereInternet) {
                             val result = playoffsUseCases.uploadWinnerCountersUseCase(teams = event.winners)
                             when (result) {

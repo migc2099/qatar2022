@@ -24,13 +24,16 @@ import com.migc.qatar2022.presentation.screens.playoffs.PlayoffDialog
 import com.migc.qatar2022.presentation.screens.playoffs.PlayoffsGrid
 import com.migc.qatar2022.presentation.screens.playoffs.PodiumDialog
 import com.migc.qatar2022.ui.theme.*
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @ExperimentalMaterialApi
 @Composable
 fun HomeScreen(
     navHostController: NavHostController,
-    homeViewModel: HomeViewModel = hiltViewModel()
+    homeViewModel: HomeViewModel = hiltViewModel(),
+    onLoadInterstitial: () -> Unit,
+    onShowInterstitial: () -> Unit
 ) {
 
     val mContext = LocalContext.current
@@ -45,6 +48,7 @@ fun HomeScreen(
         Log.d("HomeScreen", "LaunchEffect")
         homeViewModel.onEvent(HomeUiEvent.OnStart)
         listState.scrollToItem(homeViewModel.listPosition, homeViewModel.listOffSet)
+        onLoadInterstitial()
     }
 
     val showPlayoffDialog = remember { mutableStateOf(false) }
@@ -237,9 +241,14 @@ fun HomeScreen(
                 OperationState.Loading -> {
                     uploadProcessingState.value = true
                 }
+                OperationState.InternetChecked -> {
+                    onLoadInterstitial()
+                }
                 OperationState.Success -> {
                     uploadProcessingState.value = false
                     Toast.makeText(mContext, mContext.getString(R.string.message_upload_completed), Toast.LENGTH_SHORT).show()
+                    delay(1000L)
+                    onShowInterstitial()
                 }
                 OperationState.Failed -> {
                     uploadProcessingState.value = false
@@ -258,6 +267,7 @@ fun HomeScreen(
     }
 
     if (playoffCompletedState.value && showPodiumDialog.value) {
+        onLoadInterstitial()
         PodiumDialog(
             teams = bestTeams.value,
             isUserAuthenticated = userState.value.user != null,

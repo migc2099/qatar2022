@@ -16,6 +16,7 @@ enum class TournamentActionType{
 
 enum class OperationState{
     Idle,
+    InternetChecked,
     Loading,
     Success,
     Failed
