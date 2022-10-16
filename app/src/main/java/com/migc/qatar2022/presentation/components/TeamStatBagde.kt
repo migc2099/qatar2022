@@ -29,7 +29,7 @@ fun TeamStatBadge(
     Card(
         modifier = Modifier
             .width(COIN_SIZE)
-            .height(ODDS_BUTTON_HEIGHT)
+            .height(PREDICTIONS_BUTTON_HEIGHT)
             .clickable {
                 onClick(countryInfo.teamId)
             },

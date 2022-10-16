@@ -15,38 +15,38 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.migc.qatar2022.R
 import com.migc.qatar2022.common.TeamsData
 import com.migc.qatar2022.domain.model.CountryInfo
-import com.migc.qatar2022.presentation.screens.teams_map.OddsDetailsState
+import com.migc.qatar2022.presentation.screens.teams_map.PredictionsState
 import com.migc.qatar2022.ui.theme.*
 
 @Composable
 fun TeamStatsSheet(
     countryInfo: CountryInfo,
-    oddsDetails: OddsDetailsState,
-    onOddClicked: (String) -> Unit
+    predictionsState: PredictionsState,
+    onPredictionsClicked: (String) -> Unit
 ) {
     val championships: List<Int> = countryInfo.championships
     val finals: List<Int> = countryInfo.runnerUps
     Log.d("TeamStatsSheet", "init")
 
     val seeText = stringResource(id = R.string.see_text)
-    val seeOddsText = stringResource(id = R.string.see_odds_text)
+    val seePredictionsText = stringResource(id = R.string.see_predictions_text)
     val firstText = remember { mutableStateOf(seeText) }
     val secondText = remember { mutableStateOf(seeText) }
     val thirdText = remember { mutableStateOf(seeText) }
-    val wcText = remember { mutableStateOf(seeOddsText) }
+    val wcText = remember { mutableStateOf(seePredictionsText) }
 
-    LaunchedEffect(key1 = oddsDetails) {
-        Log.d("LaunchedEffect", "oddsDetails.value $oddsDetails")
-        if (oddsDetails.bettingOdds != null) {
-            firstText.value = oddsDetails.bettingOdds.first.toString()
-            secondText.value = oddsDetails.bettingOdds.second.toString()
-            thirdText.value = oddsDetails.bettingOdds.third.toString()
-            wcText.value = oddsDetails.bettingOdds.wc.toString()
+    LaunchedEffect(key1 = predictionsState) {
+        Log.d("LaunchedEffect", "predictionsState.value $predictionsState")
+        if (predictionsState.data != null) {
+            firstText.value = predictionsState.data.firstPlace.toString()
+            secondText.value = predictionsState.data.secondPlace.toString()
+            thirdText.value = predictionsState.data.thirdPlace.toString()
+            wcText.value = predictionsState.data.bettingOdds.toString()
         } else {
             firstText.value = seeText
             secondText.value = seeText
             thirdText.value = seeText
-            wcText.value = seeOddsText
+            wcText.value = seePredictionsText
         }
     }
 
@@ -69,32 +69,32 @@ fun TeamStatsSheet(
         ) {
             TeamStatBadge(
                 countryInfo = countryInfo,
-                isValueLoading = oddsDetails.isLoading,
+                isValueLoading = predictionsState.isLoading,
                 text = firstText.value,
                 backgroundColor = goldColor,
-                onClick = onOddClicked
+                onClick = onPredictionsClicked
             )
             TeamStatBadge(
                 countryInfo = countryInfo,
-                isValueLoading = oddsDetails.isLoading,
+                isValueLoading = predictionsState.isLoading,
                 text = secondText.value,
                 backgroundColor = silverColor,
-                onClick = onOddClicked
+                onClick = onPredictionsClicked
             )
             TeamStatBadge(
                 countryInfo = countryInfo,
-                isValueLoading = oddsDetails.isLoading,
+                isValueLoading = predictionsState.isLoading,
                 text = thirdText.value,
                 backgroundColor = bronzeColor,
-                onClick = onOddClicked
+                onClick = onPredictionsClicked
             )
             TeamStatBadge(
                 countryInfo = countryInfo,
-                isValueLoading = oddsDetails.isLoading,
+                isValueLoading = predictionsState.isLoading,
                 text = wcText.value,
                 backgroundColor = mainColor,
                 textColor = mainBackgroundColor,
-                onClick = onOddClicked,
+                onClick = onPredictionsClicked,
             )
         }
         Spacer(modifier = Modifier.height(MEDIUM_VERTICAL_GAP))
@@ -177,7 +177,7 @@ fun TeamStatsSheetPreview() {
             runnerUps = listOf(1970, 1994),
             ranking = 13
         ),
-        oddsDetails = OddsDetailsState(),
-        onOddClicked = {},
+        predictionsState = PredictionsState(),
+        onPredictionsClicked = {},
     )
 }

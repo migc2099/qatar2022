@@ -11,10 +11,10 @@ object Constants {
 
     const val SIGN_IN_REQUEST = "signInRequest"
     const val SIGN_UP_REQUEST = "signUpRequest"
-    const val NODE_ODDS = "odds"
-    const val FIELD_FIRST = "first"
-    const val FIELD_SECOND = "second"
-    const val FIELD_THIRD = "third"
+    const val NODE_PREDICTIONS = "predictions"
+    const val FIELD_FIRST = "first_place"
+    const val FIELD_SECOND = "second_place"
+    const val FIELD_THIRD = "third_place"
 
     const val FIXTURE_BASE_URL = "https://fixturedownload.com/"
 //    const val RANKINGS_BASE_URL = "https://gist.githubusercontent.com/"

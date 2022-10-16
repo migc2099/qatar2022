@@ -27,7 +27,7 @@ fun TeamsMapScreen(
     val mContext = LocalContext.current
     val countriesData = viewModel.data.collectAsState()
     val currentCountry = viewModel.countryInfo.collectAsState()
-    val oddsDetails = viewModel.odds.collectAsState()
+    val predictions = viewModel.predictions.collectAsState()
 
     val sheetState = rememberBottomSheetState(
         initialValue = BottomSheetValue.Collapsed,
@@ -50,14 +50,15 @@ fun TeamsMapScreen(
         }
     }
 
-    LaunchedEffect(key1 = oddsDetails.value){
-        Log.d("TeamsMapScreen", "LaunchEffect oddDetails.value: ${oddsDetails.value}")
-        if (oddsDetails.value.error.isNotEmpty()){
+    LaunchedEffect(key1 = predictions.value){
+        Log.d("TeamsMapScreen", "LaunchEffect predictionsState.value: ${predictions.value}")
+        if (predictions.value.error.isNotEmpty()){
             var message = ""
-            when (oddsDetails.value.error) {
+            when (predictions.value.error) {
                 Constants.SIGN_IN_REQUIRED_MESSAGE -> message = mContext.getString(R.string.message_sign_in_required)
                 Constants.CONNECTION_EXCEPTION_ERROR_MESSAGE -> message = mContext.getString(R.string.message_connection_error)
                 Constants.UNEXPECTED_EXCEPTION_ERROR_MESSAGE -> message = mContext.getString(R.string.message_unexpected_error)
+                Constants.GETTING_DATA_ERROR_MESSAGE -> message = mContext.getString(R.string.message_retrieving_data_error)
             }
             if (message.isNotEmpty()) {
                 Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show()
@@ -70,9 +71,9 @@ fun TeamsMapScreen(
         sheetContent = {
             TeamStatsSheet(
                 countryInfo = currentCountry.value,
-                oddsDetails = oddsDetails.value,
-                onOddClicked = {
-                    viewModel.onEvent(TeamsMapUiEvent.OnSeeOddsClicked(it))
+                predictionsState = predictions.value,
+                onPredictionsClicked = {
+                    viewModel.onEvent(TeamsMapUiEvent.OnSeePredictionsClicked(it))
                 }
             )
         },

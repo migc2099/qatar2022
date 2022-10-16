@@ -29,8 +29,8 @@ class TeamsMapViewModel @Inject constructor(
     private val _currentCountry: MutableStateFlow<CountryInfo> = MutableStateFlow(CountryInfo())
     val countryInfo = _currentCountry.asStateFlow()
 
-    private val _odds: MutableStateFlow<OddsDetailsState> = MutableStateFlow(OddsDetailsState())
-    val odds = _odds.asStateFlow()
+    private val _predictions: MutableStateFlow<PredictionsState> = MutableStateFlow(PredictionsState())
+    val predictions = _predictions.asStateFlow()
 
     init {
         viewModelScope.launch(Dispatchers.IO) {
@@ -47,29 +47,29 @@ class TeamsMapViewModel @Inject constructor(
 
     fun onEvent(teamsMapUiEvent: TeamsMapUiEvent) {
         when (teamsMapUiEvent) {
-            is TeamsMapUiEvent.OnSeeOddsClicked -> {
-                _odds.value = OddsDetailsState(isLoading = true)
+            is TeamsMapUiEvent.OnSeePredictionsClicked -> {
+                _predictions.value = PredictionsState(isLoading = true)
                 val connectionAvailable = networkUseCases.checkIfInternetAvailableUseCase()
                 if (connectionAvailable) {
                     val user = firebaseUseCases.getFirebaseAuthUseCase()
                     if (user != null) {
-                        if (_odds.value.bettingOdds == null) {
+                        if (_predictions.value.data == null) {
                             viewModelScope.launch(Dispatchers.IO) {
-                                val result = teamsMapUseCases.getTeamOddsUseCase(teamId = teamsMapUiEvent.teamId)
+                                val result = teamsMapUseCases.getPredictionsUseCase(teamId = teamsMapUiEvent.teamId)
                                 when (result) {
                                     is Resource.Loading -> {
-                                        _odds.value = OddsDetailsState(
+                                        _predictions.value = PredictionsState(
                                             isLoading = true
                                         )
                                     }
                                     is Resource.Success -> {
-                                        _odds.value = OddsDetailsState(
+                                        _predictions.value = PredictionsState(
                                             isLoading = false,
-                                            bettingOdds = result.data
+                                            data = result.data
                                         )
                                     }
                                     is Resource.Error -> {
-                                        _odds.value = OddsDetailsState(
+                                        _predictions.value = PredictionsState(
                                             error = result.message.toString()
                                         )
                                     }
@@ -78,13 +78,13 @@ class TeamsMapViewModel @Inject constructor(
                             }
                         }
                     } else {
-                        _odds.value = OddsDetailsState(
+                        _predictions.value = PredictionsState(
                             isLoading = false,
                             error = Constants.SIGN_IN_REQUIRED_MESSAGE
                         )
                     }
                 } else {
-                    _odds.value = OddsDetailsState(
+                    _predictions.value = PredictionsState(
                         isLoading = false,
                         error = Constants.CONNECTION_EXCEPTION_ERROR_MESSAGE
                     )
@@ -93,8 +93,8 @@ class TeamsMapViewModel @Inject constructor(
             is TeamsMapUiEvent.OnCountryFlagClicked -> {
                 if (_currentCountry.value.teamId != teamsMapUiEvent.countryInfo.teamId) {
                     _currentCountry.value = teamsMapUiEvent.countryInfo
-                    Log.d("onEvent", "_odds.value = OddsDetailsState()")
-                    _odds.value = OddsDetailsState()
+                    Log.d("onEvent", "_predictions.value = PredictionsState()")
+                    _predictions.value = PredictionsState()
                 }
             }
         }

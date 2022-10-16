@@ -1,9 +1,9 @@
 package com.migc.qatar2022.presentation.screens.teams_map
 
-import com.migc.qatar2022.domain.model.BettingOdds
+import com.migc.qatar2022.domain.model.Predictions
 
-data class OddsDetailsState(
+data class PredictionsState(
     val isLoading: Boolean = false,
-    val bettingOdds: BettingOdds? = null,
+    val data: Predictions? = null,
     val error: String = ""
 )

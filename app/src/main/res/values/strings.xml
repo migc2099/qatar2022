@@ -34,10 +34,10 @@
     <string name="countries_map_text">Countries Map</string>
     <string name="appearances_text">Appearances</string>
     <string name="ranking_text">Ranking</string>
-    <string name="team_app_performance_subtitle">Performance on app</string>
+    <string name="team_app_performance_subtitle">Predictions</string>
     <string name="team_facts_subtitle">Facts</string>
     <string name="see_text">See</string>
-    <string name="see_odds_text">See Odds</string>
+    <string name="see_predictions_text">See</string>
     <string name="star_path">M14,21.288,21.416,26l-1.968-8.88L26,11.145l-8.628-.771L14,2l-3.372,8.375L2,11.145,8.552,17.12,6.584,26Z</string>
     <string name="generate_scores">Generate Realistic Scores (Beta)</string>
     <string name="go_back_text">Go Back</string>

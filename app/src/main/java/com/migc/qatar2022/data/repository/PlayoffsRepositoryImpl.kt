@@ -7,7 +7,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.migc.qatar2022.common.Constants.FIELD_FIRST
 import com.migc.qatar2022.common.Constants.FIELD_SECOND
 import com.migc.qatar2022.common.Constants.FIELD_THIRD
-import com.migc.qatar2022.common.Constants.NODE_ODDS
+import com.migc.qatar2022.common.Constants.NODE_PREDICTIONS
 import com.migc.qatar2022.data.QatarDatabase
 import com.migc.qatar2022.data.local.mapper.toPlayoff
 import com.migc.qatar2022.data.local.mapper.toPlayoffEntity
@@ -102,17 +102,17 @@ class PlayoffsRepositoryImpl constructor(
                 Log.d("PlayoffRep", "updating ${teams[0].teamId}")
                 val db = FirebaseFirestore.getInstance()
                 val firstRef: DocumentReference = db
-                    .collection(NODE_ODDS)
+                    .collection(NODE_PREDICTIONS)
                     .document(teams[0].teamId)
 
                 Log.d("PlayoffRep", "updating ${teams[1].teamId}")
                 val secondRef: DocumentReference = db
-                    .collection(NODE_ODDS)
+                    .collection(NODE_PREDICTIONS)
                     .document(teams[1].teamId)
 
                 Log.d("PlayoffRep", "updating ${teams[2].teamId}")
                 val thirdRef: DocumentReference = db
-                    .collection(NODE_ODDS)
+                    .collection(NODE_PREDICTIONS)
                     .document(teams[2].teamId)
 
                 db.runBatch { batch ->
