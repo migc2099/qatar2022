@@ -19,6 +19,7 @@ import com.migc.qatar2022.domain.use_case.standings.*
 import com.migc.qatar2022.domain.use_case.team.GetTeamByIdUseCase
 import com.migc.qatar2022.domain.use_case.teams_map.GetCountriesInfoUseCase
 import com.migc.qatar2022.domain.use_case.teams_map.GetPredictionsUseCase
+import com.migc.qatar2022.domain.use_case.teams_map.GetTopPredictionsUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -127,7 +128,8 @@ object RepositoriesModule {
     ): TeamsMapUseCases {
         return TeamsMapUseCases(
             getCountriesInfoUseCase = GetCountriesInfoUseCase(countriesInfoRepository),
-            getPredictionsUseCase = GetPredictionsUseCase(countriesInfoRepository)
+            getPredictionsUseCase = GetPredictionsUseCase(countriesInfoRepository),
+            getTopPredictionsUseCase = GetTopPredictionsUseCase(countriesInfoRepository)
         )
     }
 

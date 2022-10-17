@@ -16,6 +16,8 @@ object Constants {
     const val FIELD_SECOND = "second_place"
     const val FIELD_THIRD = "third_place"
 
+    const val TOP_PREDICTIONS_NUMBER : Long = 5
+
     const val FIXTURE_BASE_URL = "https://fixturedownload.com/"
 //    const val RANKINGS_BASE_URL = "https://gist.githubusercontent.com/"
     const val TEAMS_RANKINGS_JSON_FILE = "teams_rankings.json"
