@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.migc.qatar2022.common.Constants
 import com.migc.qatar2022.common.Resource
 import com.migc.qatar2022.domain.model.CountryInfo
+import com.migc.qatar2022.domain.model.Predictions
 import com.migc.qatar2022.domain.use_case.FirebaseUseCases
 import com.migc.qatar2022.domain.use_case.NetworkUseCases
 import com.migc.qatar2022.domain.use_case.TeamsMapUseCases
@@ -32,6 +33,9 @@ class TeamsMapViewModel @Inject constructor(
     private val _predictions: MutableStateFlow<PredictionsState> = MutableStateFlow(PredictionsState())
     val predictions = _predictions.asStateFlow()
 
+    private val _topPredictions: MutableStateFlow<List<Predictions>> = MutableStateFlow(emptyList())
+    val topPredictions = _topPredictions.asStateFlow()
+
     init {
         viewModelScope.launch(Dispatchers.IO) {
             teamsMapUseCases.getCountriesInfoUseCase()
@@ -42,6 +46,21 @@ class TeamsMapViewModel @Inject constructor(
                     Log.e("TeamsMapViewModel", it.message.toString())
                     _data.value = emptyList()
                 }
+            teamsMapUseCases.getTopPredictionsUseCase().collect { result ->
+                Log.d("TeamsMapViewModel", "predictions: $result")
+                when (result) {
+                    is Resource.Success -> {
+                        if (result.data != null) {
+                            _topPredictions.value = result.data
+                        }
+                    }
+                    is Resource.Error -> {
+                        Log.e("init", "topPredictions error: ${result.message}")
+                    }
+                    else -> {}
+                }
+
+            }
         }
     }
 

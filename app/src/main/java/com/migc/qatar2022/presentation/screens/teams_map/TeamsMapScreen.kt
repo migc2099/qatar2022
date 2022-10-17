@@ -5,9 +5,12 @@ import android.util.Log
 import android.widget.Toast
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -16,7 +19,8 @@ import com.migc.qatar2022.common.Constants
 import com.migc.qatar2022.common.Utils.LockScreenOrientation
 import com.migc.qatar2022.presentation.components.EarthMap
 import com.migc.qatar2022.presentation.components.TeamStatsSheet
-import com.migc.qatar2022.ui.theme.mainBackgroundColor
+import com.migc.qatar2022.presentation.components.TopPredictionsDisplay
+import com.migc.qatar2022.ui.theme.*
 
 @ExperimentalMaterialApi
 @Composable
@@ -28,6 +32,7 @@ fun TeamsMapScreen(
     val countriesData = viewModel.data.collectAsState()
     val currentCountry = viewModel.countryInfo.collectAsState()
     val predictions = viewModel.predictions.collectAsState()
+    val topPredictions = viewModel.topPredictions.collectAsState()
 
     val sheetState = rememberBottomSheetState(
         initialValue = BottomSheetValue.Collapsed,
@@ -50,9 +55,9 @@ fun TeamsMapScreen(
         }
     }
 
-    LaunchedEffect(key1 = predictions.value){
+    LaunchedEffect(key1 = predictions.value) {
         Log.d("TeamsMapScreen", "LaunchEffect predictionsState.value: ${predictions.value}")
-        if (predictions.value.error.isNotEmpty()){
+        if (predictions.value.error.isNotEmpty()) {
             var message = ""
             when (predictions.value.error) {
                 Constants.SIGN_IN_REQUIRED_MESSAGE -> message = mContext.getString(R.string.message_sign_in_required)
@@ -81,12 +86,23 @@ fun TeamsMapScreen(
         sheetPeekHeight = 0.dp,
         sheetShape = RoundedCornerShape(topStart = 8.dp, topEnd = 8.dp),
     ) {
-        EarthMap(
-            countriesInfo = countriesData.value,
-            onCountryClicked = {
-                viewModel.onEvent(TeamsMapUiEvent.OnCountryFlagClicked(it))
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.TopEnd
+        ) {
+            EarthMap(
+                countriesInfo = countriesData.value,
+                onCountryClicked = {
+                    viewModel.onEvent(TeamsMapUiEvent.OnCountryFlagClicked(it))
+                }
+            )
+            if (topPredictions.value.isNotEmpty()){
+                TopPredictionsDisplay(
+                    modifier = Modifier.size(TOP_TEAMS_DISPLAY_WIDTH, TOP_TEAMS_DISPLAY_HEIGHT),
+                    teams = topPredictions.value
+                )
             }
-        )
+        }
     }
 
 }

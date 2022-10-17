@@ -41,7 +41,7 @@ fun TeamStatsSheet(
             firstText.value = predictionsState.data.firstPlace.toString()
             secondText.value = predictionsState.data.secondPlace.toString()
             thirdText.value = predictionsState.data.thirdPlace.toString()
-            wcText.value = predictionsState.data.bettingOdds.toString()
+            wcText.value = predictionsState.data.bettingOdds
         } else {
             firstText.value = seeText
             secondText.value = seeText
