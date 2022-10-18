@@ -132,13 +132,13 @@ fun FixtureDetails(
                     homeTeamScoreValue = { homeTeamScore.value },
                     awayTeamScoreValue = { awayTeamScore.value },
                     homeTeamScore = { score ->
-                        if (score.isNotEmpty()) {
-                            viewModel.updateHomeTeamScore(match.matchNumber, score.toInt())
+                        if (score.trim().isNotEmpty()) {
+                            viewModel.updateHomeTeamScore(match.matchNumber, score.trim().toInt())
                         }
                     },
                     awayTeamScore = { score ->
-                        if (score.isNotEmpty()) {
-                            viewModel.updateAwayTeamScore(match.matchNumber, score.toInt())
+                        if (score.trim().isNotEmpty()) {
+                            viewModel.updateAwayTeamScore(match.matchNumber, score.trim().toInt())
                         }
                     }
                 )

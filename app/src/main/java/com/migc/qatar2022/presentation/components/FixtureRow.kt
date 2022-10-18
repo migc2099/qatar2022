@@ -121,7 +121,7 @@ fun ScoreTextField(textValue: TextFieldValue, onScoreChange: (String) -> Unit) {
         },
         modifier = Modifier.width(SCORE_TEXT_FIELD_WIDTH),
         textStyle = LocalTextStyle.current.copy(textAlign = TextAlign.Center),
-        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.NumberPassword),
         singleLine = true,
         shape = CircleShape,
         colors = TextFieldDefaults.textFieldColors(
