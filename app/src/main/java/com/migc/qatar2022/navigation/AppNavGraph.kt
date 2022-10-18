@@ -35,7 +35,11 @@ fun AppNavGraph(
             )
         }
         composable(route = Screen.Login.route) {
-            LoginScreen(navHostController = navHostController)
+            LoginScreen(
+                navHostController = navHostController,
+                onLoadInterstitial = onLoadInterstitial,
+                onShowInterstitial = onShowInterstitial
+            )
         }
         composable(route = Screen.GroupDetails.route + "/{$PARAM_GROUP_ID}") {
             GroupDetailsScreen(navHostController = navHostController)

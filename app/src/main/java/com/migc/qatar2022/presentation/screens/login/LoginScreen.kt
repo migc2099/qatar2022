@@ -29,12 +29,15 @@ import com.migc.qatar2022.ui.theme.*
 @Composable
 fun LoginScreen(
     navHostController: NavHostController,
-    loginViewModel: LoginViewModel = hiltViewModel()
+    loginViewModel: LoginViewModel = hiltViewModel(),
+    onLoadInterstitial: () -> Unit,
+    onShowInterstitial: () -> Unit
 ) {
     val mContext = LocalContext.current
     val authState = loginViewModel.auth.collectAsState()
     val anonymousButtonVisible = remember { mutableStateOf(true) }
     val googleButtonVisible = remember { mutableStateOf(true) }
+    val tooManyClicks = remember { mutableStateOf(0) }
 
     LaunchedEffect(Unit) {
         loginViewModel.toastMessage.collect {
@@ -96,12 +99,19 @@ fun LoginScreen(
                             text = buttonText.value,
                             isEnabled = !authState.value.inProgress
                         ) {
-                            Log.d("LoginScreen", "authState.value.user = ${authState.value.user}")
-                            if (authState.value.user != null) {
-                                loginViewModel.onEvent(LoginUiEvent.OnSignOutClicked)
+                            tooManyClicks.value++
+                            if (tooManyClicks.value < Constants.WARN_NUMBER_LOGIN_ATTEMPTS) {
+                                onLoadInterstitial()
+                                Log.d("LoginScreen", "authState.value.user = ${authState.value.user}")
+                                if (authState.value.user != null) {
+                                    loginViewModel.onEvent(LoginUiEvent.OnSignOutClicked)
+                                } else {
+                                    loginViewModel.onEvent(LoginUiEvent.OnSignInAnonymouslyClicked)
+                                }
                             } else {
-                                loginViewModel.onEvent(LoginUiEvent.OnSignInAnonymouslyClicked)
+                                onShowInterstitial()
                             }
+
                         }
                         if (authState.value.inProgress) {
                             CircularProgressIndicator(
@@ -123,6 +133,7 @@ fun LoginScreen(
                             icon = painterResource(id = R.drawable.ic_authenticate),
                             isEnabled = !authState.value.inProgress
                         ) {
+                            tooManyClicks.value++
                             if (authState.value.user != null) {
                                 loginViewModel.onEvent(LoginUiEvent.OnOneTapSignOutClicked)
                             } else {

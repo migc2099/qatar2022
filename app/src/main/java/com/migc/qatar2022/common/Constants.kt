@@ -61,4 +61,6 @@ object Constants {
     const val GETTING_DATA_ERROR_MESSAGE = "getting_data_error_message"
     const val PERMISSION_DENIED_MESSAGE = "PERMISSION_DENIED: Missing or insufficient permissions"
 
+    const val WARN_NUMBER_LOGIN_ATTEMPTS = 7
+
 }
