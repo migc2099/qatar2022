@@ -5,22 +5,23 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.painter.Painter
-import com.migc.qatar2022.ui.theme.LARGE_PADDING
-import com.migc.qatar2022.ui.theme.MEDIUM_VERTICAL_PADDING
-import com.migc.qatar2022.ui.theme.Typography
-import com.migc.qatar2022.ui.theme.mainColor
+import com.migc.qatar2022.ui.theme.*
 
 @Composable
 fun BottomSheetRow(icon: Painter, title: String, onClick: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
+            .height(BOTTOM_SHEET_ROW_HEIGHT)
             .clickable {
                 onClick()
             }
-            .padding(horizontal = LARGE_PADDING, vertical = MEDIUM_VERTICAL_PADDING)
+            .padding(horizontal = LARGE_PADDING, vertical = MEDIUM_VERTICAL_PADDING),
+        horizontalArrangement = Arrangement.Start,
+        verticalAlignment = Alignment.CenterVertically
     ) {
         Icon(
             painter = icon,

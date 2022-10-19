@@ -213,7 +213,7 @@ fun HomeScreen(
                 }
             }
             item {
-                Spacer(modifier = Modifier.height(MEDIUM_VERTICAL_GAP))
+                Spacer(modifier = Modifier.height(BOTTOM_LIST_SPACE))
             }
         }
     }
