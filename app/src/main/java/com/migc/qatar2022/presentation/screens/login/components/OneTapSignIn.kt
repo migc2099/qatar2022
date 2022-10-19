@@ -17,7 +17,7 @@ fun OneTapSignIn(
 ) {
     val mContext = LocalContext.current
     when (val oneTapSignInResponse = viewModel.oneTapSignInResponse) {
-        is Resource.Loading -> CircularProgressIndicator()
+        is Resource.Loading -> {}
         is Resource.Success -> oneTapSignInResponse.data?.let {
             LaunchedEffect(it) {
                 launch(it)
