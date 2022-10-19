@@ -7,7 +7,7 @@
     "appearances": 1,
     "championships": [],
     "runner_ups": [],
-    "ranking": 48
+    "ranking": 50
   },
   {
     "team_id": "ECU",
@@ -57,7 +57,7 @@
     "appearances": 6,
     "championships": [],
     "runner_ups": [],
-    "ranking": 22
+    "ranking": 20
   },
   {
     "team_id": "USA",
@@ -67,7 +67,7 @@
     "appearances": 11,
     "championships": [],
     "runner_ups": [],
-    "ranking": 14
+    "ranking": 16
   },
   {
     "team_id": "WAL",
@@ -97,7 +97,7 @@
     "appearances": 6,
     "championships": [],
     "runner_ups": [],
-    "ranking": 53
+    "ranking": 51
   },
   {
     "team_id": "MEX",
@@ -107,7 +107,7 @@
     "appearances": 17,
     "championships": [],
     "runner_ups": [],
-    "ranking": 12
+    "ranking": 13
   },
   {
     "team_id": "POL",
@@ -157,7 +157,7 @@
     "appearances": 6,
     "championships": [],
     "runner_ups": [],
-    "ranking": 39
+    "ranking": 38
   },
   {
     "team_id": "SPA",
@@ -167,7 +167,7 @@
     "appearances": 16,
     "championships": [2010],
     "runner_ups": [],
-    "ranking": 6
+    "ranking": 7
   },
   {
     "team_id": "GER",
@@ -197,7 +197,7 @@
     "appearances": 6,
     "championships": [],
     "runner_ups": [],
-    "ranking": 34
+    "ranking": 31
   },
   {
     "team_id": "BEL",
@@ -217,7 +217,7 @@
     "appearances": 2,
     "championships": [],
     "runner_ups": [],
-    "ranking": 43
+    "ranking": 41
   },
   {
     "team_id": "MOR",
@@ -227,7 +227,7 @@
     "appearances": 6,
     "championships": [],
     "runner_ups": [],
-    "ranking": 23
+    "ranking": 22
   },
   {
     "team_id": "CRO",
@@ -237,7 +237,7 @@
     "appearances": 6,
     "championships": [],
     "runner_ups": [2018],
-    "ranking": 15
+    "ranking": 12
   },
   {
     "team_id": "BRA",
@@ -257,7 +257,7 @@
     "appearances": 13,
     "championships": [],
     "runner_ups": [],
-    "ranking": 25
+    "ranking": 21
   },
   {
     "team_id": "SWI",
@@ -267,7 +267,7 @@
     "appearances": 12,
     "championships": [],
     "runner_ups": [],
-    "ranking": 16
+    "ranking": 15
   },
   {
     "team_id": "CAM",
@@ -277,7 +277,7 @@
     "appearances": 8,
     "championships": [],
     "runner_ups": [],
-    "ranking": 38
+    "ranking": 43
   },
   {
     "team_id": "POR",
@@ -297,7 +297,7 @@
     "appearances": 4,
     "championships": [],
     "runner_ups": [],
-    "ranking": 60
+    "ranking": 61
   },
   {
     "team_id": "URU",
@@ -307,7 +307,7 @@
     "appearances": 14,
     "championships": [1930, 1950],
     "runner_ups": [],
-    "ranking": 13
+    "ranking": 14
   },
   {
     "team_id": "KOR",
