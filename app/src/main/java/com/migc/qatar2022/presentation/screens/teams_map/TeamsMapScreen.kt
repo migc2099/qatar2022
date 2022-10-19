@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.migc.qatar2022.R
 import com.migc.qatar2022.common.Constants
+import com.migc.qatar2022.common.Constants.TIMES_CLICKED_TO_SHOW_AD
 import com.migc.qatar2022.common.Utils.LockScreenOrientation
 import com.migc.qatar2022.presentation.components.EarthMap
 import com.migc.qatar2022.presentation.components.TeamStatsSheet
@@ -25,7 +26,11 @@ import com.migc.qatar2022.ui.theme.*
 @ExperimentalMaterialApi
 @Composable
 fun TeamsMapScreen(
-    viewModel: TeamsMapViewModel = hiltViewModel()
+    viewModel: TeamsMapViewModel = hiltViewModel(),
+    onLoadInterstitial: (String) -> Unit,
+    onLoadRewardedInterstitial: () -> Unit,
+    onShowInterstitial: () -> Unit,
+    onShowRewardedInterstitial: () -> Unit
 ) {
     LockScreenOrientation(orientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT)
     val mContext = LocalContext.current
@@ -33,6 +38,9 @@ fun TeamsMapScreen(
     val currentCountry = viewModel.countryInfo.collectAsState()
     val predictions = viewModel.predictions.collectAsState()
     val topPredictions = viewModel.topPredictions.collectAsState()
+    val timesClicked = remember { mutableStateOf(0) }
+    val maxClicksBeforeAd = remember { mutableStateOf(TIMES_CLICKED_TO_SHOW_AD) }
+    val adFormat = remember { mutableStateOf("") }
 
     val sheetState = rememberBottomSheetState(
         initialValue = BottomSheetValue.Collapsed,
@@ -52,6 +60,18 @@ fun TeamsMapScreen(
             if (currentCountry.value.teamId.isEmpty()) {
                 sheetState.collapse()
             }
+        }
+    }
+
+    LaunchedEffect(key1 = adFormat.value) {
+        if (adFormat.value.isEmpty()) {
+            adFormat.value = viewModel.pickRandomAdType()
+            Log.d("random launched", adFormat.value)
+        }
+        Log.d("log", adFormat.value)
+        when (adFormat.value) {
+            Constants.AD_UNIT_MAP_INTERSTITIAL_ID -> onLoadInterstitial(Constants.AD_UNIT_MAP_INTERSTITIAL_ID)
+            Constants.AD_UNIT_MAP_REWARD_ID -> onLoadRewardedInterstitial()
         }
     }
 
@@ -79,6 +99,16 @@ fun TeamsMapScreen(
                 predictionsState = predictions.value,
                 onPredictionsClicked = {
                     viewModel.onEvent(TeamsMapUiEvent.OnSeePredictionsClicked(it))
+                    timesClicked.value++
+                    if (timesClicked.value >= maxClicksBeforeAd.value) {
+                        when (adFormat.value) {
+                            Constants.AD_UNIT_MAP_INTERSTITIAL_ID -> onShowInterstitial()
+                            Constants.AD_UNIT_MAP_REWARD_ID -> onShowRewardedInterstitial()
+                        }
+                        adFormat.value = ""
+                        timesClicked.value = 0
+                        maxClicksBeforeAd.value = viewModel.generateMaxClicksAllowed()
+                    }
                 }
             )
         },
@@ -96,7 +126,7 @@ fun TeamsMapScreen(
                     viewModel.onEvent(TeamsMapUiEvent.OnCountryFlagClicked(it))
                 }
             )
-            if (topPredictions.value.isNotEmpty()){
+            if (topPredictions.value.isNotEmpty()) {
                 TopPredictionsDisplay(
                     modifier = Modifier.size(TOP_TEAMS_DISPLAY_WIDTH, TOP_TEAMS_DISPLAY_HEIGHT),
                     teams = topPredictions.value

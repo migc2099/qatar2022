@@ -17,8 +17,10 @@ import com.migc.qatar2022.presentation.screens.teams_map.TeamsMapScreen
 @Composable
 fun AppNavGraph(
     navHostController: NavHostController,
-    onLoadInterstitial: () -> Unit,
+    onLoadInterstitial: (String) -> Unit,
     onShowInterstitial: () -> Unit,
+    onLoadRewardedInterstitial: () -> Unit,
+    onShowRewardedInterstitial: () -> Unit
 ) {
     NavHost(
         navController = navHostController,
@@ -48,7 +50,12 @@ fun AppNavGraph(
             StandingScreen()
         }
         composable(route = Screen.TeamsMapScreen.route) {
-            TeamsMapScreen()
+            TeamsMapScreen(
+                onLoadInterstitial = onLoadInterstitial,
+                onLoadRewardedInterstitial = onLoadRewardedInterstitial,
+                onShowInterstitial = onShowInterstitial,
+                onShowRewardedInterstitial = onShowRewardedInterstitial
+            )
         }
     }
 }

@@ -16,10 +16,11 @@ object Constants {
     const val FIELD_SECOND = "second_place"
     const val FIELD_THIRD = "third_place"
 
-    const val TOP_PREDICTIONS_NUMBER : Long = 5
+    const val TOP_PREDICTIONS_NUMBER: Long = 5
 
     const val FIXTURE_BASE_URL = "https://fixturedownload.com/"
-//    const val RANKINGS_BASE_URL = "https://gist.githubusercontent.com/"
+
+    //    const val RANKINGS_BASE_URL = "https://gist.githubusercontent.com/"
     const val TEAMS_RANKINGS_JSON_FILE = "teams_rankings.json"
 
     const val QATAR_DATABASE = "qatar_database"
@@ -62,5 +63,10 @@ object Constants {
     const val PERMISSION_DENIED_MESSAGE = "PERMISSION_DENIED: Missing or insufficient permissions"
 
     const val WARN_NUMBER_LOGIN_ATTEMPTS = 7
+    const val TIMES_CLICKED_TO_SHOW_AD = 16
 
+    const val AD_UNIT_SUBMIT_INTERSTITIAL_ID = "ad_unit_submit_interstitial_id"
+    const val AD_UNIT_MAP_REWARD_ID = "ad_unit_map_reward_id"
+    const val AD_UNIT_MAP_INTERSTITIAL_ID = "ad_unit_map_interstitial_id"
+    const val AD_UNIT_LOGIN_INTERSTITIAL_ID = "ad_unit_login_interstitial_id"
 }

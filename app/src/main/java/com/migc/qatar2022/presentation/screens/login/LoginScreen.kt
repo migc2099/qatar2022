@@ -30,7 +30,7 @@ import com.migc.qatar2022.ui.theme.*
 fun LoginScreen(
     navHostController: NavHostController,
     loginViewModel: LoginViewModel = hiltViewModel(),
-    onLoadInterstitial: () -> Unit,
+    onLoadInterstitial: (String) -> Unit,
     onShowInterstitial: () -> Unit
 ) {
     val mContext = LocalContext.current
@@ -101,7 +101,7 @@ fun LoginScreen(
                         ) {
                             tooManyClicks.value++
                             if (tooManyClicks.value < Constants.WARN_NUMBER_LOGIN_ATTEMPTS) {
-                                onLoadInterstitial()
+                                onLoadInterstitial(Constants.AD_UNIT_LOGIN_INTERSTITIAL_ID)
                                 Log.d("LoginScreen", "authState.value.user = ${authState.value.user}")
                                 if (authState.value.user != null) {
                                     loginViewModel.onEvent(LoginUiEvent.OnSignOutClicked)

@@ -16,6 +16,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+import kotlin.random.Random
 
 @HiltViewModel
 class TeamsMapViewModel @Inject constructor(
@@ -117,6 +118,18 @@ class TeamsMapViewModel @Inject constructor(
                 }
             }
         }
+    }
+
+    fun generateMaxClicksAllowed(): Int {
+        return Random.nextInt(Constants.TIMES_CLICKED_TO_SHOW_AD, Constants.TIMES_CLICKED_TO_SHOW_AD * 2)
+    }
+
+    fun pickRandomAdType(): String {
+        val adsList = listOf(
+            Constants.AD_UNIT_MAP_INTERSTITIAL_ID,
+            Constants.AD_UNIT_MAP_REWARD_ID
+        )
+        return adsList.shuffled()[0]
     }
 
 }
