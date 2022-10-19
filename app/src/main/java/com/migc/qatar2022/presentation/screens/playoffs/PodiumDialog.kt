@@ -83,7 +83,6 @@ fun PodiumDialog(
                     ) {
                         TextButton(
                             onClick = {
-//                                isUploadWinnersProcessing.value = true
                                 val winners = listOf(teams[0], teams[1], teams[2])
                                 onUploadWinners(winners)
                             },
@@ -95,7 +94,7 @@ fun PodiumDialog(
                                 contentAlignment = Alignment.Center
                             ) {
                                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                                    Text(text = stringResource(id = R.string.upload_winners_text))
+                                    Text(text = stringResource(id = R.string.send_results_text))
                                     if (!isUserAuthenticated) {
                                         Text(
                                             color = Color.Gray,

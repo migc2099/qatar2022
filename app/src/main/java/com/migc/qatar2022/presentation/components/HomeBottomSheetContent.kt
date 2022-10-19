@@ -37,7 +37,7 @@ fun HomeBottomSheetContent(
         if (isShowWinnersEnabled) {
             BottomSheetRow(
                 icon = painterResource(R.drawable.ic_show_winners),
-                title = stringResource(R.string.show_winners_text)
+                title = stringResource(R.string.show_results_text)
             ) {
                 if (playoffCompletedState) {
                     onShowWinnersClick()
@@ -57,7 +57,7 @@ fun HomeBottomSheetContent(
         }
         BottomSheetRow(
             icon = painterResource(R.drawable.ic_countries_map),
-            title = stringResource(id = R.string.countries_map_text)
+            title = stringResource(id = R.string.teams_map_text)
         ) {
             onTeamsMapClick()
         }

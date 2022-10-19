@@ -55,7 +55,7 @@ fun TeamStatsSheet(
         Spacer(modifier = Modifier.height(MEDIUM_VERTICAL_GAP))
         Text(
             modifier = Modifier.padding(horizontal = LARGE_PADDING),
-            text = stringResource(id = R.string.team_app_performance_subtitle),
+            text = stringResource(id = R.string.predictions_on_app_subtitle),
             color = mainColor
         )
         Divider()

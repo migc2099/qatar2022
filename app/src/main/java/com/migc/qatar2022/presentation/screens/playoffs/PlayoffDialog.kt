@@ -212,7 +212,7 @@ fun PlayoffDialog(
                             }
 
                         }) {
-                        Text(text = stringResource(R.string.okay_text))
+                        Text(text = stringResource(R.string.accept_text))
                     }
                 }
             }
