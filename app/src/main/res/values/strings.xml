@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">World Cup Qatar 2022 Simulator</string>
     <string name="app_top_bar_title">Qatar 2022</string>
-    <string name="soccer_logo">Football</string>
+    <string name="soccer_logo">Soccer ball</string>
     <string name="days_text">Days</string>
     <string name="hours_text">Hours</string>
     <string name="minutes_text">Mins</string>
@@ -13,11 +13,11 @@
     <string name="save_changes_text">Save changes</string>
     <string name="enter_match_result_text">Enter Match Result</string>
     <string name="cancel_text">Cancel</string>
-    <string name="okay_text">Accept</string>
-    <string name="upload_winners_text">Upload Winners</string>
+    <string name="accept_text">Accept</string>
+    <string name="send_results_text">Send Results</string>
     <string name="start_over_text">Start Over</string>
     <string name="close_text">Close</string>
-    <string name="show_winners_text">Show Winners</string>
+    <string name="show_results_text">Show Results</string>
     <string name="authentication_required_text">(Requires Sign In)</string>
     <string name="reset_required_text">(Requires Playoffs Reset)</string>
     <string name="reset_playoffs_text">Reset Playoffs</string>
@@ -31,18 +31,18 @@
     <string name="penalty_kick_text">pk</string>
     <string name="menu_text">Menu</string>
     <string name="authenticate_text">Authenticate</string>
-    <string name="countries_map_text">Countries Map</string>
+    <string name="teams_map_text">Teams Map</string>
     <string name="appearances_text">Appearances</string>
     <string name="ranking_text">Ranking</string>
-    <string name="team_app_performance_subtitle">Predictions</string>
+    <string name="predictions_on_app_subtitle">Predictions on app</string>
     <string name="team_facts_subtitle">Facts</string>
     <string name="see_text">See</string>
     <string name="see_predictions_text">See</string>
-    <string name="star_path">M14,21.288,21.416,26l-1.968-8.88L26,11.145l-8.628-.771L14,2l-3.372,8.375L2,11.145,8.552,17.12,6.584,26Z</string>
+    <string name="star_path" translatable="false">M14,21.288,21.416,26l-1.968-8.88L26,11.145l-8.628-.771L14,2l-3.372,8.375L2,11.145,8.552,17.12,6.584,26Z</string>
     <string name="generate_scores">Generate Realistic Scores (Beta)</string>
     <string name="go_back_text">Go Back</string>
     <string name="reupload_prevention_message">You have already uploaded this tournament\'s winners</string>
-    <string name="web_client_id">778036367622-5frl7qm49cqjhffb660ged4ts6jo2aji.apps.googleusercontent.com</string>
+    <string name="web_client_id" translatable="false">778036367622-5frl7qm49cqjhffb660ged4ts6jo2aji.apps.googleusercontent.com</string>
     <string name="sign_in_with_google_text">Sign In With Google</string>
     <string name="sign_in_success_message">Signed in</string>
     <string name="sign_out_success_message">Signed out</string>
