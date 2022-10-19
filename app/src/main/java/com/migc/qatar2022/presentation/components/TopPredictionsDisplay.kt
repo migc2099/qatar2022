@@ -79,7 +79,7 @@ fun TopPredictionsDisplay(modifier: Modifier, teams: List<Predictions>) {
                         Spacer(modifier = Modifier.width(SMALL_HORIZONTAL_PADDING))
                         Text(
                             color = mainColor,
-                            text = TeamsData.countriesMap[teams[index].teamId]!!,
+                            text = stringResource(id = TeamsData.countriesMap[teams[index].teamId]!!),
                             fontSize = Typography.subtitle2.fontSize
                         )
                     }

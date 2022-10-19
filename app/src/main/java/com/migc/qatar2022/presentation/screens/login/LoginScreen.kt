@@ -89,9 +89,9 @@ fun LoginScreen(
                 val buttonText = remember { mutableStateOf("") }
                 Log.d("LoginScreen", "authState.value.user = ${authState.value.user}")
                 if (authState.value.user != null) {
-                    buttonText.value = "Sign out"
+                    buttonText.value = stringResource(R.string.sign_out_text)
                 } else {
-                    buttonText.value = "Sign in anonymously"
+                    buttonText.value = stringResource(R.string.sign_in_anonymously_text)
                 }
                 if (anonymousButtonVisible.value) {
                     Box(contentAlignment = Alignment.Center) {
@@ -126,7 +126,7 @@ fun LoginScreen(
                     Box(contentAlignment = Alignment.Center) {
                         var text = stringResource(id = R.string.sign_in_with_google_text)
                         if (authState.value.user != null) {
-                            text = "Sign out"
+                            text = stringResource(id = R.string.sign_out_text)
                         }
                         SignInButton(
                             text = text,

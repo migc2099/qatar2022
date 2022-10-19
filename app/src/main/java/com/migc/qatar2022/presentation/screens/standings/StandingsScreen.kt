@@ -72,7 +72,7 @@ fun StandingScreen(
                     digitsModifier = digitsModifier,
                     position = index + 1,
                     flag = TeamsData.flagsMap[team.teamId]!!,
-                    teamName = TeamsData.countriesMap[team.teamId]!!,
+                    teamName = stringResource(id = TeamsData.countriesMap[team.teamId]!!),
                     points = team.points.toString(),
                     wins = team.wins.toString(),
                     draws = team.draws.toString(),

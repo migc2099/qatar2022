@@ -21,7 +21,7 @@
     <string name="authentication_required_text">(Requiere Inicio de Sesion)</string>
     <string name="reset_required_text">(Requiere Reiniciar Cuartos de Final)</string>
     <string name="reset_playoffs_text">Reiniciar Cuartos de Final</string>
-    <string name="final_standings_text">Table de Posiciones</string>
+    <string name="final_standings_text">Tabla de Posiciones</string>
     <string name="points_acronym">Pts</string>
     <string name="wins_acronym">G</string>
     <string name="draw_acronym">E</string>
@@ -37,13 +37,15 @@
     <string name="predictions_on_app_subtitle">Predicciones en la app</string>
     <string name="team_facts_subtitle">Datos</string>
     <string name="see_text">Ver</string>
-    <string name="see_predictions_text">Ver</string>
-    <string name="generate_scores">Generar Resultados (Basado en Ranking)</string>
+    <string name="see_predictions_text">Apuestas</string>
+    <string name="generate_scores">Generar Resultados</string>
     <string name="go_back_text">Volver</string>
     <string name="reupload_prevention_message">Ya subistes a los ganadores de este torneo</string>
     <string name="sign_in_success_message">Sesion iniciada</string>
     <string name="sign_out_success_message">Sesion finalizada</string>
-    <string name="sign_in_with_google_text">Iniciar Sesion con Google</string>
+    <string name="sign_in_anonymously_text">Accesar anonimamente</string>
+    <string name="sign_in_with_google_text">Usar Google</string>
+    <string name="sign_out_text">Salir</string>
     <string name="message_upload_completed">Completado</string>
     <string name="message_unexpected_error">Error Inesperado</string>
     <string name="message_sign_in_unexpected_error">Error Inesperado. Intenta otro metodo o intenta de nuevo</string>
@@ -51,4 +53,38 @@
     <string name="message_sign_in_required">Se require inicio de sesion</string>
     <string name="message_retrieving_data_error">No se pudo obtener los datos</string>
     <string name="top_teams_text">Mejores Equipos</string>
+
+    <!-- Countries -->
+    <string name="QAT">Catar</string>
+    <string name="ECU">Ecuador</string>
+    <string name="SEN">Senegal</string>
+    <string name="NET">Holanda</string>
+    <string name="ENG">Inglaterra</string>
+    <string name="IRA">Iran</string>
+    <string name="USA">Estados Unidos</string>
+    <string name="WAL">Gales</string>
+    <string name="ARG">Argentina</string>
+    <string name="SAU">Arabia Saudita</string>
+    <string name="MEX">México</string>
+    <string name="POL">Polonia</string>
+    <string name="FRA">Francia</string>
+    <string name="DEN">Dinamarca</string>
+    <string name="TUN">Tunez</string>
+    <string name="AUS">Australia</string>
+    <string name="SPA">España</string>
+    <string name="GER">Alemania</string>
+    <string name="JAP">Japón</string>
+    <string name="COS">Costa Rica</string>
+    <string name="BEL">Bélgica</string>
+    <string name="CAN">Canadá</string>
+    <string name="MOR">Marruecos</string>
+    <string name="CRO">Croacia</string>
+    <string name="BRA">Brasil</string>
+    <string name="SER">Serbia</string>
+    <string name="SWI">Suiza</string>
+    <string name="CAM">Camerún</string>
+    <string name="POR">Portugal</string>
+    <string name="GHA">Gana</string>
+    <string name="URU">Uruguay</string>
+    <string name="KOR">Corea del Sur</string>
 </resources>

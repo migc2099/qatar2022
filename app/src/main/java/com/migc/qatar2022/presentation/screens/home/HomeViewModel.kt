@@ -87,9 +87,14 @@ class HomeViewModel @Inject constructor(
                 }
             }
             is HomeUiEvent.OnPlayoffDialogClicked -> {
+                _playoffCompletedState.value = false
                 viewModelScope.launch(Dispatchers.IO) {
                     _selectedPlayoff.value = playoffsUseCases.getPlayoffByRoundKeyUseCase(event.roundKey)
-                    _playoffCompletedState.value = false
+                }
+            }
+            is HomeUiEvent.OnPlayoffDialogDismissed -> {
+                viewModelScope.launch(Dispatchers.IO) {
+                    refreshPlayoffsGrid()
                 }
             }
             is HomeUiEvent.OnPlayoffDialogCompleted -> {

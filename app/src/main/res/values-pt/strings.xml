@@ -37,13 +37,15 @@
     <string name="predictions_on_app_subtitle">Previsões no app</string>
     <string name="team_facts_subtitle">Fatos</string>
     <string name="see_text">Ver</string>
-    <string name="see_predictions_text">Ver</string>
-    <string name="generate_scores">Gerar Resultados(com base na classificação)</string>
+    <string name="see_predictions_text">Apostas</string>
+    <string name="generate_scores">Gerar Resultados</string>
     <string name="go_back_text">Voltar</string>
     <string name="reupload_prevention_message">Já enviou esses resultados</string>
     <string name="sign_in_success_message">Logado</string>
     <string name="sign_out_success_message">Desconectado</string>
-    <string name="sign_in_with_google_text">Faça login no Google</string>
+    <string name="sign_in_anonymously_text">Acessar anonimamente</string>
+    <string name="sign_in_with_google_text">Usar Google</string>
+    <string name="sign_out_text">Sair</string>
     <string name="message_upload_completed">Concluído</string>
     <string name="message_unexpected_error">Erro Inesperado</string>
     <string name="message_sign_in_unexpected_error">Erro Inesperado. Tente novamente ou tente mais tarde</string>
@@ -51,4 +53,38 @@
     <string name="message_sign_in_required">Autenticação necessária</string>
     <string name="message_retrieving_data_error">Não foi possível recuperar dados</string>
     <string name="top_teams_text">Melhores Equipes</string>
+
+    <!-- Countries -->
+    <string name="QAT">Catar</string>
+    <string name="ECU">Ecuador</string>
+    <string name="SEN">Senegal</string>
+    <string name="NET">Holanda</string>
+    <string name="ENG">Inglaterra</string>
+    <string name="IRA">Irã</string>
+    <string name="USA">Estados Unidos</string>
+    <string name="WAL">Gales</string>
+    <string name="ARG">Argentina</string>
+    <string name="SAU">Arabia Saudita</string>
+    <string name="MEX">México</string>
+    <string name="POL">Polônia</string>
+    <string name="FRA">França</string>
+    <string name="DEN">Dinamarca</string>
+    <string name="TUN">Tunísia</string>
+    <string name="AUS">Australia</string>
+    <string name="SPA">Espanha</string>
+    <string name="GER">Alemanha</string>
+    <string name="JAP">Japão</string>
+    <string name="COS">Costa Rica</string>
+    <string name="BEL">Bélgica</string>
+    <string name="CAN">Canadá</string>
+    <string name="MOR">Marrocos</string>
+    <string name="CRO">Croácia</string>
+    <string name="BRA">Brasil</string>
+    <string name="SER">Sérvia</string>
+    <string name="SWI">Suíça</string>
+    <string name="CAM">Camarões</string>
+    <string name="POR">Portugal</string>
+    <string name="GHA">Gana</string>
+    <string name="URU">Uruguay</string>
+    <string name="KOR">Coreia do Sul</string>
 </resources>

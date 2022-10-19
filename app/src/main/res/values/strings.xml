@@ -39,11 +39,13 @@
     <string name="see_text">See</string>
     <string name="see_predictions_text">See</string>
     <string name="star_path" translatable="false">M14,21.288,21.416,26l-1.968-8.88L26,11.145l-8.628-.771L14,2l-3.372,8.375L2,11.145,8.552,17.12,6.584,26Z</string>
-    <string name="generate_scores">Generate Realistic Scores (Beta)</string>
+    <string name="generate_scores">Generate Scores</string>
     <string name="go_back_text">Go Back</string>
     <string name="reupload_prevention_message">You have already uploaded this tournament\'s winners</string>
     <string name="web_client_id" translatable="false">778036367622-5frl7qm49cqjhffb660ged4ts6jo2aji.apps.googleusercontent.com</string>
-    <string name="sign_in_with_google_text">Sign In With Google</string>
+    <string name="sign_in_anonymously_text">Sign in anonymously</string>
+    <string name="sign_in_with_google_text">Google Sign In</string>
+    <string name="sign_out_text">Sign out</string>
     <string name="sign_in_success_message">Signed in</string>
     <string name="sign_out_success_message">Signed out</string>
     <string name="message_upload_completed">Upload Completed</string>
@@ -53,4 +55,38 @@
     <string name="message_sign_in_required">Sign In Required</string>
     <string name="message_retrieving_data_error">Couldn\'t obtain data</string>
     <string name="top_teams_text">Top Teams</string>
+
+    <!-- Countries -->
+    <string name="QAT">Qatar</string>
+    <string name="ECU">Ecuador</string>
+    <string name="SEN">Senegal</string>
+    <string name="NET">Netherlands</string>
+    <string name="ENG">England</string>
+    <string name="IRA">Iran</string>
+    <string name="USA">USA</string>
+    <string name="WAL">Wales</string>
+    <string name="ARG">Argentina</string>
+    <string name="SAU">Saudi Arabia</string>
+    <string name="MEX">Mexico</string>
+    <string name="POL">Poland</string>
+    <string name="FRA">France</string>
+    <string name="DEN">Denmark</string>
+    <string name="TUN">Tunisia</string>
+    <string name="AUS">Australia</string>
+    <string name="SPA">Spain</string>
+    <string name="GER">Germany</string>
+    <string name="JAP">Japan</string>
+    <string name="COS">Costa Rica</string>
+    <string name="BEL">Belgium</string>
+    <string name="CAN">Canada</string>
+    <string name="MOR">Morocco</string>
+    <string name="CRO">Croatia</string>
+    <string name="BRA">Brazil</string>
+    <string name="SER">Serbia</string>
+    <string name="SWI">Switzerland</string>
+    <string name="CAM">Cameroon</string>
+    <string name="POR">Portugal</string>
+    <string name="GHA">Ghana</string>
+    <string name="URU">Uruguay</string>
+    <string name="KOR">Korea Republic</string>
 </resources>

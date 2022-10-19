@@ -33,7 +33,7 @@ fun TeamStatsSheet(
     val firstText = remember { mutableStateOf(seeText) }
     val secondText = remember { mutableStateOf(seeText) }
     val thirdText = remember { mutableStateOf(seeText) }
-    val wcText = remember { mutableStateOf(seePredictionsText) }
+    val boText = remember { mutableStateOf(seePredictionsText) }
 
     LaunchedEffect(key1 = predictionsState) {
         Log.d("LaunchedEffect", "predictionsState.value $predictionsState")
@@ -41,12 +41,12 @@ fun TeamStatsSheet(
             firstText.value = predictionsState.data.firstPlace.toString()
             secondText.value = predictionsState.data.secondPlace.toString()
             thirdText.value = predictionsState.data.thirdPlace.toString()
-            wcText.value = predictionsState.data.bettingOdds
+            boText.value = predictionsState.data.bettingOdds
         } else {
             firstText.value = seeText
             secondText.value = seeText
             thirdText.value = seeText
-            wcText.value = seePredictionsText
+            boText.value = seePredictionsText
         }
     }
 
@@ -88,10 +88,11 @@ fun TeamStatsSheet(
                 backgroundColor = bronzeColor,
                 onClick = onPredictionsClicked
             )
+            Spacer(modifier = Modifier.width(SMALL_HORIZONTAL_PADDING))
             TeamStatBadge(
                 countryInfo = countryInfo,
                 isValueLoading = predictionsState.isLoading,
-                text = wcText.value,
+                text = boText.value,
                 backgroundColor = mainColor,
                 textColor = mainBackgroundColor,
                 onClick = onPredictionsClicked,
@@ -127,12 +128,14 @@ fun TeamStatsSheet(
                             )
                         }
                         Spacer(modifier = Modifier.width(LARGE_PADDING))
-                        Text(
-                            text = countryInfo.teamName,
-                            color = mainColor,
-                            fontSize = Typography.h6.fontSize,
-                            fontStyle = FontStyle.Italic
-                        )
+                        if (countryInfo.teamId.isNotEmpty()){
+                            Text(
+                                text = stringResource(id = TeamsData.countriesMap[countryInfo.teamId]!!),
+                                color = mainColor,
+                                fontSize = Typography.h6.fontSize,
+                                fontStyle = FontStyle.Italic
+                            )
+                        }
                     }
 
                     Spacer(modifier = Modifier.height(MEDIUM_VERTICAL_GAP))
@@ -158,7 +161,6 @@ fun TeamStatsSheet(
                     Coin(title = stringResource(id = R.string.appearances_text), value = countryInfo.appearances)
                 }
             }
-
         }
     }
 }

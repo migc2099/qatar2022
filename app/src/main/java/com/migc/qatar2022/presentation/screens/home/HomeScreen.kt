@@ -226,9 +226,11 @@ fun HomeScreen(
         PlayoffDialog(
             playoff = selectedPlayoff.value,
             onDismiss = {
+                homeViewModel.onEvent(HomeUiEvent.OnPlayoffDialogDismissed)
                 showPlayoffDialog.value = false
             },
             onNegativeClick = {
+                homeViewModel.onEvent(HomeUiEvent.OnPlayoffDialogDismissed)
                 showPlayoffDialog.value = false
             },
             onPositiveClick = {

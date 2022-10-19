@@ -105,7 +105,7 @@ fun GroupCard(
                             Spacer(modifier = Modifier.width(MEDIUM_HORIZONTAL_GAP))
                             Text(
                                 color = Color.Black,
-                                text = teamStats.teamName,
+                                text = stringResource(id = TeamsData.countriesMap[teamStats.teamId]!!),
                                 fontSize = Typography.subtitle1.fontSize
                             )
                             Box(

@@ -1,6 +1,5 @@
 package com.migc.qatar2022.presentation.screens.playoffs
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -187,14 +186,7 @@ fun PlayoffDialog(
                     Spacer(modifier = Modifier.width(LARGE_PADDING))
                     TextButton(
                         onClick = {
-
-                            Log.d("LOG", " first team score: ${editedPlayOff.firstTeamScore}")
-                            Log.d("LOG", " second team score: ${editedPlayOff.secondTeamScore}")
-                            Log.d("LOG", " second team PK score: ${editedPlayOff.firstTeamPKScore}")
-                            Log.d("LOG", " second team PK score: ${editedPlayOff.secondTeamPKScore}")
-
                             if (editedPlayOff.firstTeamScore != null && editedPlayOff.secondTeamScore != null) {
-
                                 if (editedPlayOff.firstTeamScore!! > -1 && editedPlayOff.secondTeamScore!! > -1) {
                                     if (editedPlayOff.firstTeamScore == editedPlayOff.secondTeamScore) {
                                         // penalty kicks
@@ -232,7 +224,7 @@ fun FlagAndName(teamId: String) {
     Text(
         modifier = Modifier.width(100.dp),
         color = Color.Black,
-        text = TeamsData.countriesMap[teamId]!!,
+        text = stringResource(id = TeamsData.countriesMap[teamId]!!),
         fontSize = Typography.subtitle2.fontSize
     )
 }

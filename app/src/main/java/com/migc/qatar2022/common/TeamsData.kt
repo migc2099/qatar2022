@@ -1,6 +1,5 @@
 package com.migc.qatar2022.common
 
-import com.google.android.gms.maps.model.LatLng
 import com.migc.qatar2022.R
 import com.migc.qatar2022.data.local.entity.FixtureEntity
 import com.migc.qatar2022.data.local.entity.GroupEntity
@@ -9,39 +8,39 @@ import com.migc.qatar2022.data.local.entity.TeamEntity
 
 object TeamsData {
 
-    val countriesMap: Map<String, String> = mapOf(
-        "QAT" to "Qatar",
-        "ECU" to "Ecuador",
-        "SEN" to "Senegal",
-        "NET" to "Netherlands",
-        "ENG" to "England",
-        "IRA" to "Iran",
-        "USA" to "USA",
-        "WAL" to "Wales",
-        "ARG" to "Argentina",
-        "SAU" to "Saudi Arabia",
-        "MEX" to "Mexico",
-        "POL" to "Poland",
-        "FRA" to "France",
-        "DEN" to "Denmark",
-        "TUN" to "Tunisia",
-        "AUS" to "Australia",
-        "SPA" to "Spain",
-        "GER" to "Germany",
-        "JAP" to "Japan",
-        "COS" to "Costa Rica",
-        "BEL" to "Belgium",
-        "CAN" to "Canada",
-        "MOR" to "Morocco",
-        "CRO" to "Croatia",
-        "BRA" to "Brazil",
-        "SER" to "Serbia",
-        "SWI" to "Switzerland",
-        "CAM" to "Cameroon",
-        "POR" to "Portugal",
-        "GHA" to "Ghana",
-        "URU" to "Uruguay",
-        "KOR" to "Korea Republic",
+    val countriesMap: Map<String, Int> = mapOf(
+        "QAT" to R.string.QAT,
+        "ECU" to R.string.ECU,
+        "SEN" to R.string.SEN,
+        "NET" to R.string.NET,
+        "ENG" to R.string.ENG,
+        "IRA" to R.string.IRA,
+        "USA" to R.string.USA,
+        "WAL" to R.string.WAL,
+        "ARG" to R.string.ARG,
+        "SAU" to R.string.SAU,
+        "MEX" to R.string.MEX,
+        "POL" to R.string.POL,
+        "FRA" to R.string.FRA,
+        "DEN" to R.string.DEN,
+        "TUN" to R.string.TUN,
+        "AUS" to R.string.AUS,
+        "SPA" to R.string.SPA,
+        "GER" to R.string.GER,
+        "JAP" to R.string.JAP,
+        "COS" to R.string.COS,
+        "BEL" to R.string.BEL,
+        "CAN" to R.string.CAN,
+        "MOR" to R.string.MOR,
+        "CRO" to R.string.CRO,
+        "BRA" to R.string.BRA,
+        "SER" to R.string.SER,
+        "SWI" to R.string.SWI,
+        "CAM" to R.string.CAM,
+        "POR" to R.string.POR,
+        "GHA" to R.string.GHA,
+        "URU" to R.string.URU,
+        "KOR" to R.string.KOR,
     )
 
     val flagsMap: Map<String, Int> = mapOf(
@@ -112,41 +111,6 @@ object TeamsData {
         "GHA" to 0.18,
         "URU" to 0.46,
         "KOR" to 0.22
-    )
-
-    val locationMap: Map<String, LatLng> = mapOf(
-        "QAT" to LatLng(25.3548, 51.1839),
-        "ECU" to LatLng(-1.8312, -78.1834),
-        "SEN" to LatLng(14.4974, -14.4524),
-        "NET" to LatLng(52.1326, 5.2913),
-        "ENG" to LatLng(52.0200, 0.0545),
-        "IRA" to LatLng(32.4279, 53.6880),
-        "USA" to LatLng(37.0902, -95.7129),
-        "WAL" to LatLng(52.1307, -3.7837),
-        "ARG" to LatLng(-38.4161, -63.6167),
-        "SAU" to LatLng(23.8859, 45.0792),
-        "MEX" to LatLng(23.6345, -102.5528),
-        "POL" to LatLng(51.9194, 19.1451),
-        "FRA" to LatLng(46.2276, 2.2137),
-        "DEN" to LatLng(56.2639, 9.5018),
-        "TUN" to LatLng(33.8869, 9.5375),
-        "AUS" to LatLng(-25.2744, 133.7751),
-        "SPA" to LatLng(40.4637, -3.7492),
-        "GER" to LatLng(51.1657, 10.4515),
-        "JAP" to LatLng(36.2048, 138.2529),
-        "COS" to LatLng(9.7489, -83.7534),
-        "BEL" to LatLng(50.5039, 4.4699),
-        "CAN" to LatLng(56.1304, -106.3468),
-        "MOR" to LatLng(31.7917, -7.0926),
-        "CRO" to LatLng(45.1000, 15.2000),
-        "BRA" to LatLng(-14.2350, -51.9253),
-        "SER" to LatLng(44.0165, 21.0059),
-        "SWI" to LatLng(46.8182, 8.2275),
-        "CAM" to LatLng(5.2657, 12.5003),
-        "POR" to LatLng(39.3999, -8.2245),
-        "GHA" to LatLng(6.8152, -1.5087),
-        "URU" to LatLng(-32.5228, -55.7658),
-        "KOR" to LatLng(35.9078, 127.7669)
     )
 
     val groups = listOf(
