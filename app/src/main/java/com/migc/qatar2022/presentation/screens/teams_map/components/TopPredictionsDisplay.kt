@@ -35,11 +35,6 @@ import kotlin.math.roundToInt
 fun TopPredictionsDisplay(modifier: Modifier, teams: List<Predictions>) {
     var offsetX by remember { mutableStateOf(0f) }
     var offsetY by remember { mutableStateOf(0f) }
-
-    LaunchedEffect(key1 = true) {
-
-    }
-
     val infiniteTransition = rememberInfiniteTransition()
     val liveAlpha by infiniteTransition.animateFloat(
         initialValue = 0.4f,

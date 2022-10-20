@@ -2,8 +2,8 @@ package com.migc.qatar2022.presentation.screens.home
 
 import android.util.Log
 import android.widget.Toast
-import androidx.compose.animation.core.Spring
-import androidx.compose.animation.core.spring
+import androidx.compose.animation.core.*
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -12,9 +12,10 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.painterResource
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.migc.qatar2022.R
@@ -71,11 +72,16 @@ fun HomeScreen(
     )
 
     val coroutineScope = rememberCoroutineScope()
+    val cupAlpha: Float by animateFloatAsState(
+        targetValue = if (playoffCompletedState.value) 1f else 0f,
+        animationSpec = tween(
+            durationMillis = 1200,
+            easing = LinearOutSlowInEasing
+        )
+    )
+
 //    val screenshotState = rememberScreenshotState()
 //    val screenshotClicked = remember { mutableStateOf(false) }
-
-    var gridHeight = 384.dp
-    var gridWidth = 620.dp
 
     BottomSheetScaffold(
         scaffoldState = scaffoldState,
@@ -188,28 +194,41 @@ fun HomeScreen(
                 LazyRow(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(384.dp)
+                        .height(KNOCK_OUT_GRID_HEIGHT * 1.1f)
                 ) {
                     item { Spacer(modifier = Modifier.width(MEDIUM_PADDING)) }
                     item {
 //                        ScreenshotBox(screenshotState = screenshotState) {
                         Card(
                             modifier = Modifier
-                                .width(gridWidth)
-                                .height(gridHeight),
+                                .width(KNOCK_OUT_GRID_WIDTH)
+                                .height(KNOCK_OUT_GRID_HEIGHT),
                             shape = RoundedCornerShape(SMALL_ROUND_CORNER),
                             backgroundColor = mainColor
                         ) {
-                            PlayoffsGrid(
-                                modifier = Modifier.padding(horizontal = MEDIUM_PADDING),
-                                playoffs = playoffs.value
+                            Box(
+                                modifier = Modifier.fillMaxSize(),
+                                contentAlignment = Alignment.TopCenter
                             ) {
-                                Log.d("LazyRow", "roundKey clicked: $it")
-                                homeViewModel.onEvent(HomeUiEvent.OnPlayoffDialogClicked(it))
-                                showPlayoffDialog.value = true
-//                                }
+                                PlayoffsGrid(
+                                    modifier = Modifier.padding(horizontal = MEDIUM_PADDING),
+                                    playoffs = playoffs.value
+                                ) {
+                                    Log.d("LazyRow", "roundKey clicked: $it")
+                                    homeViewModel.onEvent(HomeUiEvent.OnPlayoffDialogClicked(it))
+                                    showPlayoffDialog.value = true
+                                }
+                                Image(
+                                    painter = painterResource(id = R.drawable.cup),
+                                    contentDescription = "cup",
+                                    modifier = Modifier
+                                        .size(FLAG_ROW_IMAGE_SIZE * 1.8f)
+                                        .padding(top = LARGE_PADDING),
+                                    alpha = cupAlpha
+                                )
                             }
                         }
+//                         }
                     }
                     item { Spacer(modifier = Modifier.width(MEDIUM_PADDING)) }
                 }

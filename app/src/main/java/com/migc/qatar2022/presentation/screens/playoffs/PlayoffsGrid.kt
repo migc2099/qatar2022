@@ -48,7 +48,7 @@ fun PlayoffsGrid(
     }
 
     LazyVerticalGrid(
-        columns = GridCells.Fixed(13),
+        columns = GridCells.Fixed(14),
         modifier = modifier
             .fillMaxWidth()
             .height(384.dp),
@@ -199,20 +199,15 @@ fun PlayoffsGrid(
         item {
             //************************** Filler ****************************************
         }
-        //************************* Final and 3rd Place *******************
-        item {
+        //************************* First Finalists **************************************
+        item{
             Column(modifier = Modifier.fillMaxWidth()) {
-                Spacer(modifier = Modifier.height(FLAG_ROW_IMAGE_SIZE + 2.dp + (MEDIUM_VERTICAL_GAP / 2)))
+                Spacer(modifier = Modifier.height((FLAG_ROW_IMAGE_SIZE * 2) + (MEDIUM_VERTICAL_GAP * 1.5f) + (EXTRA_SMALL_PADDING * 6)))
                 matches[64].let { playoff ->
                     if (playoff!!.firstTeam.isNotEmpty()) {
                         TeamFlag(teamId = playoff.firstTeam, onClick = { onPlayoffClick(playoff.roundKey) })
                     } else {
-                        TeamPlaceholder(text = "WC")
-                    }
-                    if (playoff.secondTeam.isNotEmpty()) {
-                        TeamFlag(teamId = playoff.secondTeam, onClick = { onPlayoffClick(playoff.roundKey) })
-                    } else {
-                        TeamPlaceholder(text = "WC")
+                        TeamPlaceholder(text = "F")
                     }
                 }
                 Spacer(modifier = Modifier.height((MEDIUM_VERTICAL_GAP * 2) + (FLAG_ROW_IMAGE_SIZE * 2) + EXTRA_SMALL_PADDING * 6))
@@ -222,7 +217,23 @@ fun PlayoffsGrid(
                     } else {
                         TeamPlaceholder(text = "3rd")
                     }
-                    if (playoff.secondTeam.isNotEmpty()) {
+                }
+            }
+        }
+        //************************* Second Finalists *******************
+        item {
+            Column(modifier = Modifier.fillMaxWidth()) {
+                Spacer(modifier = Modifier.height((FLAG_ROW_IMAGE_SIZE * 2) + (MEDIUM_VERTICAL_GAP * 1.5f) + (EXTRA_SMALL_PADDING * 6)))
+                matches[64].let { playoff ->
+                    if (playoff!!.secondTeam.isNotEmpty()) {
+                        TeamFlag(teamId = playoff.secondTeam, onClick = { onPlayoffClick(playoff.roundKey) })
+                    } else {
+                        TeamPlaceholder(text = "F")
+                    }
+                }
+                Spacer(modifier = Modifier.height((MEDIUM_VERTICAL_GAP * 2) + (FLAG_ROW_IMAGE_SIZE * 2) + EXTRA_SMALL_PADDING * 6))
+                matches[63].let { playoff ->
+                    if (playoff!!.secondTeam.isNotEmpty()) {
                         TeamFlag(teamId = playoff.secondTeam, onClick = { onPlayoffClick(playoff.roundKey) })
                     } else {
                         TeamPlaceholder(text = "3rd")
