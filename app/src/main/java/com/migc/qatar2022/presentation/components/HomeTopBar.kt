@@ -4,9 +4,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -16,9 +16,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.migc.qatar2022.R
 import com.migc.qatar2022.ui.theme.*
 
+@ExperimentalMaterial3Api
 @Composable
-fun HomeTopBar(onSignInClick: () -> Unit, onMenuClick: () -> Unit) {
-    TopAppBar(
+fun HomeTopBar(
+    onSignInClick: () -> Unit,
+    onMenuClick: () -> Unit,
+    scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
+) {
+    CenterAlignedTopAppBar(
         title = {
             Text(
                 text = stringResource(id = R.string.app_top_bar_title),
@@ -43,16 +48,24 @@ fun HomeTopBar(onSignInClick: () -> Unit, onMenuClick: () -> Unit) {
                     onMenuClick()
                 }
             ) {
-                Icon(Icons.Filled.Menu, stringResource(R.string.menu_text))
+                Icon(
+                    imageVector = Icons.Filled.Menu, stringResource(R.string.menu_text),
+                    tint = mainBackgroundColor
+                )
             }
         },
-        backgroundColor = mainColor,
-        contentColor = mainBackgroundColor,
-        elevation = LARGE_ELEVATION
+        windowInsets = TopAppBarDefaults.windowInsets,
+        colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+            containerColor = mainColor,
+            navigationIconContentColor = mainBackgroundColor,
+            titleContentColor = mainBackgroundColor,
+            actionIconContentColor = mainBackgroundColor
+        ),
+        scrollBehavior = scrollBehavior
     )
-
 }
 
+@ExperimentalMaterial3Api
 @Composable
 @Preview
 fun HomeTopBarPreview() {

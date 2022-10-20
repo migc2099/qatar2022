@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.google.android.gms.ads.*
@@ -18,6 +19,7 @@ import com.migc.qatar2022.navigation.AppNavGraph
 import com.migc.qatar2022.ui.theme.Qatar2022Theme
 import dagger.hilt.android.AndroidEntryPoint
 
+@ExperimentalMaterial3Api
 @ExperimentalMaterialApi
 @AndroidEntryPoint
 class MainActivity : ComponentActivity(), OnUserEarnedRewardListener {
@@ -71,7 +73,7 @@ class MainActivity : ComponentActivity(), OnUserEarnedRewardListener {
     private fun loadRewardedInterstitialAd() {
         RewardedInterstitialAd.load(
             this,
-            "ca-app-pub-3940256099942544/5354046379", //getString(R.string.ad_unit_map_reward_id)
+            "ca-app-pub-3940256099942544/5354046379", //getString(R.string.ad_unit_map_reward_id),
             AdRequest.Builder().build(),
             object : RewardedInterstitialAdLoadCallback() {
                 override fun onAdLoaded(ad: RewardedInterstitialAd) {
@@ -112,7 +114,7 @@ class MainActivity : ComponentActivity(), OnUserEarnedRewardListener {
         if (mInterstitialAd == null) {
             InterstitialAd.load(
                 this,
-                "ca-app-pub-3940256099942544/1033173712",
+                "ca-app-pub-3940256099942544/1033173712", //unitId,
                 AdRequest.Builder().build(),
                 object : InterstitialAdLoadCallback() {
                     override fun onAdFailedToLoad(adError: LoadAdError) {

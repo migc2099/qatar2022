@@ -11,9 +11,13 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.material3.rememberTopAppBarState
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -30,6 +34,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.random.Random
 
+@ExperimentalMaterial3Api
 @ExperimentalMaterialApi
 @Composable
 fun HomeScreen(
@@ -79,11 +84,13 @@ fun HomeScreen(
             easing = LinearOutSlowInEasing
         )
     )
+    val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
 
 //    val screenshotState = rememberScreenshotState()
 //    val screenshotClicked = remember { mutableStateOf(false) }
 
     BottomSheetScaffold(
+        modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
         scaffoldState = scaffoldState,
         topBar = {
             HomeTopBar(
@@ -100,7 +107,8 @@ fun HomeScreen(
                             sheetState.collapse()
                         }
                     }
-                }
+                },
+                scrollBehavior = scrollBehavior
             )
         },
         sheetContent = {
