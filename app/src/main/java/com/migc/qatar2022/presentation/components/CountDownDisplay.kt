@@ -138,7 +138,7 @@ fun CountDownDisplay(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                if (days.value > 0 && hours.value > 0 && minutes.value > 0 && seconds.value > 0){
+                if (worldCupTimeStamp >= System.currentTimeMillis()) {
                     Text(
                         modifier = Modifier.fillMaxWidth(),
                         color = mainBackgroundColor,
@@ -157,35 +157,33 @@ fun CountDownDisplay(
                 }
 
                 Spacer(modifier = Modifier.height(MEDIUM_VERTICAL_GAP))
-                if (days.value > 0 && hours.value > 0 && minutes.value > 0 && seconds.value > 0) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.Center
-                    ) {
-                        DisplayNumber(
-                            timeValue = days.value.toString(),
-                            timeLabel = stringResource(R.string.days_text),
-                            scaleValue = daysScale.value
-                        )
-                        Spacer(modifier = Modifier.width(MEDIUM_HORIZONTAL_GAP))
-                        DisplayNumber(
-                            timeValue = hours.value.toString(),
-                            timeLabel = stringResource(R.string.hours_text),
-                            scaleValue = hoursScale.value
-                        )
-                        Spacer(modifier = Modifier.width(MEDIUM_HORIZONTAL_GAP))
-                        DisplayNumber(
-                            timeValue = minutes.value.toString(),
-                            timeLabel = stringResource(R.string.minutes_text),
-                            scaleValue = minsScale.value
-                        )
-                        Spacer(modifier = Modifier.width(MEDIUM_HORIZONTAL_GAP))
-                        DisplayNumber(
-                            timeValue = seconds.value.toString(),
-                            timeLabel = stringResource(R.string.seconds_text),
-                            scaleValue = secsScale.value
-                        )
-                    }
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    DisplayNumber(
+                        timeValue = days.value.toString(),
+                        timeLabel = stringResource(R.string.days_text),
+                        scaleValue = daysScale.value
+                    )
+                    Spacer(modifier = Modifier.width(MEDIUM_HORIZONTAL_GAP))
+                    DisplayNumber(
+                        timeValue = hours.value.toString(),
+                        timeLabel = stringResource(R.string.hours_text),
+                        scaleValue = hoursScale.value
+                    )
+                    Spacer(modifier = Modifier.width(MEDIUM_HORIZONTAL_GAP))
+                    DisplayNumber(
+                        timeValue = minutes.value.toString(),
+                        timeLabel = stringResource(R.string.minutes_text),
+                        scaleValue = minsScale.value
+                    )
+                    Spacer(modifier = Modifier.width(MEDIUM_HORIZONTAL_GAP))
+                    DisplayNumber(
+                        timeValue = seconds.value.toString(),
+                        timeLabel = stringResource(R.string.seconds_text),
+                        scaleValue = secsScale.value
+                    )
                 }
             }
 
