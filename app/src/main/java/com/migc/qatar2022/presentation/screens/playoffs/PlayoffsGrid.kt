@@ -19,7 +19,8 @@ import com.migc.qatar2022.ui.theme.*
 
 @Composable
 fun PlayoffsGrid(
-    modifier: Modifier, playoffs: List<Playoff>,
+    modifier: Modifier,
+    playoffs: List<Playoff>,
     onPlayoffClick: (Int) -> Unit
 ) {
 
@@ -51,7 +52,7 @@ fun PlayoffsGrid(
         columns = GridCells.Fixed(14),
         modifier = modifier
             .fillMaxWidth()
-            .height(384.dp),
+            .height(KNOCK_OUT_GRID_HEIGHT),
         verticalArrangement = Arrangement.Center
     ) {
         //********************** Round of 16 ****************************************

@@ -1,5 +1,7 @@
 package com.migc.qatar2022.presentation.screens.home
 
+import android.content.Intent
+import android.content.res.Configuration
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.animation.core.*
@@ -9,8 +11,11 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.rememberTopAppBarState
@@ -18,18 +23,24 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.input.nestedscroll.nestedScroll
+import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.migc.qatar2022.R
 import com.migc.qatar2022.common.Constants
+import com.migc.qatar2022.common.Utils
 import com.migc.qatar2022.navigation.Screen
 import com.migc.qatar2022.presentation.components.*
 import com.migc.qatar2022.presentation.screens.playoffs.PlayoffDialog
 import com.migc.qatar2022.presentation.screens.playoffs.PlayoffsGrid
 import com.migc.qatar2022.presentation.screens.playoffs.PodiumDialog
 import com.migc.qatar2022.ui.theme.*
+import com.smarttoolfactory.screenshot.ScreenshotBox
+import com.smarttoolfactory.screenshot.rememberScreenshotState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlin.random.Random
@@ -44,6 +55,7 @@ fun HomeScreen(
     onShowInterstitial: () -> Unit
 ) {
 
+    val mConfiguration = LocalConfiguration.current
     val mContext = LocalContext.current
     val tournamentActionState = homeViewModel.tournamentActionState.collectAsState()
     val userState = homeViewModel.userState.collectAsState()
@@ -86,8 +98,10 @@ fun HomeScreen(
     )
     val scrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
 
-//    val screenshotState = rememberScreenshotState()
-//    val screenshotClicked = remember { mutableStateOf(false) }
+    val expanded = mConfiguration.screenWidthDp.dp > KNOCK_OUT_GRID_WIDTH + SHARE_BUTTON_SIZE
+            || mConfiguration.orientation == Configuration.ORIENTATION_LANDSCAPE
+    val screenshotState = rememberScreenshotState()
+    val screenshotClicked = remember { mutableStateOf(false) }
 
     BottomSheetScaffold(
         modifier = Modifier.nestedScroll(scrollBehavior.nestedScrollConnection),
@@ -135,10 +149,6 @@ fun HomeScreen(
                 onFinalStandingsClick = {
                     navHostController.navigate(Screen.Standings.route)
                 },
-//                onSharePlayoffGridClick = {
-//                    screenshotState.capture()
-//                    screenshotClicked.value = true
-//                },
                 onTeamsMapClick = {
                     navHostController.navigate(Screen.TeamsMapScreen.route)
                 }
@@ -151,7 +161,8 @@ fun HomeScreen(
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()
-                .background(mainBackgroundColor)
+                .background(mainBackgroundColor),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
             item {
                 CountDownDisplay(modifier = Modifier.padding(horizontal = LARGE_PADDING, vertical = MEDIUM_PADDING))
@@ -202,41 +213,63 @@ fun HomeScreen(
                 LazyRow(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(KNOCK_OUT_GRID_HEIGHT * 1.1f)
+                        .height(KNOCK_OUT_GRID_HEIGHT * 1.1f),
+                    horizontalArrangement = Arrangement.Center
                 ) {
                     item { Spacer(modifier = Modifier.width(MEDIUM_PADDING)) }
                     item {
-//                        ScreenshotBox(screenshotState = screenshotState) {
-                        Card(
-                            modifier = Modifier
-                                .width(KNOCK_OUT_GRID_WIDTH)
-                                .height(KNOCK_OUT_GRID_HEIGHT),
-                            shape = RoundedCornerShape(SMALL_ROUND_CORNER),
-                            backgroundColor = mainColor
+                        Row(
+                            verticalAlignment = Alignment.Bottom
                         ) {
-                            Box(
-                                modifier = Modifier.fillMaxSize(),
-                                contentAlignment = Alignment.TopCenter
-                            ) {
-                                PlayoffsGrid(
-                                    modifier = Modifier.padding(horizontal = MEDIUM_PADDING),
-                                    playoffs = playoffs.value
-                                ) {
-                                    Log.d("LazyRow", "roundKey clicked: $it")
-                                    homeViewModel.onEvent(HomeUiEvent.OnPlayoffDialogClicked(it))
-                                    showPlayoffDialog.value = true
-                                }
-                                Image(
-                                    painter = painterResource(id = R.drawable.cup),
-                                    contentDescription = "cup",
+                            ScreenshotBox(screenshotState = screenshotState) {
+                                Card(
                                     modifier = Modifier
-                                        .size(FLAG_ROW_IMAGE_SIZE * 1.8f)
-                                        .padding(top = LARGE_PADDING),
-                                    alpha = cupAlpha
-                                )
+                                        .width(KNOCK_OUT_GRID_WIDTH)
+                                        .height(KNOCK_OUT_GRID_HEIGHT),
+                                    shape = RoundedCornerShape(SMALL_ROUND_CORNER),
+                                    backgroundColor = mainColor
+                                ) {
+                                    Box(
+                                        modifier = Modifier.fillMaxSize(),
+                                        contentAlignment = Alignment.TopCenter
+                                    ) {
+                                        PlayoffsGrid(
+                                            modifier = Modifier.padding(horizontal = MEDIUM_PADDING),
+                                            playoffs = playoffs.value
+                                        ) {
+                                            Log.d("LazyRow", "roundKey clicked: $it")
+                                            homeViewModel.onEvent(HomeUiEvent.OnPlayoffDialogClicked(it))
+                                            showPlayoffDialog.value = true
+                                        }
+                                        Image(
+                                            painter = painterResource(id = R.drawable.cup),
+                                            contentDescription = "cup",
+                                            modifier = Modifier
+                                                .size(FLAG_ROW_IMAGE_SIZE * 1.8f)
+                                                .padding(top = LARGE_PADDING),
+                                            alpha = cupAlpha
+                                        )
+                                    }
+                                }
+                            }
+                            if (expanded) {
+                                Spacer(modifier = Modifier.width(MEDIUM_PADDING))
+                                Button(
+                                    onClick = {
+                                        screenshotState.capture()
+                                        screenshotClicked.value = true
+                                    },
+                                    modifier = Modifier.size(SHARE_BUTTON_SIZE),
+                                    shape = CircleShape
+                                ) {
+                                    Icon(
+                                        Icons.Filled.Share,
+                                        contentDescription = stringResource(id = R.string.share_text),
+                                        tint = mainBackgroundColor
+                                    )
+                                }
                             }
                         }
-//                         }
                     }
                     item { Spacer(modifier = Modifier.width(MEDIUM_PADDING)) }
                 }
@@ -322,20 +355,19 @@ fun HomeScreen(
         )
     }
 
-//    if (screenshotClicked.value) {
-//        screenshotState.imageBitmap?.let {
-//
-//            LazyRow() {
-//                item {
-//                    Image(
-//                        modifier = Modifier
-//                            .size(256.dp),
-//                        bitmap = it,
-//                        contentDescription = ""
-//                    )
-//                }
-//            }
-//        }
-//    }
+    if (screenshotClicked.value) {
+        screenshotState.bitmap?.let {
+            val contentUri = Utils.getTempUriFromBitmap(mContext, it)
+            if (contentUri != null) {
+                val shareIntent = Intent()
+                shareIntent.action = Intent.ACTION_SEND
+                shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                shareIntent.type = "image/jpeg"
+                shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri)
+                shareIntent.putExtra(Intent.EXTRA_TEXT, stringResource(id = R.string.share_title_text))
+                mContext.startActivity(Intent.createChooser(shareIntent, stringResource(id = R.string.choose_app_share_text)))
+            }
+        }
+    }
 
 }

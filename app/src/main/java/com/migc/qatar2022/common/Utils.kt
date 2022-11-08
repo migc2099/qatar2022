@@ -3,12 +3,20 @@ package com.migc.qatar2022.common
 import android.app.Activity
 import android.content.Context
 import android.content.ContextWrapper
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.drawable.Drawable
+import android.net.Uri
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.ui.platform.LocalContext
+import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
+import com.migc.qatar2022.BuildConfig
+import java.io.File
+import java.io.FileOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -28,6 +36,27 @@ object Utils {
         drawable.setBounds(0, 0, drawable.intrinsicWidth, drawable.intrinsicHeight)
         drawable.draw(canvas)
         return bitmap
+    }
+
+    fun getTempUriFromBitmap(context: Context, bitmap: Bitmap): Uri? {
+        val imageName = "/knockouts.jpg"
+        try {
+            File(context.cacheDir, "images").deleteRecursively()
+            val cachePath = File(context.cacheDir, "images")
+            cachePath.mkdirs()
+            val stream = FileOutputStream("$cachePath$imageName")
+            bitmap.compress(
+                Bitmap.CompressFormat.JPEG, 90, stream
+            )
+            stream.close()
+        } catch (e: Exception) {
+            Log.e("Utils", e.toString())
+        }
+
+        // SHARE
+        val imagePath = File(context.cacheDir, "images")
+        val newFile = File(imagePath, imageName)
+        return FileProvider.getUriForFile(context, BuildConfig.APPLICATION_ID + ".provider", newFile)
     }
 
     @Composable

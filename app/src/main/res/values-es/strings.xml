@@ -53,6 +53,9 @@
     <string name="message_sign_in_required">Se require inicio de sesion</string>
     <string name="message_retrieving_data_error">No se pudo obtener los datos</string>
     <string name="top_teams_text">Mejores Equipos</string>
+    <string name="share_text">Share</string>
+    <string name="share_title_text">Ésta es mi predicción en la Copa Mundial</string>
+    <string name="choose_app_share_text">Escoja una app</string>
 
     <!-- Countries -->
     <string name="QAT">Catar</string>

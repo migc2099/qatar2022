@@ -42,7 +42,7 @@
     <string name="generate_scores">Generate Scores</string>
     <string name="go_back_text">Go Back</string>
     <string name="reupload_prevention_message">You have already uploaded this tournament\'s winners</string>
-    <string name="web_client_id" translatable="false">778036367622-5frl7qm49cqjhffb660ged4ts6jo2aji.apps.googleusercontent.com</string>
+    <string name="web_client_id" translatable="false">778036367622-52q0ta6e2r25bohu72j50pelc4rp45p2.apps.googleusercontent.com</string>
     <string name="sign_in_anonymously_text">Sign in anonymously</string>
     <string name="sign_in_with_google_text">Google Sign In</string>
     <string name="sign_out_text">Sign out</string>
@@ -55,6 +55,9 @@
     <string name="message_sign_in_required">Sign In Required</string>
     <string name="message_retrieving_data_error">Couldn\'t obtain data</string>
     <string name="top_teams_text">Top Teams</string>
+    <string name="share_text">Share</string>
+    <string name="share_title_text">This is my World Cup prediction</string>
+    <string name="choose_app_share_text">Choose App</string>
 
     <!-- Countries -->
     <string name="QAT">Qatar</string>

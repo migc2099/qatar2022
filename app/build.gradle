@@ -9,12 +9,12 @@ plugins {
 }
 
 android {
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.migc.qatar2022"
         minSdk 24
-        targetSdk 32
+        targetSdk 33
         versionCode 12
         versionName "1.4.1"
 
@@ -68,6 +68,10 @@ dependencies {
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_version"
     debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_version"
 
+    // Material 3
+    implementation "androidx.compose.material3:material3:1.0.0-rc01"
+    implementation "androidx.compose.material3:material3-window-size-class:1.0.0-rc01"
+
     // Room
     implementation "androidx.room:room-runtime:$room_version"
     kapt "androidx.room:room-compiler:$room_version"
@@ -114,6 +118,10 @@ dependencies {
     // Gson
     implementation 'com.google.code.gson:gson:2.8.9'
 
-//    implementation 'com.github.SmartToolFactory:Compose-Screenshot:1.0.3'
+    implementation 'com.github.SmartToolFactory:Compose-Screenshot:1.0.3'
+
+    // Don't forget to change the line below with the latest version of Parse SDK for Android
+    implementation "com.github.parse-community.Parse-SDK-Android:parse:4.1.0"
+    implementation 'com.github.parse-community:ParseLiveQuery-Android:1.2.2'
 
 }
