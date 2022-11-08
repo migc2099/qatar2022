@@ -241,14 +241,35 @@ fun HomeScreen(
                                             homeViewModel.onEvent(HomeUiEvent.OnPlayoffDialogClicked(it))
                                             showPlayoffDialog.value = true
                                         }
-                                        Image(
-                                            painter = painterResource(id = R.drawable.cup),
-                                            contentDescription = "cup",
+                                        Column(
                                             modifier = Modifier
-                                                .size(FLAG_ROW_IMAGE_SIZE * 1.8f)
-                                                .padding(top = LARGE_PADDING),
-                                            alpha = cupAlpha
-                                        )
+                                                .width(FLAG_ROW_IMAGE_SIZE * 2f)
+                                                .height(KNOCK_OUT_GRID_HEIGHT / 2.8f),
+                                            horizontalAlignment = Alignment.CenterHorizontally,
+                                            verticalArrangement = Arrangement.Top
+                                        ) {
+                                            Image(
+                                                painter = painterResource(id = R.drawable.cup),
+                                                contentDescription = "cup",
+                                                modifier = Modifier
+                                                    .fillMaxSize(0.7f)
+                                                    .padding(top = LARGE_PADDING),
+                                                alpha = cupAlpha
+                                            )
+                                            if (playoffCompletedState.value && bestTeams.value.isNotEmpty()) {
+                                                bestTeams.value[0].let {
+                                                        if (it.teamId.isNotEmpty()){
+                                                            Box(
+                                                                modifier = Modifier
+                                                                    .size(FLAG_ROW_IMAGE_SIZE * 1.2f)
+                                                            ) {
+                                                                TeamFlag(teamId = bestTeams.value[0].teamId, { })
+                                                            }
+                                                        }
+
+                                                    }
+                                            }
+                                        }
                                     }
                                 }
                             }

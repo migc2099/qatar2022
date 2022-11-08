@@ -199,11 +199,20 @@ fun PlayoffsGrid(
         }
         item {
             //************************** Filler ****************************************
+            Column {
+                Spacer(modifier = Modifier.height((FLAG_ROW_IMAGE_SIZE * 3.5f) + (MEDIUM_VERTICAL_GAP * 1.5f) + (EXTRA_SMALL_PADDING * 6)))
+                Bracket(
+                    modifier = Modifier
+                        .height((FLAG_ROW_IMAGE_SIZE ) + (EXTRA_SMALL_PADDING * 4))
+                        .fillMaxWidth(),
+                    rotate = false
+                )
+            }
         }
         //************************* First Finalists **************************************
         item{
             Column(modifier = Modifier.fillMaxWidth()) {
-                Spacer(modifier = Modifier.height((FLAG_ROW_IMAGE_SIZE * 2) + (MEDIUM_VERTICAL_GAP * 1.5f) + (EXTRA_SMALL_PADDING * 6)))
+                Spacer(modifier = Modifier.height((FLAG_ROW_IMAGE_SIZE * 3.5f) + (MEDIUM_VERTICAL_GAP * 1.5f) + (EXTRA_SMALL_PADDING * 6)))
                 matches[64].let { playoff ->
                     if (playoff!!.firstTeam.isNotEmpty()) {
                         TeamFlag(teamId = playoff.firstTeam, onClick = { onPlayoffClick(playoff.roundKey) })
@@ -211,7 +220,7 @@ fun PlayoffsGrid(
                         TeamPlaceholder(text = "F")
                     }
                 }
-                Spacer(modifier = Modifier.height((MEDIUM_VERTICAL_GAP * 2) + (FLAG_ROW_IMAGE_SIZE * 2) + EXTRA_SMALL_PADDING * 6))
+                Spacer(modifier = Modifier.height((MEDIUM_VERTICAL_GAP) + (FLAG_ROW_IMAGE_SIZE) + EXTRA_SMALL_PADDING * 3))
                 matches[63].let { playoff ->
                     if (playoff!!.firstTeam.isNotEmpty()) {
                         TeamFlag(teamId = playoff.firstTeam, onClick = { onPlayoffClick(playoff.roundKey) })
@@ -224,7 +233,7 @@ fun PlayoffsGrid(
         //************************* Second Finalists *******************
         item {
             Column(modifier = Modifier.fillMaxWidth()) {
-                Spacer(modifier = Modifier.height((FLAG_ROW_IMAGE_SIZE * 2) + (MEDIUM_VERTICAL_GAP * 1.5f) + (EXTRA_SMALL_PADDING * 6)))
+                Spacer(modifier = Modifier.height((FLAG_ROW_IMAGE_SIZE * 3.5f) + (MEDIUM_VERTICAL_GAP * 1.5f) + (EXTRA_SMALL_PADDING * 6)))
                 matches[64].let { playoff ->
                     if (playoff!!.secondTeam.isNotEmpty()) {
                         TeamFlag(teamId = playoff.secondTeam, onClick = { onPlayoffClick(playoff.roundKey) })
@@ -232,7 +241,7 @@ fun PlayoffsGrid(
                         TeamPlaceholder(text = "F")
                     }
                 }
-                Spacer(modifier = Modifier.height((MEDIUM_VERTICAL_GAP * 2) + (FLAG_ROW_IMAGE_SIZE * 2) + EXTRA_SMALL_PADDING * 6))
+                Spacer(modifier = Modifier.height((MEDIUM_VERTICAL_GAP) + (FLAG_ROW_IMAGE_SIZE) + EXTRA_SMALL_PADDING * 3))
                 matches[63].let { playoff ->
                     if (playoff!!.secondTeam.isNotEmpty()) {
                         TeamFlag(teamId = playoff.secondTeam, onClick = { onPlayoffClick(playoff.roundKey) })
@@ -244,6 +253,15 @@ fun PlayoffsGrid(
         }
         item {
             //************************** Filler ****************************************
+            Column {
+                Spacer(modifier = Modifier.height((FLAG_ROW_IMAGE_SIZE * 3.5f) + (MEDIUM_VERTICAL_GAP * 1.5f) + (EXTRA_SMALL_PADDING * 6)))
+                Bracket(
+                    modifier = Modifier
+                        .height((FLAG_ROW_IMAGE_SIZE ) + (EXTRA_SMALL_PADDING * 4))
+                        .fillMaxWidth(),
+                    rotate = true
+                )
+            }
         }
         // ************************ Semifinals *********************************
         item {
