@@ -7,6 +7,7 @@
     <string name="minutes_text">Mins</string>
     <string name="seconds_text">Segs</string>
     <string name="world_cup_starts_text">La Copa Mundial Empieza en</string>
+    <string name="world_cup_started_text">La Copa Mundial ha empezado</string>
     <string name="team_flag">Bandera</string>
     <string name="home_team_flag">Bandero Equipo Local</string>
     <string name="away_team_flag">Bandera Equipo Visitante</string>

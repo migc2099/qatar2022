@@ -1,6 +1,5 @@
 package com.migc.qatar2022.presentation.components
 
-import android.util.Log
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -139,41 +138,54 @@ fun CountDownDisplay(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(
-                    modifier = Modifier.fillMaxWidth(),
-                    color = mainBackgroundColor,
-                    text = stringResource(R.string.world_cup_starts_text),
-                    fontSize = Typography.subtitle1.fontSize,
-                    textAlign = TextAlign.Center
-                )
+                if (days.value > 0 && hours.value > 0 && minutes.value > 0 && seconds.value > 0){
+                    Text(
+                        modifier = Modifier.fillMaxWidth(),
+                        color = mainBackgroundColor,
+                        text = stringResource(R.string.world_cup_starts_text),
+                        fontSize = Typography.subtitle1.fontSize,
+                        textAlign = TextAlign.Center
+                    )
+                } else {
+                    Text(
+                        modifier = Modifier.fillMaxWidth(),
+                        color = mainBackgroundColor,
+                        text = stringResource(R.string.world_cup_started_text),
+                        fontSize = Typography.h6.fontSize,
+                        textAlign = TextAlign.Center
+                    )
+                }
+
                 Spacer(modifier = Modifier.height(MEDIUM_VERTICAL_GAP))
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    DisplayNumber(
-                        timeValue = days.value.toString(),
-                        timeLabel = stringResource(R.string.days_text),
-                        scaleValue = daysScale.value
-                    )
-                    Spacer(modifier = Modifier.width(MEDIUM_HORIZONTAL_GAP))
-                    DisplayNumber(
-                        timeValue = hours.value.toString(),
-                        timeLabel = stringResource(R.string.hours_text),
-                        scaleValue = hoursScale.value
-                    )
-                    Spacer(modifier = Modifier.width(MEDIUM_HORIZONTAL_GAP))
-                    DisplayNumber(
-                        timeValue = minutes.value.toString(),
-                        timeLabel = stringResource(R.string.minutes_text),
-                        scaleValue = minsScale.value
-                    )
-                    Spacer(modifier = Modifier.width(MEDIUM_HORIZONTAL_GAP))
-                    DisplayNumber(
-                        timeValue = seconds.value.toString(),
-                        timeLabel = stringResource(R.string.seconds_text),
-                        scaleValue = secsScale.value
-                    )
+                if (days.value > 0 && hours.value > 0 && minutes.value > 0 && seconds.value > 0) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        DisplayNumber(
+                            timeValue = days.value.toString(),
+                            timeLabel = stringResource(R.string.days_text),
+                            scaleValue = daysScale.value
+                        )
+                        Spacer(modifier = Modifier.width(MEDIUM_HORIZONTAL_GAP))
+                        DisplayNumber(
+                            timeValue = hours.value.toString(),
+                            timeLabel = stringResource(R.string.hours_text),
+                            scaleValue = hoursScale.value
+                        )
+                        Spacer(modifier = Modifier.width(MEDIUM_HORIZONTAL_GAP))
+                        DisplayNumber(
+                            timeValue = minutes.value.toString(),
+                            timeLabel = stringResource(R.string.minutes_text),
+                            scaleValue = minsScale.value
+                        )
+                        Spacer(modifier = Modifier.width(MEDIUM_HORIZONTAL_GAP))
+                        DisplayNumber(
+                            timeValue = seconds.value.toString(),
+                            timeLabel = stringResource(R.string.seconds_text),
+                            scaleValue = secsScale.value
+                        )
+                    }
                 }
             }
 
@@ -211,6 +223,9 @@ fun CountDownDisplayPreview() {
 }
 
 private fun millisToDaysHrMinSec(diffInMillis: Long): CountDownResult {
+    if (diffInMillis <= 0) {
+        return CountDownResult(0, 0, 0, 0)
+    }
     val diffInSeconds = diffInMillis / 1000
     val diffInMinutes = diffInSeconds / 60
     val diffInHours = diffInMinutes / 60
@@ -220,7 +235,7 @@ private fun millisToDaysHrMinSec(diffInMillis: Long): CountDownResult {
     val minutes = (diffInMinutes - ((days * 24 * 60) + (hours * 60)))
     val seconds = (diffInSeconds - ((days * 24 * 60 * 60) + (hours * 60 * 60) + (minutes * 60)))
 
-    Log.d("millis", "days: $days hours: $hours minutes: $minutes seconds: $seconds")
+//    Log.d("millis", "days: $days hours: $hours minutes: $minutes seconds: $seconds")
     return CountDownResult(days.toInt(), hours.toInt(), minutes.toInt(), seconds.toInt())
 }
 
