@@ -32,9 +32,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.migc.qatar2022.R
 import com.migc.qatar2022.common.Constants
+import com.migc.qatar2022.common.Constants.GOOGLE_PLAY_STORE_LINK
 import com.migc.qatar2022.common.Utils
 import com.migc.qatar2022.navigation.Screen
 import com.migc.qatar2022.presentation.components.*
+import com.migc.qatar2022.presentation.screens.home.components.HomeTopBar
 import com.migc.qatar2022.presentation.screens.playoffs.PlayoffDialog
 import com.migc.qatar2022.presentation.screens.playoffs.PlayoffsGrid
 import com.migc.qatar2022.presentation.screens.playoffs.PodiumDialog
@@ -110,6 +112,10 @@ fun HomeScreen(
             HomeTopBar(
                 onSignInClick = {
                     navHostController.navigate(Screen.Login.route)
+                },
+                onShareClick = {
+                    screenshotState.capture()
+                    screenshotClicked.value = true
                 },
                 onMenuClick = {
                     coroutineScope.launch {
@@ -258,16 +264,15 @@ fun HomeScreen(
                                             )
                                             if (playoffCompletedState.value && bestTeams.value.isNotEmpty()) {
                                                 bestTeams.value[0].let {
-                                                        if (it.teamId.isNotEmpty()){
-                                                            Box(
-                                                                modifier = Modifier
-                                                                    .size(FLAG_ROW_IMAGE_SIZE * 1.2f)
-                                                            ) {
-                                                                TeamFlag(teamId = bestTeams.value[0].teamId, { })
-                                                            }
+                                                    if (it.teamId.isNotEmpty()) {
+                                                        Box(
+                                                            modifier = Modifier
+                                                                .size(FLAG_ROW_IMAGE_SIZE * 1.2f)
+                                                        ) {
+                                                            TeamFlag(teamId = bestTeams.value[0].teamId, { })
                                                         }
-
                                                     }
+                                                }
                                             }
                                         }
                                     }
@@ -380,12 +385,13 @@ fun HomeScreen(
         screenshotState.bitmap?.let {
             val contentUri = Utils.getTempUriFromBitmap(mContext, it)
             if (contentUri != null) {
-                val shareIntent = Intent()
-                shareIntent.action = Intent.ACTION_SEND
-                shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                shareIntent.type = "image/jpeg"
-                shareIntent.putExtra(Intent.EXTRA_STREAM, contentUri)
-                shareIntent.putExtra(Intent.EXTRA_TEXT, stringResource(id = R.string.share_title_text))
+                val shareIntent: Intent = Intent().apply {
+                    action = Intent.ACTION_SEND
+                    putExtra(Intent.EXTRA_TEXT, GOOGLE_PLAY_STORE_LINK)
+                    putExtra(Intent.EXTRA_STREAM, contentUri)
+                    type = "image/jpeg"
+                    addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                }
                 mContext.startActivity(Intent.createChooser(shareIntent, stringResource(id = R.string.choose_app_share_text)))
             }
         }

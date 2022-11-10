@@ -1,4 +1,4 @@
-package com.migc.qatar2022.presentation.components
+package com.migc.qatar2022.presentation.screens.home.components
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material.Icon
@@ -6,6 +6,7 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -20,10 +21,11 @@ import com.migc.qatar2022.ui.theme.*
 @Composable
 fun HomeTopBar(
     onSignInClick: () -> Unit,
+    onShareClick: () -> Unit,
     onMenuClick: () -> Unit,
     scrollBehavior: TopAppBarScrollBehavior = TopAppBarDefaults.enterAlwaysScrollBehavior(rememberTopAppBarState())
 ) {
-    CenterAlignedTopAppBar(
+    TopAppBar(
         title = {
             Text(
                 text = stringResource(id = R.string.app_top_bar_title),
@@ -40,6 +42,14 @@ fun HomeTopBar(
                 Icon(
                     painter = painterResource(id = R.drawable.ic_authenticate),
                     contentDescription = stringResource(id = R.string.authenticate_text),
+                    tint = mainBackgroundColor
+                )
+            }
+            IconButton(
+                onClick = { onShareClick() }
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.Share, stringResource(id = R.string.share_text),
                     tint = mainBackgroundColor
                 )
             }
@@ -69,5 +79,5 @@ fun HomeTopBar(
 @Composable
 @Preview
 fun HomeTopBarPreview() {
-    HomeTopBar(onSignInClick = {}, onMenuClick = {})
+    HomeTopBar(onSignInClick = {}, onShareClick = {}, onMenuClick = {})
 }
