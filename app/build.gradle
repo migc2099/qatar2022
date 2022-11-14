@@ -15,8 +15,8 @@ android {
         applicationId "com.migc.qatar2022"
         minSdk 24
         targetSdk 33
-        versionCode 12
-        versionName "1.4.1"
+        versionCode 14
+        versionName "1.4.3"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -121,7 +121,7 @@ dependencies {
     implementation 'com.github.SmartToolFactory:Compose-Screenshot:1.0.3'
 
     // Don't forget to change the line below with the latest version of Parse SDK for Android
-    implementation "com.github.parse-community.Parse-SDK-Android:parse:4.1.0"
-    implementation 'com.github.parse-community:ParseLiveQuery-Android:1.2.2'
+//    implementation "com.github.parse-community.Parse-SDK-Android:parse:4.1.0"
+//    implementation 'com.github.parse-community:ParseLiveQuery-Android:1.2.2'
 
 }
