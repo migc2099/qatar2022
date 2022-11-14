@@ -115,7 +115,19 @@ fun HomeScreen(
                 },
                 onShareClick = {
                     screenshotState.capture()
-                    screenshotClicked.value = true
+                    screenshotState.bitmap?.let {
+                        val contentUri = Utils.getTempUriFromBitmap(mContext, it)
+                        if (contentUri != null) {
+                            val shareIntent: Intent = Intent().apply {
+                                action = Intent.ACTION_SEND
+                                putExtra(Intent.EXTRA_TEXT, GOOGLE_PLAY_STORE_LINK)
+                                putExtra(Intent.EXTRA_STREAM, contentUri)
+                                type = "image/jpeg"
+                                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                            }
+                            mContext.startActivity(Intent.createChooser(shareIntent, mContext.getString(R.string.choose_app_share_text)))
+                        }
+                    }
                 },
                 onMenuClick = {
                     coroutineScope.launch {
@@ -283,7 +295,19 @@ fun HomeScreen(
                                 Button(
                                     onClick = {
                                         screenshotState.capture()
-                                        screenshotClicked.value = true
+                                        screenshotState.bitmap?.let {
+                                            val contentUri = Utils.getTempUriFromBitmap(mContext, it)
+                                            if (contentUri != null) {
+                                                val shareIntent: Intent = Intent().apply {
+                                                    action = Intent.ACTION_SEND
+                                                    putExtra(Intent.EXTRA_TEXT, GOOGLE_PLAY_STORE_LINK)
+                                                    putExtra(Intent.EXTRA_STREAM, contentUri)
+                                                    type = "image/jpeg"
+                                                    addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                                                }
+                                                mContext.startActivity(Intent.createChooser(shareIntent, mContext.getString(R.string.choose_app_share_text)))
+                                            }
+                                        }
                                     },
                                     modifier = Modifier.size(SHARE_BUTTON_SIZE),
                                     shape = CircleShape
@@ -379,22 +403,6 @@ fun HomeScreen(
             },
             onClose = { showPodiumDialog.value = false }
         )
-    }
-
-    if (screenshotClicked.value) {
-        screenshotState.bitmap?.let {
-            val contentUri = Utils.getTempUriFromBitmap(mContext, it)
-            if (contentUri != null) {
-                val shareIntent: Intent = Intent().apply {
-                    action = Intent.ACTION_SEND
-                    putExtra(Intent.EXTRA_TEXT, GOOGLE_PLAY_STORE_LINK)
-                    putExtra(Intent.EXTRA_STREAM, contentUri)
-                    type = "image/jpeg"
-                    addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-                }
-                mContext.startActivity(Intent.createChooser(shareIntent, stringResource(id = R.string.choose_app_share_text)))
-            }
-        }
     }
 
 }
