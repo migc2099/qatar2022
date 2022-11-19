@@ -10,13 +10,8 @@ import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class FixtureRepositoryImpl @Inject constructor(
-//    private val fixtureApi: FixtureApi,
     private val qatarDatabase: QatarDatabase
 ) : FixtureRepository {
-
-//    override suspend fun getMatchesByGroup(group: String): List<FixtureDto> {
-//        return fixtureApi.getFixture()
-//    }
 
     override fun getFixtureByGroup(group: String): Flow<List<Fixture>> {
         return qatarDatabase.fixtureDao.getGroupMatches(group).map { fixtureList ->
