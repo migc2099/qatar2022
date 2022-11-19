@@ -49,7 +49,7 @@ object Constants {
     const val TOTAL_GROUPS = 8
     const val TOTAL_TEAMS = 32
 
-    const val WORLD_CUP_START_DATE_MILLIS = 1668988800000
+    const val WORLD_CUP_START_DATE_MILLIS = 1668960000000
 
     const val PARAM_GROUP_ID = "group_id"
 
@@ -64,7 +64,7 @@ object Constants {
     const val PERMISSION_DENIED_MESSAGE = "PERMISSION_DENIED: Missing or insufficient permissions"
 
     const val WARN_NUMBER_LOGIN_ATTEMPTS = 7
-    const val TIMES_CLICKED_TO_SHOW_AD = 16
+    const val TIMES_CLICKED_TO_SHOW_AD = 10
 
     const val AD_UNIT_SUBMIT_INTERSTITIAL_ID = "ad_unit_submit_interstitial_id"
     const val AD_UNIT_MAP_REWARD_ID = "ad_unit_map_reward_id"

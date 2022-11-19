@@ -64,7 +64,6 @@ fun HomeScreen(
     val teamStatsMap = homeViewModel.statsPerGroup.value
     val playoffs = homeViewModel.playoffs.collectAsState()
     val playoffCompletedState = homeViewModel.playoffCompletedState.collectAsState()
-    val secondResultSubmitted = remember { mutableStateOf(false) }
 
     val listState = rememberLazyListState()
     LaunchedEffect(key1 = true) {
@@ -125,7 +124,12 @@ fun HomeScreen(
                                 type = "image/jpeg"
                                 addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                             }
-                            mContext.startActivity(Intent.createChooser(shareIntent, mContext.getString(R.string.choose_app_share_text)))
+                            mContext.startActivity(
+                                Intent.createChooser(
+                                    shareIntent,
+                                    mContext.getString(R.string.choose_app_share_text)
+                                )
+                            )
                         }
                     }
                 },
@@ -305,7 +309,12 @@ fun HomeScreen(
                                                     type = "image/jpeg"
                                                     addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                                                 }
-                                                mContext.startActivity(Intent.createChooser(shareIntent, mContext.getString(R.string.choose_app_share_text)))
+                                                mContext.startActivity(
+                                                    Intent.createChooser(
+                                                        shareIntent,
+                                                        mContext.getString(R.string.choose_app_share_text)
+                                                    )
+                                                )
                                             }
                                         }
                                     },
@@ -364,10 +373,7 @@ fun HomeScreen(
                     uploadProcessingState.value = false
                     Toast.makeText(mContext, mContext.getString(R.string.message_upload_completed), Toast.LENGTH_SHORT).show()
                     delay(1000L)
-                    if (secondResultSubmitted.value && Random.nextBoolean()) {
-                        onShowInterstitial()
-                    }
-                    secondResultSubmitted.value = true
+                    onShowInterstitial()
                 }
                 OperationState.Failed -> {
                     uploadProcessingState.value = false
