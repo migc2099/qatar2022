@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -27,13 +28,17 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.migc.qatar2022.R
 import com.migc.qatar2022.common.Constants
 import com.migc.qatar2022.common.Constants.GOOGLE_PLAY_STORE_LINK
+import com.migc.qatar2022.common.Constants.INSTAGRAM_ID
 import com.migc.qatar2022.common.Utils
+import com.migc.qatar2022.common.Utils.copyToClipboard
 import com.migc.qatar2022.navigation.Screen
 import com.migc.qatar2022.presentation.components.*
 import com.migc.qatar2022.presentation.screens.home.components.HomeTopBar
@@ -45,7 +50,6 @@ import com.smarttoolfactory.screenshot.ScreenshotBox
 import com.smarttoolfactory.screenshot.rememberScreenshotState
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlin.random.Random
 
 @ExperimentalMaterial3Api
 @ExperimentalMaterialApi
@@ -334,7 +338,50 @@ fun HomeScreen(
                 }
             }
             item {
-                Spacer(modifier = Modifier.height(BOTTOM_LIST_SPACE))
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.End
+                ) {
+                    Text(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(MEDIUM_PADDING),
+                        color = mainColor,
+                        text = stringResource(id = R.string.follow_me_ig),
+                        textAlign = TextAlign.Center,
+                        fontSize = Typography.caption.fontSize,
+                        maxLines = 2
+                    )
+                    Spacer(modifier = Modifier.height(SMALL_HORIZONTAL_PADDING))
+                    Row(
+                        modifier = Modifier
+                            .size(SIGNATURE_WIDTH, SIGNATURE_HEIGHT)
+                            .padding(LARGE_PADDING)
+                            .clickable {
+                                INSTAGRAM_ID.copyToClipboard(context = mContext)
+                                Toast.makeText(mContext, mContext.getString(R.string.copied_text), Toast.LENGTH_SHORT).show()
+                            },
+                        horizontalArrangement = Arrangement.Center,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text(
+                            color = mainColor,
+                            text = "@${INSTAGRAM_ID}",
+                            fontSize = Typography.subtitle2.fontSize,
+                            fontWeight = FontWeight.Bold,
+                            textAlign = TextAlign.Center
+                        )
+                        Spacer(modifier = Modifier.width(SMALL_HORIZONTAL_PADDING))
+                        Icon(
+                            painter = painterResource(id = R.drawable.ic_copy),
+                            contentDescription = stringResource(id = R.string.copy_text),
+                            tint = mainColor
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.height(MEDIUM_VERTICAL_GAP))
+                }
+
             }
         }
     }

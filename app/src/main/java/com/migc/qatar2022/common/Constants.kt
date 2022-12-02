@@ -19,6 +19,7 @@ object Constants {
     const val TOP_PREDICTIONS_NUMBER: Long = 5
 
     const val GOOGLE_PLAY_STORE_LINK = "https://play.google.com/store/apps/details?id=com.migc.qatar2022"
+    const val INSTAGRAM_ID = "migc.dev"
 
     //    const val RANKINGS_BASE_URL = "https://gist.githubusercontent.com/"
     const val TEAMS_RANKINGS_JSON_FILE = "teams_rankings.json"
@@ -49,6 +50,7 @@ object Constants {
     const val TOTAL_TEAMS = 32
 
     const val WORLD_CUP_START_DATE_MILLIS = 1668960000000
+    const val NEXT_WORLD_CUP_START_DATE_MILLIS = 1780902000000
 
     const val PARAM_GROUP_ID = "group_id"
 

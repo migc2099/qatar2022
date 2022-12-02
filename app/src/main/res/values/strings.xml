@@ -6,7 +6,7 @@
     <string name="hours_text">Hours</string>
     <string name="minutes_text">Mins</string>
     <string name="seconds_text">Secs</string>
-    <string name="world_cup_starts_text">World Cup Starts in</string>
+    <string name="world_cup_starts_text">Next World Cup Starts in</string>
     <string name="world_cup_started_text">World Cup has started</string>
     <string name="team_flag">Flag</string>
     <string name="home_team_flag">Home Team Flag</string>
@@ -59,6 +59,10 @@
     <string name="share_text">Share</string>
     <string name="share_title_text">This is my World Cup prediction</string>
     <string name="choose_app_share_text">Choose App</string>
+    <string name="follow_me_ig">Did you like the app? follow me on Instagram for future free apps and 2026 World Cup!</string>
+    <string name="copy_text">Copy</string>
+    <string name="copied_text">copied</string>
+    <string name="build_with_text">Made with passion... and a lot of coffee</string>
 
     <!-- Countries -->
     <string name="QAT">Qatar</string>

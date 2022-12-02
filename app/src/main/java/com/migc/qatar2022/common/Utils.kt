@@ -1,9 +1,7 @@
 package com.migc.qatar2022.common
 
 import android.app.Activity
-import android.content.Context
-import android.content.ContextWrapper
-import android.content.Intent
+import android.content.*
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.drawable.Drawable
@@ -77,6 +75,12 @@ object Utils {
         is Activity -> this
         is ContextWrapper -> baseContext.findActivity()
         else -> null
+    }
+
+    fun String.copyToClipboard(context: Context) {
+        val clipBoard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+        val clipData = ClipData.newPlainText("label", this)
+        clipBoard.setPrimaryClip(clipData)
     }
 
 }

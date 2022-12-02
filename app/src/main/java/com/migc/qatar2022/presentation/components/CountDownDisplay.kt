@@ -1,6 +1,8 @@
 package com.migc.qatar2022.presentation.components
 
+import android.widget.Toast
 import androidx.compose.animation.core.*
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Card
@@ -9,12 +11,16 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.migc.qatar2022.R
 import com.migc.qatar2022.common.Constants
+import com.migc.qatar2022.common.Constants.INSTAGRAM_ID
+import com.migc.qatar2022.common.Utils.copyToClipboard
 import com.migc.qatar2022.ui.theme.*
 import kotlinx.coroutines.delay
 
@@ -22,12 +28,14 @@ import kotlinx.coroutines.delay
 fun CountDownDisplay(
     modifier: Modifier = Modifier
 ) {
+    val mContext = LocalContext.current
+
     val days = remember { mutableStateOf(0) }
     val hours = remember { mutableStateOf(0) }
     val minutes = remember { mutableStateOf(0) }
     val seconds = remember { mutableStateOf(0) }
 
-    val worldCupTimeStamp = Constants.WORLD_CUP_START_DATE_MILLIS
+    val worldCupTimeStamp = Constants.NEXT_WORLD_CUP_START_DATE_MILLIS
 
     LaunchedEffect(key1 = true) {
         while (true) {
@@ -125,7 +133,7 @@ fun CountDownDisplay(
         modifier = modifier
             .padding(vertical = MEDIUM_VERTICAL_PADDING)
             .fillMaxWidth()
-            .height(96.dp),
+            .height(COUNTER_CARD_HEIGHT),
         shape = RoundedCornerShape(SMALL_ROUND_CORNER),
         backgroundColor = mainColor,
         elevation = SMALL_ELEVATION
@@ -151,7 +159,7 @@ fun CountDownDisplay(
                         modifier = Modifier.fillMaxWidth(),
                         color = mainBackgroundColor,
                         text = stringResource(R.string.world_cup_started_text),
-                        fontSize = Typography.h6.fontSize,
+                        fontSize = Typography.subtitle1.fontSize,
                         textAlign = TextAlign.Center
                     )
                 }
@@ -185,6 +193,30 @@ fun CountDownDisplay(
                         scaleValue = secsScale.value
                     )
                 }
+                Spacer(modifier = Modifier.height(MEDIUM_VERTICAL_GAP))
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(SMALL_HORIZONTAL_PADDING),
+                    horizontalArrangement = Arrangement.End
+                ) {
+                    Text(
+                        color = mainBackgroundColor,
+                        fontSize = Typography.overline.fontSize,
+                        text = stringResource(id = R.string.build_with_text)
+                    )
+                    Spacer(modifier = Modifier.width(2.dp))
+                    Text(
+                        modifier = Modifier.clickable {
+                            INSTAGRAM_ID.copyToClipboard(context = mContext)
+                            Toast.makeText(mContext, mContext.getString(R.string.copied_text), Toast.LENGTH_SHORT).show()
+                        },
+                        text = "@$INSTAGRAM_ID",
+                        color = mainBackgroundColor,
+                        fontSize = Typography.overline.fontSize,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
             }
 
         }
@@ -204,12 +236,12 @@ fun DisplayNumber(timeValue: String, timeLabel: String, scaleValue: Float) {
             },
             color = mainBackgroundColor,
             text = timeValue,
-            fontSize = Typography.subtitle2.fontSize
+            fontSize = Typography.caption.fontSize
         )
         Text(
             color = mainBackgroundColor,
             text = timeLabel,
-            fontSize = Typography.subtitle2.fontSize
+            fontSize = Typography.caption.fontSize
         )
     }
 }

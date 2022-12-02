@@ -2,6 +2,10 @@ package com.migc.qatar2022.ui.theme
 
 import androidx.compose.ui.unit.dp
 
+val COUNTER_CARD_HEIGHT = 120.dp
+val SIGNATURE_HEIGHT = 64.dp
+val SIGNATURE_WIDTH = 136.dp
+
 val SMALL_ROUND_CORNER = 4.dp
 val MEDIUM_ROUND_CORNER = 8.dp
 val EXTRA_LARGE_ROUND_CORNER = 24.dp

@@ -6,7 +6,7 @@
     <string name="hours_text">Horas</string>
     <string name="minutes_text">Mins</string>
     <string name="seconds_text">Segs</string>
-    <string name="world_cup_starts_text">La Copa Mundial Empieza en</string>
+    <string name="world_cup_starts_text">La próxima Copa Mundial Empieza en</string>
     <string name="world_cup_started_text">La Copa Mundial ha empezado</string>
     <string name="team_flag">Bandera</string>
     <string name="home_team_flag">Bandero Equipo Local</string>
@@ -57,6 +57,10 @@
     <string name="share_text">Share</string>
     <string name="share_title_text">Ésta es mi predicción en la Copa Mundial</string>
     <string name="choose_app_share_text">Escoja una app</string>
+    <string name="follow_me_ig">Te gustó la app? Sigueme en Instagram para futuras apps gratis y la Copa Mundial 2026!</string>
+    <string name="copy_text">Copiar</string>
+    <string name="copied_text">copiado</string>
+    <string name="build_with_text">Hecho con pasión... y mucho café</string>
 
     <!-- Countries -->
     <string name="QAT">Catar</string>
