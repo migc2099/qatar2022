@@ -274,14 +274,15 @@ fun HomeScreen(
                                             horizontalAlignment = Alignment.CenterHorizontally,
                                             verticalArrangement = Arrangement.Top
                                         ) {
-                                            Image(
-                                                painter = painterResource(id = R.drawable.cup),
-                                                contentDescription = "cup",
-                                                modifier = Modifier
-                                                    .fillMaxSize(0.7f)
-                                                    .padding(top = LARGE_PADDING),
-                                                alpha = cupAlpha
-                                            )
+//                                            Image(
+//                                                painter = painterResource(id = R.drawable.cup),
+//                                                contentDescription = "cup",
+//                                                modifier = Modifier
+//                                                    .fillMaxSize(0.7f)
+//                                                    .padding(top = LARGE_PADDING),
+//                                                alpha = cupAlpha
+//                                            )
+                                            Spacer(modifier = Modifier.height(EXTRA_LARGE_PADDING * 3))
                                             if (playoffCompletedState.value && bestTeams.value.isNotEmpty()) {
                                                 bestTeams.value[0].let {
                                                     if (it.teamId.isNotEmpty()) {
@@ -359,7 +360,9 @@ fun HomeScreen(
                             .padding(LARGE_PADDING)
                             .clickable {
                                 INSTAGRAM_ID.copyToClipboard(context = mContext)
-                                Toast.makeText(mContext, mContext.getString(R.string.copied_text), Toast.LENGTH_SHORT).show()
+                                Toast
+                                    .makeText(mContext, mContext.getString(R.string.copied_text), Toast.LENGTH_SHORT)
+                                    .show()
                             },
                         horizontalArrangement = Arrangement.Center,
                         verticalAlignment = Alignment.CenterVertically
